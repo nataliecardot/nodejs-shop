@@ -7,6 +7,9 @@ const fs = require('fs');
 const server = http.createServer((req, res) => {
   const url = req.url;
   const method = req.method;
+  // There is no req.data; incoming data is instead sent as a stream of data. A stream is basically an ongoing process. The request is simply read by Node in chunks and in the end, eventually it's done (fully parsed). This is done so we can start working on individual chunks without having to wait for the full request being read. Node handles all requests this way because it doesn't know in advance how big and complex they are
+  // To organize these incoming chunks, you use a buffer (like a bus stop) -- a construct that allows you to work with multiple chunks before they're fully parsed
+  // We can do so with even listener - listen for data event (req.on('data') ... below)
   if (url === '/') {
     // write method allows us to write data to respone, and it works in chunks/line by line
     res.write('<html>');
