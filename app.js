@@ -22,8 +22,29 @@ const server = http.createServer((req, res) => {
     return res.end();
   }
   if (url === '/message' && method === 'POST') {
-    // Creates file with submitted text
-    fs.writeFileSync('message.txt', 'DUMMY');
+    // When a stream processor receives data faster than it can digest, it puts the data in a buffer
+    // A buffer is a temporary storage location in memory that we can grab data from
+    const body = [];
+    req.on('data', chunk => {
+      console.log(chunk);
+      // The constant stores a reference to an array. Not modifying the constant's value, but the array it points to. The const declaration creates a read-only reference to a value. It does not mean the value it holds is immutable, just that the variable identifier cannot be reassigned. For instance, in the case where the content is an object, this means the object's contents (e.g., its parameters) can be altered
+      body.push(chunk);
+    });
+    // Will be fired once parsing of incoming request data is done
+    // In this function, can now rely on all the data chunks being read in, and all are stored in body now
+    req.on('end', () => {
+      // Buffer is made available globally by Node.js
+      // Creates new buffer and adds all the chunks inside the body to it
+      // Buffer.concat(): concat() method joins all buffer objects in an array into one buffer object
+      // Conversion to string only works because incoming data will be text because body of request will be text
+      const parsedBody = Buffer.concat(body).toString();
+      // Form automatically sends request where it takes all the input data and puts it into the request body as key-value pairs where the names assigned to the inputs are the keys, and the values are what the user entered
+      console.log(parsedBody);
+      // Now can store input in the file
+      // split() method is used to split a string into an array of substrings using specified separator provided in argument
+      const message = parsedBody.split('=')[1];
+      fs.writeFileSync('message.txt', message);
+    });
     // The HTTP 302 Found redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the Location header
     res.statusCode = 302;
     res.setHeader('Location', '/');
