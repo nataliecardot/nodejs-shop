@@ -35,7 +35,9 @@ const server = http.createServer((req, res) => {
     });
     // Will be fired once parsing of incoming request data is done
     // In this function, can now rely on all the data chunks being read in, and all are stored in body now
-    req.on('end', () => {
+    // This return prevents execution of code following this req.on function. If you don't include it, the event listener would be registered, but it would never be called due to the code following it being called, with req.end()
+    // In other words, the return just stops the function from executing further, but before it is stopped we register an event listener on the 'end' event for the request object so once that happens the code in the callback to the event listener can still be invoked
+    return req.on('end', () => {
       // Buffer is made available globally by Node.js
       // Creates new buffer and adds all the chunks inside the body to it
       // Buffer.concat(): concat() method joins all buffer objects in an array into one buffer object
@@ -47,12 +49,13 @@ const server = http.createServer((req, res) => {
       // split() method is used to split a string into an array of substrings using specified separator provided in argument
       const message = parsedBody.split('=')[1];
       fs.writeFileSync('message.txt', message);
+      // The HTTP 302 Found redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the Location header
+      res.statusCode = 302;
+      res.setHeader('Location', '/');
+      return res.end();
     });
-    // The HTTP 302 Found redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the Location header
-    res.statusCode = 302;
-    res.setHeader('Location', '/');
-    return res.end();
   }
+  console.log('testy');
   res.setHeader('Content-Type', 'text/html');
   res.write('<html>');
   res.write('<head><title>My First Page</title></head>');
