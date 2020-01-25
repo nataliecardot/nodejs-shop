@@ -48,11 +48,12 @@ const server = http.createServer((req, res) => {
       // Now can store input in the file
       // split() method is used to split a string into an array of substrings using specified separator provided in argument
       const message = parsedBody.split('=')[1];
-      fs.writeFileSync('message.txt', message);
-      // The HTTP 302 Found redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the Location header
-      res.statusCode = 302;
-      res.setHeader('Location', '/');
-      return res.end();
+      fs.writeFile('message.txt', message, err => {
+        // The HTTP 302 Found redirect status response code indicates that the resource requested has been temporarily moved to the URL given by the Location header
+        res.statusCode = 302;
+        res.setHeader('Location', '/');
+        return res.end();
+      });
     });
   }
   console.log('testy');
