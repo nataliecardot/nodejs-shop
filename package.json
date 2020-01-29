@@ -1,0 +1,20 @@
+{
+  "name": "nodejs-shop",
+  "version": "1.0.0",
+  "description": "Course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nataliecardot/nodejs-shop.git"
+  },
+  "author": "Natalie Cardot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nataliecardot/nodejs-shop/issues"
+  },
+  "homepage": "https://github.com/nataliecardot/nodejs-shop#readme"
+}
