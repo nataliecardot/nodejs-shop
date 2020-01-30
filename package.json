@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/nataliecardot/nodejs-shop/issues"
   },
-  "homepage": "https://github.com/nataliecardot/nodejs-shop#readme"
+  "homepage": "https://github.com/nataliecardot/nodejs-shop#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
