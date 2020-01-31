@@ -1,0 +1,18 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\app.js",
+      "restart": true,
+      "runtimeExecutable": "nodemon", // So always starts with app.js (to start server), no matter which file is currently open
+      "console": "integratedTerminal" // Have to have Nodemon installed globally for this
+    }
+  ]
+}
