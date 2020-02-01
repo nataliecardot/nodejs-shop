@@ -1,9 +1,9 @@
 const http = require('http');
 
-const routes = require('./routes');
+const express = require('express');
 
-// Root file that makes up Node.js application (sometimes also called server.js)
+const app = express();
 
-const server = http.createServer(routes.handler);
+const server = http.createServer(app);
 
 server.listen(3000);

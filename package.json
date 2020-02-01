@@ -19,5 +19,8 @@
   "homepage": "https://github.com/nataliecardot/nodejs-shop#readme",
   "devDependencies": {
     "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
