@@ -1,5 +1,3 @@
-const http = require('http');
-
 const express = require('express');
 
 const app = express();
@@ -13,7 +11,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   console.log('In another middleware!');
-  // send is Express utility function that allows us to send response, and attach a body of type any; Express sets content type automatically (but can still set one manually with Node.js setHeader method)
+  // send is Express utility function that allows us to send response, and attach a body of type any; Express sets content type automatically based on content, but only if you haven't set one manually (with Node.js setHeader method)
   res.send('<h1>Hello from Express!</h1>');
 });
 
@@ -22,7 +20,5 @@ app.use((req, res, next) => {
   res.send('<h1>Hello from Eess!</h1>');
 });
 
-// using the express function stored in app constant as request handler
-const server = http.createServer(app);
-
-server.listen(3000);
+// Express shorthand
+app.listen(3000);
