@@ -19,5 +19,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(adminRoutes);
 app.use(shopRoutes);
 
+// Catchall middleware; for requests to path without any fitting middleware
+app.use((req, res) => {
+  // Can chain status Express convenience method to set status code, setHeader ... send just has to be the last method in the chain
+  res.status(404).send('<h1>Page Not Found</h1>');
+});
+
 // Express shorthand
 app.listen(3000);
