@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
 // Express middleware are functions that execute during the lifecycle of a request to the Express server
 
 // Register body parser so req.body doesn't output undefined
@@ -12,25 +15,9 @@ const app = express();
 // When extended property is set to true, the URL-encoded data will be parsed with the qs library. qs library allows you to create a nested object from your query string. However, my purpose of using this instead of extended: false to get rid of [Object: null prototype] in console (which appears because with that setting, it's parsed by query-string library. The object returned by the querystring.parse() method does not prototypically inherit from the JavaScript Object. This means that typical Object methods such as obj.toString(), obj.hasOwnProperty(), and others are not defined and will not work. In other words, they have null prototype)
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/add-product', (req, res) => {
-  res.send(
-    '<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>'
-  );
-});
-
-app.post('/product', (req, res) => {
-  // Get body of incoming request with body field provided by Express
-  // By default, request doesn't try to parse incoming request body. To do that, have to register a parser by adding another middleware (done above)
-  // Once parser is registered, yields JavaScript object with key-value pair
-  console.log(req.body);
-  // Don't have to set status code and location header using this Express convenience method
-  res.redirect('/');
-});
-
-// '/' is default path for app.use() and app.METHOD() functions
-app.use('/', (req, res) => {
-  res.send('<h1>Hello from Express!</h1>');
-});
+// The order of these doesn't matter, but only because using get rather than router.use in shop.js; with get, post, etc., it's an exact match -- not the case if you change it to router.use. still, better to care about the order in case it's changed back to router.use
+app.use(adminRoutes);
+app.use(shopRoutes);
 
 // Express shorthand
 app.listen(3000);
