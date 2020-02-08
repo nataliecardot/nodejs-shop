@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -24,7 +26,8 @@ app.use(shopRoutes);
 // Catchall middleware; for requests to path without any fitting middleware
 app.use((req, res) => {
   // Can chain status Express convenience method to set status code, setHeader ... send just has to be the last method in the chain
-  res.status(404).send('<h1>Page Not Found</h1>');
+  // Don't have to go up a level since already in the root folder
+  res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
 // Express shorthand
