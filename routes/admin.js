@@ -14,7 +14,7 @@ router.get('/add-product', (req, res) => {
 
 // /admin/add-product => POST
 router.post('/add-product', (req, res) => {
-  // Get body of incoming request with body field provided by Express
+  // Get body of incoming request with body property provided by Express
   // By default, request doesn't try to parse incoming request body. To do that, have to register a parser by adding another middleware (done above)
   // Once parser is registered, yields JavaScript object with key-value pair
   console.log(req.body);
