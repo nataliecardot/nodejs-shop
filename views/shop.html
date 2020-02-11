@@ -1,29 +1,46 @@
-<!-- File to serve for users visiting homepage -->
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Add Product</title>
-  <!-- File served staticly with middleware in app.js. Directly access as if in public folder already; Express will take any request that tries to find some file (.css or .js, etc.), and automatically forwards such a request to the public folder, and therefore, then the remaining path has to be everything but that public part, as if we're already in the public folder -->
-  <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-  <header class="main-header">
-    <!-- Using BEM CSS methodology for class naming to prevent naming conflicts -->
-    <nav class="main-header__nav">
-      <ul class="main-header__item-list">
-        <li class="main-header__item"><a class="active" href="/">Shop</a></li>
-        <li class="main-header__item"><a href="/admin/add-product">Add Product</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <main>
-    <h1>My Products</h1>
-    <p>List of all the products to be added later...</p>
-  </main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item"><a class="active" href="/">Shop</a></li>
+                <li class="main-header__item"><a href="/admin/add-product">Add Product</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>My Products</h1>
+        <p>List of all the products...</p>
+        <!-- <div class="grid">
+            <article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">Great Book</h1>
+                </header>
+                <div class="card__image">
+                    <img src="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png" alt="A Book">
+                </div>
+                <div class="card__content">
+                    <h2 class="product__price">$19.99</h2>
+                    <p class="product__description">A very interesting book about so many even more interesting things!</p>
+                </div>
+                <div class="card__actions">
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </article>
+        </div> -->
+    </main>
 </body>
+
 </html>
