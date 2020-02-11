@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // Express middleware are functions that execute during the lifecycle of a request to the Express server
@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // The order of these doesn't matter, but only because using get rather than router.use in shop.js; with get, post, etc., it's an exact match -- not the case if you change it to router.use. still, better to care about the order in case it's changed back to router.use
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match the routes in the routes file; it's like stripping it out (so you don't have to keep repeating it in each route)
 // So the filtering mechanism allows us to add a common starting segment for our path, which all routes in a given file use, to outsource that into this file so we don't have to repeat it for all the routes in the route file
-app.use('/admin', adminRoutes);
+// adminData refers to all the exports from admin.js routes file (routes and products)
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
