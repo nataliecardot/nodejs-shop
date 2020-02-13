@@ -9,7 +9,7 @@ const app = express();
 // Pug ships with build-in Express support and auto-registers itself with Express, so to say, that's why putting Pug below works
 // So, telling Express to compile dynamic templates with the Pug engine, and below, where to find these templates (views)
 app.set('view engine', 'pug');
-// Setting this explicity, though the main directory/views is the defaul location for the views for the view engine to use
+// Setting this explicity, though the main directory/views is the default location for the views for the view engine to use
 app.set('views', 'views');
 
 const adminData = require('./routes/admin');
@@ -39,7 +39,7 @@ app.use(shopRoutes);
 app.use((req, res) => {
   // Can chain status Express convenience method to set status code, setHeader ... send just has to be the last method in the chain
   // Don't have to go up a level since already in the root folder
-  res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+  res.status(404).render('404');
 });
 
 // Express shorthand

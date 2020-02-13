@@ -55,7 +55,11 @@ main {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: stretch;
+}
+
+/* Adds vertical spacing between rows (otherwise rows touch) */
+.grid > * {
+  margin: 1rem 0;
 }
 
 .card {
