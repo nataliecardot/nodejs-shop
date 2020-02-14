@@ -39,7 +39,7 @@ app.use(shopRoutes);
 app.use((req, res) => {
   // Can chain status Express convenience method to set status code, setHeader ... send just has to be the last method in the chain
   // Don't have to go up a level since already in the root folder
-  res.status(404).render('404');
+  res.status(404).render('404', { pageTitle: 'Page Not Found' });
 });
 
 // Express shorthand

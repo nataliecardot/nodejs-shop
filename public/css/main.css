@@ -2,6 +2,7 @@
 
 * {
   box-sizing: border-box;
+  color: #495057;
 }
 
 body {
@@ -109,4 +110,8 @@ main {
 .btn:active {
   background-color: #37474f;
   color: #fff;
+}
+
+h1 {
+  text-align: center;
 }

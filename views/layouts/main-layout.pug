@@ -3,7 +3,7 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Page Not Found
+    title #{pageTitle}
     link(rel="stylesheet", href="/css/main.css")
     //- Can dynamically enter content into this hook from other file
     //- Allows other views that extend this layout to add additional links
@@ -13,7 +13,7 @@ html(lang="en")
       nav.main-header__nav
         ul.main-header__item-list
           li.main-header__item
-            a(href="/") Shop
+            a(href="/", class=(path === '/' && 'active')) Shop
           li.main-header__item
             //- path corresponds to the key passed into admin.js route for get request to add-product (the value for path can be whatever you want)
             a(href="/admin/add-product", class=(path === '/admin/add-product' && 'active')) Add Product

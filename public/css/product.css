@@ -10,14 +10,14 @@
 }
 
 .product__title {
-  font-size: 1.2rem;
-  text-align: center;
+  margin-bottom: 0.9rem !important;
 }
 
 .product__price {
   text-align: center;
-  color: #4d4d4d;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem !important;
+  /* Default h2 size in article: 1.5em, same as h1 */
+  font-size: 1.3rem;
 }
 
 .product__description {
