@@ -15,6 +15,7 @@ html(lang="en")
           li.main-header__item
             a(href="/") Shop
           li.main-header__item
-            a(href="/admin/add-product") Add Product
+            //- path corresponds to the key passed into admin.js route for get request to add-product (the value for path can be whatever you want)
+            a(href="/admin/add-product", class=(path === '/admin/add-product' && 'active')) Add Product
     main
       block content

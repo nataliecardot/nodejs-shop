@@ -11,7 +11,11 @@ const products = [];
 
 // /admin/add-product => GET
 router.get('/add-product', (req, res) => {
-  res.render('add-product', { pageTitle: 'Add Product' });
+  res.render('add-product', {
+    pageTitle: 'Add Product',
+    // You can set path to whatever you want; doesn't have to match route
+    path: '/admin/add-product'
+  });
 });
 
 // /admin/add-product => POST
