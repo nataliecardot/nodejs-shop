@@ -7,10 +7,10 @@ const expressHbs = require('express-handlebars');
 const app = express();
 
 // Registers new templating engine in case using one that not built in (Pug was kind of built in; express-handlebars isn't)
-// expressHbs() returns initialized engine, which is then assigned to the name handlebars (name is arbitrary)
-app.engine('handlebars', expressHbs());
+// expressHbs() returns initialized engine, which is then assigned to the name handlebars (name is arbitrary. The extension for the Handlebars files can match this name)
+app.engine('hbs', expressHbs());
 // Allows us to set any values globally on our Express application. (And this can also be keys or configuration items Express doesn't understand; in that case it just ignores them, but we could read them from the app object with app.get(), but we're not interested in this.) We can use some reserved key names, configuration items you can set, that do lead to Express.js behaving differently. Interesting to us: the views and view engine keys. View engine allows us to tell Express: for any dynamic templates we're trying to render, please use this engine we're registering here. Views allows us to tell Express where to find these dynamic views
-app.set('view engine', 'handlebars');
+app.set('view engine', 'hbs');
 // Setting this explicity, though the main directory/views is the default location for the views for the view engine to use
 app.set('views', 'views');
 
@@ -39,8 +39,6 @@ app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
 app.use((req, res) => {
-  // Can chain status Express convenience method to set status code, setHeader ... send just has to be the last method in the chain
-  // Don't have to go up a level since already in the root folder
   res.status(404).render('404', { pageTitle: 'Page Not Found' });
 });
 
