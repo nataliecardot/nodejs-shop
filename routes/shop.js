@@ -14,7 +14,13 @@ router.get('/', (req, res) => {
   // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
   // Don't need shop.pug (extension) since that engine was defined as the default templating engine; it will look for Pug files
   // To inject products into template in order to use it in template file shop.pug, passing second argument to render method. The render method allows to pass in data that should be added into the view
-  res.render('shop', { prods: products, pageTitle: 'Shop', path: '/' });
+  res.render('shop', {
+    prods: products,
+    pageTitle: 'Shop',
+    path: '/',
+    // Doing it here because you can't run any logic in Handlebars template; can only output single variables and their value, and can only use these in if blocks, too
+    hasProducts: products.length > 0
+  });
 });
 
 module.exports = router;
