@@ -19,7 +19,9 @@ router.get('/', (req, res) => {
     pageTitle: 'Shop',
     path: '/',
     // Doing it here because you can't run any logic in Handlebars template; can only output single variables and their value, and can only use these in if blocks, too
-    hasProducts: products.length > 0
+    hasProducts: products.length > 0,
+    activeShop: true,
+    productCSS: true
   });
 });
 

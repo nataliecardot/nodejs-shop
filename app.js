@@ -7,8 +7,16 @@ const expressHbs = require('express-handlebars');
 const app = express();
 
 // Registers new templating engine in case using one that not built in (Pug was kind of built in; express-handlebars isn't)
-// expressHbs() returns initialized engine, which is then assigned to the name handlebars (name is arbitrary. The extension for the Handlebars files can match this name)
-app.engine('hbs', expressHbs());
+// expressHbs() returns initialized engine, which is then assigned to the name handlebars (name is arbitrary. The extension for the Handlebars files can match this name -- but this doesn't work for the layout, which is why extname is needed)
+// views/layouts is actually default for layoutsDir
+app.engine(
+  'hbs',
+  expressHbs({
+    layoutsDir: 'views/layouts',
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+  })
+);
 // Allows us to set any values globally on our Express application. (And this can also be keys or configuration items Express doesn't understand; in that case it just ignores them, but we could read them from the app object with app.get(), but we're not interested in this.) We can use some reserved key names, configuration items you can set, that do lead to Express.js behaving differently. Interesting to us: the views and view engine keys. View engine allows us to tell Express: for any dynamic templates we're trying to render, please use this engine we're registering here. Views allows us to tell Express where to find these dynamic views
 app.set('view engine', 'hbs');
 // Setting this explicity, though the main directory/views is the default location for the views for the view engine to use
