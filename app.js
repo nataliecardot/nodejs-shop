@@ -34,7 +34,7 @@ app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
 app.use((req, res) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found' });
+  res.status(404).render('404', { pageTitle: 'Page Not Found', path: '' });
 });
 
 // Express shorthand

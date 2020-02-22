@@ -1,25 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title><%= pageTitle %></title>
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="/css/product.css" />
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
   </head>
 
   <body>
-    <header class="main-header">
-      <nav class="main-header__nav">
-        <ul class="main-header__item-list">
-          <li class="main-header__item"><a class="active" href="/">Shop</a></li>
-          <li class="main-header__item">
-            <a href="/admin/add-product">Add Product</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <%- include('includes/navigation.ejs') %>
 
     <main>
       <% if (prods.length > 0) { %>
@@ -32,7 +16,7 @@
           <div class="card__image">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/3/37/Empty_book.jpg"
-              alt="A Book"
+              alt="A book"
             />
           </div>
           <div class="card__content">
@@ -49,8 +33,8 @@
         <% } %>
       </div>
       <% } else { %>
-      <h1>No Products Found!</h1>
+        <h1>No Products Found!</h1>
       <% } %>
     </main>
-  </body>
-</html>
+
+<%- include('includes/end.ejs') %>
