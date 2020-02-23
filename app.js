@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 // Setting this explicity, though the main directory/views is the default location for the views for the view engine to use
 app.set('views', 'views');
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 // Express middleware are functions that execute during the lifecycle of a request to the Express server
@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match the routes in the routes file; it's like stripping it out (so you don't have to keep repeating it in each route)
 // So the filtering mechanism allows us to add a common starting segment for our path, which all routes in a given file use, to outsource that into this file so don't have to repeat it for all the routes in the route file
 // adminData refers to all the exports from admin.js routes file (routes and products)
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
