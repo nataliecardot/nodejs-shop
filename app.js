@@ -3,6 +3,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const errorController = require('./controllers/error');
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -33,9 +35,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
-app.use((req, res) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found', path: '' });
-});
+app.use(errorController.get404);
 
 // Express shorthand
 app.listen(3000);
