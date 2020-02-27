@@ -29,18 +29,19 @@ exports.postAddProduct = (req, res) => {
 
 exports.getProducts = (req, res) => {
   // Get products using Product class (in model) static method
-  const products = Product.fetchAll();
-  // This is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
-  // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
-  // Don't need shop.pug (extension) since that engine was defined as the default templating engine; it will look for Pug files
-  // To inject products into template in order to use it in template file shop.pug, passing second argument to render method. The render method allows to pass in data that should be added into the view
-  res.render('shop', {
-    prods: products,
-    pageTitle: 'Shop',
-    path: '/',
-    // Doing it here because you can't run any logic in Handlebars template; can only output single variables and their value, and can only use these in if blocks, too
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true
+  Product.fetchAll(products => {
+    // This is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
+    // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
+    // Don't need shop.ejs (extension) since that engine was defined as the default templating engine; it will look for Pug files
+    // To inject products into template in order to use it in template file shop.ejs, passing second argument to render method. The render method allows to pass in data that should be added into the view
+    res.render('shop', {
+      prods: products,
+      pageTitle: 'Shop',
+      path: '/',
+      // Doing it here because you can't run any logic in Handlebars template; can only output single variables and their value, and can only use these in if blocks, too
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true
+    });
   });
 };

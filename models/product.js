@@ -36,20 +36,22 @@ module.exports = class Product {
   }
 
   // Retrieve all products from array. Not called on a single instance of Product; static keyword allows for calling method directly on the class itself rather than an instantiated object
-  static fetchAll() {
+  // Passing callback as arg into fetchAll (the callback is passed in in controllers/products.js) to address issue of readFile being asynchronous and fetchAll completing before its callback is done, and thus products.length being undefined
+  static fetchAll(cb) {
     const p = path.join(
       path.dirname(process.mainModule.filename),
       'data',
       'products.json'
     );
+    // readFile method is asynchronous; once this line is executed, the callback is registered in event emitter registry and finishes fetchAll() function; the function itself doesn't return anything (and therefore undefined, the default return value for functions). Once readFile is done, its callback is executed
     fs.readFile(p, (err, fileContent) => {
       if (err) {
         // No products (always want to return an array, because that's what fetchAll expects)
-        return [];
+        return cb([]);
       }
       // Don't need else because after a return, would finish execution of this function
-      // To return as an array instead of a JSON string (text), necessary to call parse method
-      return JSON.parse(fileContent);
+      // To pass file content as an array instead of a JSON string (text), necessary to call parse method
+      cb(JSON.parse(fileContent));
     });
   }
 };
