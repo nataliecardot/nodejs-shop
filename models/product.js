@@ -1,4 +1,5 @@
-const products = [];
+const fs = require('fs');
+const path = require('path');
 
 // Refresher on what a class is https://www.javascripttutorial.net/es6/javascript-class/
 module.exports = class Product {
@@ -8,12 +9,47 @@ module.exports = class Product {
 
   // Called on a single instance of Product
   save() {
-    // `this` will refer to the object created based on the class
-    products.push(this);
+    const p = path.join(
+      path.dirname(process.mainModule.filename),
+      'data',
+      'products.json'
+    );
+    // To store new product, first get existing array of products
+    fs.readFile(p, (err, fileContent) => {
+      // Array to use in case of an error (meaning no products.json file; no products added)
+      let products = [];
+      if (!err) {
+        // If no error, know there is file content; will store inside (but first get existing items)
+        // JSON is vanilla Node.js helper object
+        // parse method takes incoming JSON and returns a JavaScript array, object, or whatever is in the file
+        products = JSON.parse(fileContent);
+      }
+      // So, products will be an array, either the one read from the file or an empty one; can now append new product there
+      // Arrow function needed to ensure this keyword refers to the class; otherwise loses context
+      products.push(this);
+      // stringify method takes JavaScript object or array and converts it into JSON string
+      // writeFile replaces file if file already exists; would be replacing with existing content with new item appended
+      fs.writeFile(p, JSON.stringify(products), err => {
+        console.log(err);
+      });
+    });
   }
 
   // Retrieve all products from array. Not called on a single instance of Product; static keyword allows for calling method directly on the class itself rather than an instantiated object
   static fetchAll() {
-    return products;
+    const p = path.join(
+      path.dirname(process.mainModule.filename),
+      'data',
+      'products.json'
+    );
+    fs.readFile(p, (err, fileContent) => {
+      if (err) {
+        // No products (always want to return an array, because that's what fetchAll expects)
+        return [];
+      }
+      // Don't need else because after a return, would finish execution of this function
+      // To return as an array instead of a JSON string (text), necessary to call parse method
+      return JSON.parse(fileContent);
+    });
   }
 };
