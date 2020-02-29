@@ -21,7 +21,7 @@ module.exports = class Product {
       if (!err) {
         // If no error, know there is file content; will store inside (but first get existing items)
         // JSON is vanilla Node.js helper object
-        // parse method takes incoming JSON and returns a JavaScript array, object, or whatever is in the file
+        // parse method takes incoming JSON and returns a JavaScript array, object, or whatever is in the file (it will be an array since when there is an error due to no existing file, products is set to equal an empty array, and the file is created, holding the empty array in the form of a JSON string)
         products = JSON.parse(fileContent);
       }
       // So, products will be an array, either the one read from the file or an empty one; can now append new product there
