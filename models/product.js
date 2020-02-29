@@ -16,16 +16,16 @@ module.exports = class Product {
     );
     // To store new product, first get existing array of products
     fs.readFile(p, (err, fileContent) => {
-      // Array to use in case of an error (meaning no products.json file; no products added)
+      // Needed for when no products.json file; no products added (in this case there will be an error, but this line is executed regardless)
       let products = [];
       if (!err) {
-        // If no error, know there is file content; will store inside (but first get existing items)
+        // No error means there is a products.json ('p' variable path) already; will store newly added product inside (but first get existing file content, array of products, so it can be appended to the end)
         // JSON is vanilla Node.js helper object
-        // parse method takes incoming JSON and returns a JavaScript array, object, or whatever is in the file (it will be an array since when there is an error due to no existing file, products is set to equal an empty array, and the file is created, holding the empty array in the form of a JSON string)
+        // parse method takes incoming JSON and returns a JavaScript array, object, or whatever is in the file (it will be an array since initially products is set to equal an empty array, the first item is pushed, and the file is created, holding the array in the form of a JSON string)
         products = JSON.parse(fileContent);
       }
-      // So, products will be an array, either the one read from the file or an empty one; can now append new product there
-      // Arrow function needed to ensure this keyword refers to the class; otherwise loses context
+      // So, products will be an array, either the one read from the file or an empty one; can now append new product to it
+      // Arrow function needed to ensure the `this` keyword refers to the class; otherwise loses context
       products.push(this);
       // stringify method takes JavaScript object or array and converts it into JSON string
       // writeFile replaces file if file already exists; would be replacing with existing content with new item appended
