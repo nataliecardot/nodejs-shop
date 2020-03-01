@@ -28,12 +28,12 @@ exports.postAddProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-  // Get products using Product class (in model) static method
+  // Get products via method in Product class (in model)
   Product.fetchAll(products => {
-    // This is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
+    // res.render() is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
     // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
-    // Don't need shop.ejs (extension) since that engine was defined as the default templating engine; it will look for Pug files
-    // To inject products into template in order to use it in template file shop.ejs, passing second argument to render method. The render method allows to pass in data that should be added into the view
+    // Don't need shop.ejs (extension) since that engine was defined as the default templating engine
+    // To inject products into template in order to use it in template file shop.ejs, passing second argument to render method. The render method allows passing in data that should be added into the view
     res.render('shop', {
       prods: products,
       pageTitle: 'Shop',
