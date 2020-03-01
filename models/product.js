@@ -9,10 +9,10 @@ const getProductsFromFile = cb => {
     'data',
     'products.json'
   );
-  // readFile method is asynchronous; once this line is executed, the callback is registered in event emitter registry and getProductsFromFile() finishes; the function itself doesn't return anything (and therefore undefined, the default return value for functions). Callback is executed once readFile() is finished
+  // readFile method is asynchronous; once this line is executed, the callback is registered in event emitter registry and getProductsFromFile() finishes; the function itself doesn't return anything (and therefore undefined, the default return value for functions). Callback is executed once file at specified path is done being read
   fs.readFile(p, (err, fileContent) => {
     if (err) {
-      // No products (always want to return an array, because that's what getProductsFromFile expects)
+      // No products. Have to still return an empty array (expected value in controller; used to check length property)
       return cb([]);
     }
     // Don't need else because a return would cause function to finish executing
