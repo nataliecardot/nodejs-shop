@@ -6,7 +6,7 @@ const Product = require('../models/product');
 // For GET request to add-product page
 // GET is used to request data from a specified resource
 exports.getAddProduct = (req, res) => {
-  res.render('add-product', {
+  res.render('admin/add-product', {
     pageTitle: 'Add Product',
     // You can set path to whatever you want; doesn't have to match route
     path: '/admin/add-product',
@@ -34,7 +34,7 @@ exports.getProducts = (req, res) => {
     // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
     // Don't need shop.ejs (extension) since that engine was defined as the default templating engine
     // To inject products into template in order to use it in template file shop.ejs, passing second argument to render method. The render method allows passing in data that should be added into the view
-    res.render('shop', {
+    res.render('shop/product-list', {
       prods: products,
       pageTitle: 'Shop',
       path: '/',
