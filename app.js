@@ -8,7 +8,7 @@ const errorController = require('./controllers/error');
 const app = express();
 
 app.set('view engine', 'ejs');
-// Setting this explicity, though the main directory/views is the default location for the views for the view engine to use
+// Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Could register multiple static folders, and it would funnel the request through all of them until it were to have a first hit for the file it were looking for
 app.use(express.static(path.join(__dirname, 'public')));
 
-// The order of these doesn't matter, but only because using get rather than router.use in shop.js; with get, post, etc., it's an exact match -- not the case if you change it to router.use. Still, better to care about the order in case it's changed back to router.use
+// The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match the routes in the routes file; it's like stripping it out (so you don't have to keep repeating it in each route)
 // So the filtering mechanism allows us to add a common starting segment for our path, which all routes in a given file use, to outsource that into this file so don't have to repeat it for all the routes in the route file
 app.use('/admin', adminRoutes);
