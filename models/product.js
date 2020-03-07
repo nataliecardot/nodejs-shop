@@ -23,11 +23,11 @@ const getProductsFromFile = cb => {
 
 // Refresher on what a class is https://www.javascripttutorial.net/es6/javascript-class/
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(title, imageUrl, price, description) {
     this.title = title;
     this.imageUrl = imageUrl;
-    this.description = description;
     this.price = price;
+    this.description = description;
   }
 
   // Called on a single instance of Product
