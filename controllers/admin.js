@@ -16,8 +16,12 @@ exports.getAddProduct = (req, res) => {
 // For POST request (from form submission; form has method="POST")
 // POST is used to send data to a server to create/update a resource
 exports.postAddProduct = (req, res) => {
-  // Create new object based on Product class (blueprint). title comes from attribute (name="title") in input
-  const product = new Product(req.body.title);
+  // Create new object based on Product class (blueprint). title, etc., comes from attribute (name="title") in input
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const price = req.body.price;
+  const description = req.body.description;
+  const product = new Product(title, imageUrl, price, description);
   // Save product (pushes to products array)
   product.save();
   // Don't have to set status code and location header using this Express convenience method
