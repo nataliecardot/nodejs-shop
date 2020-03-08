@@ -9,7 +9,7 @@ exports.getProducts = (req, res) => {
     // res.render() is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
     // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
     // Don't need shop.ejs (the extension) since that engine was defined as the default templating engine
-    // To inject products into template in order to use it in template ejs file, passing second argument to render method. The render method allows passing in data that should be added into the view
+    // To inject products into template in order to use them in template EJS file, passing second argument to render method. The render method allows passing in data that should be added into the view
     res.render('shop/product-list', {
       prods: products,
       pageTitle: 'All Products',
@@ -32,6 +32,13 @@ exports.getCart = (req, res) => {
   res.render('shop/cart', {
     path: '/cart',
     pageTitle: 'Your Cart'
+  });
+};
+
+exports.getOrders = (req, res) => {
+  res.render('shop/orders', {
+    path: '/orders',
+    pageTitle: 'Your Orders'
   });
 };
 
