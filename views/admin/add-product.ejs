@@ -4,7 +4,7 @@
 </head>
 
 <body>
-  <%- include('../includes/navigation.ejs') %>
+   <%- include('../includes/navigation.ejs') %>
 
   <main>
     <form class="product-form" action="/admin/add-product" method="POST">
@@ -18,7 +18,6 @@
       </div>
       <div class="form-control">
         <label for="price">Price</label>
-        <!-- Step added to support decimals. Step of 0.01 means you can have two decimal places (default is step="1", which doesn't allow any decimal) https://stackoverflow.com/questions/19011861/is-there-a-float-input-type-in-html5 -->
         <input type="number" name="price" id="price" step="0.01">
       </div>
       <div class="form-control">
