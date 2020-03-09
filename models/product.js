@@ -15,7 +15,7 @@ const getProductsFromFile = cb => {
       // No products. Have to still return an empty array (expected value in controller; used to check length property)
       return cb([]);
     }
-    // Don't need else because a return would cause function to finish executing (but could alternatively use else)
+    // Don't need else because the return within the if statement would cause function to finish executing
     // To pass file content as an array instead of a JSON string (text), necessary to call parse method
     cb(JSON.parse(fileContent));
   });
