@@ -7,7 +7,7 @@ const p = path.join(
   'products.json'
 );
 
-// Passing callback as arg (the callback is passed in in controllers/products.js) to address issue of readFile being asynchronous and getProductsFromFile() completing before its callback is done executing, and thus products.length being undefined
+// Passing callback as arg (the callback is passed in in controllers/shop.js) to address issue of readFile being asynchronous and getProductsFromFile() completing before its callback is done executing, and thus products.length being undefined
 const getProductsFromFile = cb => {
   // readFile method is asynchronous; once this line is executed, the callback is registered in event emitter registry and getProductsFromFile() finishes; the function itself doesn't return anything (and therefore undefined, the default return value for functions). Callback is executed once file at specified path is done being read
   fs.readFile(p, (err, fileContent) => {
@@ -32,6 +32,7 @@ module.exports = class Product {
 
   // Called on a single instance of Product
   save() {
+    this.id = Math.random().toString();
     getProductsFromFile(products => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), err => {
