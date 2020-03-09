@@ -55,7 +55,7 @@ form {
 .main-header__item a:hover,
 .main-header__item a:active,
 .main-header__item a.active {
-  color: #ffeb3b;
+  color: #e7dd80;
 }
 
 .mobile-nav {
@@ -120,8 +120,8 @@ form {
 
 #side-menu-toggle:active,
 #side-menu-toggle:hover {
-  color: #ffeb3b;
-  border-color: #ffeb3b;
+  color: #e7dd80;
+  border-color: #e7dd80;
 }
 
 .backdrop {
@@ -144,6 +144,7 @@ form {
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  position: relative;
 }
 
 .card__header,
@@ -169,6 +170,9 @@ form {
 .card__actions {
   padding: 1rem;
   text-align: center;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .card__actions button,
