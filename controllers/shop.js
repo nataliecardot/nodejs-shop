@@ -18,6 +18,14 @@ exports.getProducts = (req, res) => {
   });
 };
 
+exports.getProduct = (req, res) => {
+  // Extract value held by dynamic path segment in shop.js routes file
+  // Express.js supplies params object. Can access productId on params object because that's the name used after the colon in the route
+  const prodId = req.params.productId;
+  console.log(prodId);
+  res.redirect('/');
+};
+
 exports.getIndex = (req, res) => {
   Product.fetchAll(products => {
     res.render('shop/index', {
