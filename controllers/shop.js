@@ -23,9 +23,12 @@ exports.getProduct = (req, res) => {
   // Express.js supplies params object. Can access productId on params object because that's the name used after the colon in the route
   const prodId = req.params.productId;
   Product.findById(prodId, product => {
-    console.log(product);
+    res.render('shop/product-detail', {
+      product: product,
+      pageTitle: product.title,
+      path: '/products'
+    });
   });
-  res.redirect('/');
 };
 
 exports.getIndex = (req, res) => {
