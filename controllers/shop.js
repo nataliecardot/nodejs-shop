@@ -48,6 +48,15 @@ exports.getCart = (req, res) => {
   });
 };
 
+exports.postCart = (req, res) => {
+  // Retrieve product ID from incoming request and fetch that product in database/file and add it to cart
+  // productId is the name used in the view, on the hidden input
+  const prodId = req.body.productId;
+  console.log(prodId);
+  // Express method. Loads the GET route, the cart page
+  res.redirect('/cart');
+};
+
 exports.getOrders = (req, res) => {
   res.render('shop/orders', {
     path: '/orders',

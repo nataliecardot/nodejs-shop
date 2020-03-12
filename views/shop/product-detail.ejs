@@ -10,9 +10,6 @@
       <div><img src="<%= product.imageUrl %>" alt="<% product.title %>"></div>
       <h2><%= product.price %></h2>
       <p><%= product.description %></p>
-      <form action="/cart" method="post">
-        <!-- submit type needed, but that's default for modern browsers (not so in old versions of IE) See https://stackoverflow.com/questions/60629749/is-type-submit-the-default-for-a-button-in-a-form-in-ie8-through-11 -->
-        <button class="btn">Add to Cart</button>
-      </form>
+      <%- include('../includes/add-to-cart.ejs') %>
     </main>
     <%- include('../includes/end.ejs') %>
