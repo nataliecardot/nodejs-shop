@@ -2,6 +2,7 @@
 
 // Capital is convention for class name
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 exports.getProducts = (req, res) => {
   // Get products via method in Product class (in model)
@@ -52,7 +53,10 @@ exports.postCart = (req, res) => {
   // Retrieve product ID from incoming request and fetch that product in database/file and add it to cart
   // productId is the name used in the view, on the hidden input
   const prodId = req.body.productId;
-  console.log(prodId);
+  Product.findById(prodId, product => {
+    // Cart is serving as a sort of 'utility model'; not instantiating it, but using static method
+    Cart.addProduct(prodId, product.price);
+  });
   // Express method. Loads the GET route, the cart page
   res.redirect('/cart');
 };
