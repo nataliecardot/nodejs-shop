@@ -2,13 +2,11 @@ const Product = require('../models/product');
 
 // For GET request to add-product page
 exports.getAddProduct = (req, res) => {
-  res.render('admin/add-product', {
+  // res.render renders a view template, optionally passing locals, an object whose properties define local variables for the view
+  res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     // You can set path to whatever you want; doesn't have to match route
-    path: '/admin/add-product',
-    formsCSS: true,
-    productCSS: true,
-    activeAddProduct: true
+    path: '/admin/add-product'
   });
 };
 
@@ -24,6 +22,22 @@ exports.postAddProduct = (req, res) => {
   product.save();
   // Don't have to set status code and location header using this Express convenience method
   res.redirect('/');
+};
+
+// Like getAddProduct, except here, will pass in the product information, and upon hitting save, want to edit rather than create product
+exports.getEditProduct = (req, res) => {
+  // Query object is created and managed by Express
+  // If edit param isn't set, will get undefined (falsy)
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect('/');
+  }
+  res.render('admin/edit-product', {
+    pageTitle: 'Edit Product',
+    // You can set path to whatever you want; doesn't have to match route
+    path: '/admin/edit-product',
+    editing: editMode
+  });
 };
 
 exports.getProducts = (req, res) => {
