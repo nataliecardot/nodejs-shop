@@ -6,7 +6,8 @@ exports.getAddProduct = (req, res) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     // You can set path to whatever you want; doesn't have to match route
-    path: '/admin/add-product'
+    path: '/admin/add-product',
+    editing: false
   });
 };
 
@@ -32,11 +33,19 @@ exports.getEditProduct = (req, res) => {
   if (!editMode) {
     return res.redirect('/');
   }
-  res.render('admin/edit-product', {
-    pageTitle: 'Edit Product',
-    // You can set path to whatever you want; doesn't have to match route
-    path: '/admin/edit-product',
-    editing: editMode
+  // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
+  const prodId = req.params.productId;
+  Product.findById(prodId, product => {
+    if (!product) {
+      return res.redirect('/');
+    }
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      // You can set path to whatever you want; doesn't have to match route
+      path: '/admin/edit-product',
+      editing: editMode,
+      product: product
+    });
   });
 };
 
