@@ -49,6 +49,10 @@ exports.getEditProduct = (req, res) => {
   });
 };
 
+exports.postEditProduct = (req, res) => {
+  // Contruct new product and replace previously existing one with the new one
+};
+
 exports.getProducts = (req, res) => {
   Product.fetchAll(products => {
     res.render('admin/products', {
