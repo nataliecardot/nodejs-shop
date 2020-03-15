@@ -19,4 +19,6 @@ router.post('/add-product', adminController.postAddProduct);
 // Using dynamic path segment
 router.get('/edit-product/:productId', adminController.getEditProduct);
 
+router.post('/edit-product');
+
 module.exports = router;
