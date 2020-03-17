@@ -18,7 +18,8 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(title, imageUrl, price, description);
+  // null is for id added as arg for Product class constructor; with null, the else block of Product save static method will be executed
+  const product = new Product(null, title, imageUrl, price, description);
   // Save product (pushes to products array)
   product.save();
   // Don't have to set status code and location header using this Express convenience method
@@ -50,7 +51,22 @@ exports.getEditProduct = (req, res) => {
 };
 
 exports.postEditProduct = (req, res) => {
-  // Contruct new product and replace previously existing one with the new one
+  // Fetch info for the product and create new Product instance and populate it with that info then call Product.save()
+  // using productId because that's the name given to the hidden input in the edit-product.ejs view file
+  const prodId = req.body.productId;
+  const updatedTitle = req.body.title;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedPrice = req.body.price;
+  const updatedDesc = req.body.description;
+  const updatedProduct = new Product(
+    prodId,
+    updatedTitle,
+    updatedImageUrl,
+    updatedPrice,
+    updatedDesc
+  );
+  updatedProduct.save();
+  res.redirect('/admin/products');
 };
 
 exports.getProducts = (req, res) => {
