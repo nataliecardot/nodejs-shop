@@ -54,6 +54,17 @@ module.exports = class Product {
     });
   }
 
+  static deleteById(id) {
+    getProductsFromFile(products => {
+      const updatedProducts = products.filter(prod => prod.id !== id);
+      fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+        if (!err) {
+          // Remove item from cart
+        }
+      });
+    });
+  }
+
   // Retrieve all products from array. Not called on a single instance of Product; static keyword allows for calling method directly on the class itself rather than an instantiated object
   static fetchAll(cb) {
     getProductsFromFile(cb);

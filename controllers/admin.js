@@ -78,3 +78,7 @@ exports.getProducts = (req, res) => {
     });
   });
 };
+
+exports.postDeleteProduct = (req, res) => {
+  const prodId = req.body.productId;
+};
