@@ -27,7 +27,7 @@
       </div>
       <!-- This is so can extract id by name productId in incoming request's body (from edit product form submission) in controller postEditProduct action method -->
       <% if (editing) { %>
-        <input type="hidden" value="<% product.id %>" name="productId">
+        <input type="hidden" value="<%= product.id %>" name="productId">
       <% } %>
 
       <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
