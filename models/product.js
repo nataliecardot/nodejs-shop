@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const Cart = require('./cart');
+
 const p = path.join(
   // path.dirname(p) returns the directories of a file path (see https://www.w3schools.com/nodejs/met_path_dirname.asp, https://nodejs.org/api/path.html#path_path_dirname_path); just have to figure out for which file we want to get the directory name. For this, can use global `process` variable, and on it is a mainModule property that refers to the main module that started the application (in this case, the module created in app.js). Then filename can be called to find out which file that module was spun up in. In short: process.mainModule.filename returns the location of the main file running the server (responsible for the fact the application is running), and this filename is then passed to dirname to get an absolute path to that directory
   path.dirname(process.mainModule.filename),
@@ -57,10 +59,11 @@ module.exports = class Product {
 
   static deleteById(id) {
     getProductsFromFile(products => {
+      const product = products.find(prod => prod.id === id);
       const updatedProducts = products.filter(prod => prod.id !== id);
       fs.writeFile(p, JSON.stringify(updatedProducts), err => {
         if (!err) {
-          // Remove item from cart
+          Cart.deleteProduct(id, product.price);
         }
       });
     });

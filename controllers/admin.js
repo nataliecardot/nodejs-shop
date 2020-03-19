@@ -66,6 +66,7 @@ exports.postEditProduct = (req, res) => {
     updatedDesc
   );
   updatedProduct.save();
+  // Will put this in a callback later to ensure it's only executed after new data is saved
   res.redirect('/admin/products');
 };
 
@@ -81,4 +82,7 @@ exports.getProducts = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
+  Product.deleteById(prodId);
+  // Will put this in a callback later to ensure it's only executed after deletion
+  res.redirect('/admin/products');
 };
