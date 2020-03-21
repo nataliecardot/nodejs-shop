@@ -9,7 +9,13 @@
         <ul>
           <!-- p refers to object passed to cartProducts array in shop controller getCart action -->
           <% products.forEach(p => { %>
-            <li><%= p.productData.title %> (<%= p.qty %>) </li>
+            <li>
+              <p><%= p.productData.title %> (<%= p.qty %>)</p>
+              <form action="/cart-delete-item" method="POST">
+                <input type="hidden" value="<%= p.productData.id %>" name="productId">
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </li>
           <% }) %>
         </ul>
       <% } else { %>
