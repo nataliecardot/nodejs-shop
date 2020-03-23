@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
+// This will be the pool that allows usage of connection in it
+const db = require('./util/database');
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // So the filtering mechanism allows us to add a common starting segment for our path, which all routes in a given file use, to outsource that into this file so don't have to repeat it for all the routes in the route file
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+
+db.execute('SELECT * FROM products');
 
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
