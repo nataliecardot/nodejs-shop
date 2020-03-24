@@ -4,7 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
-// This will be the pool that allows usage of connection in it
 const db = require('./util/database');
 
 const app = express();
