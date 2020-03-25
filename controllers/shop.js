@@ -6,17 +6,17 @@ const Cart = require('../models/cart');
 
 exports.getProducts = (req, res) => {
   // Get products via method in Product class (in model)
-  Product.fetchAll(products => {
-    // res.render() is provided by Express. It will use the default templating engine (which is why it was necessary to define it in app.js) then return that template
-    // Since already specified that all views are in the views folder, don't have to construct a path to to that folder
-    // Don't need shop.ejs (the extension) since that engine was defined as the default templating engine
-    // To inject products into template in order to use them in template EJS file, passing second argument to render method. The render method allows passing in data that should be added into the view
-    res.render('shop/product-list', {
-      prods: products,
-      pageTitle: 'All Products',
-      path: '/products'
-    });
-  });
+  Product.fetchAll()
+    // Using destructuring to extract nested array returned after executing query SELECT * FROM products and store in variable
+    // rows are entries in products table
+    .then(([rows]) => {
+      res.render('shop/product-list', {
+        prods: rows,
+        pageTitle: 'All Products',
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getProduct = (req, res) => {
@@ -33,13 +33,15 @@ exports.getProduct = (req, res) => {
 };
 
 exports.getIndex = (req, res) => {
-  Product.fetchAll(products => {
-    res.render('shop/index', {
-      prods: products,
-      pageTitle: 'Shop',
-      path: '/'
-    });
-  });
+  Product.fetchAll()
+    .then(([rows]) => {
+      res.render('shop/index', {
+        prods: rows,
+        pageTitle: 'Shop',
+        path: '/'
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getCart = (req, res) => {

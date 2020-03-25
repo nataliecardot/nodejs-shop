@@ -32,13 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-// Executing a query on connection pool, on products table
-db.execute('SELECT * FROM products')
-  .then(result => {
-    console.log(result[0], result[1]);
-  })
-  .catch(err => console.log(err));
-
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
 
