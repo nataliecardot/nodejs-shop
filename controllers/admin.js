@@ -21,9 +21,12 @@ exports.postAddProduct = (req, res) => {
   // null is for id added as arg for Product class constructor; with null, the else block of Product save static method will be executed
   const product = new Product(null, title, imageUrl, price, description);
   // Save product (pushes to products array)
-  product.save();
-  // Don't have to set status code and location header using this Express convenience method
-  res.redirect('/');
+  product
+    .save()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
 };
 
 // Like getAddProduct, except here, will pass in the product information, and upon hitting save, want to edit rather than create product
