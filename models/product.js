@@ -29,5 +29,8 @@ module.exports = class Product {
     return db.execute('SELECT * FROM products');
   }
 
-  static findById(id) {}
+  static findById(id) {
+    // Question mark is to let MySQL inject the value, the ID in the arg
+    return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
+  }
 };

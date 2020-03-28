@@ -2,7 +2,7 @@ const Product = require('../models/product');
 
 // For GET request to add-product page
 exports.getAddProduct = (req, res) => {
-  // res.render renders a view template, optionally passing locals, an object whose properties define local variables for the view
+  // res.render renders a view template, optionally passing 'locals' object that contains properties that define local variables for the view
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     // You can set path to whatever you want; doesn't have to match route

@@ -1,1 +1,9 @@
-[{"id":"0.5032246073036479","title":"Cheese","imageUrl":"https://www.kindpng.com/picc/m/110-1100511_cheese-picture-transparent-background-block-of-cheese-png.png","price":"10","description":"Delicious cheese"}]
+[
+  {
+    "id": "0.5032246073036479",
+    "title": "Cheese",
+    "imageUrl": "https://cdn.shortpixel.ai/client/q_lossy,ret_img,w_500/https://kahanelaw.com/wp-content/uploads/2018/10/CHEESE.jpg",
+    "price": "10",
+    "description": "Delicious cheese"
+  }
+]
