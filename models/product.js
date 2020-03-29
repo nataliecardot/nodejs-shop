@@ -1,36 +1,32 @@
-// Provides access to connection pool
-const db = require('../util/database');
+// Capitalized because it's a constructor function/class
+const Sequelize = require('sequelize');
 
-const Cart = require('./cart');
+// Import database connection pool (it's actually more than a connection pool; it's a fully configured Sequelize environment, with all the features of the package), managed by Sequelize
+const sequelize = require('../util/database');
 
-module.exports = class Product {
-  constructor(id, title, imageUrl, price, description) {
-    this.id = id;
-    this.title = title;
-    this.imageUrl = imageUrl;
-    this.price = price;
-    this.description = description;
+// Define model that will be managed by Sequelize (it's typically lowercase). Second arg defines model structure, and therefore, structure of automatically created database table
+const Product = sequelize.define('product', {
+  // Attributes/fields product should have
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  // Shortcut for setting type
+  title: Sequelize.STRING,
+  price: {
+    type: Sequelize.DOUBLE,
+    allowNull: false
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
+});
 
-  // Called on a single instance of Product
-  save() {
-    // id generated automatically by database engine; don't need to include it
-    // Using approach of question marks, one for each field inserting data into, to safety insert values and not face issue of SQL injection, an attack pattern in which users can insert special data into webpage input fields that run as SQL queries. Passing second arg to execute with values that will be injected in place of question marks. MySQL package will safely escape the input values to parse them for hidden SQL commands and remove them
-    return db.execute(
-      'INSERT INTO products (title, price, imageUrl, description) VALUES (?, ?, ?, ?)',
-      [this.title, this.price, this.imageUrl, this.description]
-    );
-  }
-
-  static deleteById(id) {}
-
-  static fetchAll() {
-    // Return promise
-    return db.execute('SELECT * FROM products');
-  }
-
-  static findById(id) {
-    // Question mark is to let MySQL inject the value, the ID in the arg
-    return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
-  }
-};
+module.exports = Product;
