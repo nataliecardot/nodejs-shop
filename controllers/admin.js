@@ -18,13 +18,16 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // null is for id added as arg for Product class constructor; with null, the else block of Product save static method will be executed
-  const product = new Product(null, title, imageUrl, price, description);
-  // Save product (pushes to products array)
-  product
-    .save()
-    .then(() => {
-      res.redirect('/');
+  // Create creates a new element based on model and immediately saves it to database (build also creates a new object based on model, but only in JS, then it must be saved manually). Takes args per model definition (using destructuring)
+  Product.create({
+    title,
+    price,
+    imageUrl,
+    description
+  })
+    .then(result => {
+      // console.log(result)
+      console.log('Product created');
     })
     .catch(err => console.log(err));
 };
