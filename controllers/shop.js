@@ -5,13 +5,11 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res) => {
-  // Get products via method in Product class (in model)
-  Product.fetchAll()
-    // Using destructuring to extract nested array returned after executing query SELECT * FROM products and store in variable
-    // rows are entries in products table
-    .then(([rows]) => {
+  // Get all records for this model
+  Product.findAll()
+    .then(products => {
       res.render('shop/product-list', {
-        prods: rows,
+        prods: products,
         pageTitle: 'All Products',
         path: '/products'
       });
@@ -36,10 +34,11 @@ exports.getProduct = (req, res) => {
 };
 
 exports.getIndex = (req, res) => {
-  Product.fetchAll()
-    .then(([rows]) => {
+  // Get all records for this model
+  Product.findAll()
+    .then(products => {
       res.render('shop/index', {
-        prods: rows,
+        prods: products,
         pageTitle: 'Shop',
         path: '/'
       });
