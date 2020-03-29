@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -35,5 +35,13 @@ app.use(shopRoutes);
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
 
-// Express shorthand
-app.listen(3000);
+// Creates tables for all models that were defined (using define method on instance of Sequelize). Sync models to database by creating the appropriate tables, and relations (if applicable)
+// Note: when table is created for model, it is automatically pluralized based ('product' model => 'products' table)
+sequelize
+  .sync()
+  .then(result => {
+    // console.log(result);
+    // Starts sever (Express shorthand)
+    app.listen(3000);
+  })
+  .catch(err => console.log(err));
