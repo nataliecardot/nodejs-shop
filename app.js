@@ -35,8 +35,8 @@ app.use(shopRoutes);
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
 
-// Creates tables for all models that were defined (using define method on instance of Sequelize). Sync models to database by creating the appropriate tables, and relations (if applicable)
-// Note: when table is created for model, it is automatically pluralized based ('product' model => 'products' table)
+// Creates tables for all models that were defined using define method on instance of Sequelize. Syncs models to database by creating appropriate tables, and if applicable, relations
+// Note: When table is created for model, it is automatically pluralized based ('product' model => 'products' table)
 sequelize
   .sync()
   .then(result => {
