@@ -21,11 +21,21 @@ exports.getProduct = (req, res) => {
   // Extract value held by dynamic path segment in shop.js routes file
   // Express.js supplies params object. Can access productId on params object because that's the name used after the colon in the route
   const prodId = req.params.productId;
-  Product.findById(prodId)
+  // Note, by default findAll provides an array, even if it only has one element (as it will in this case)
+  // Product.findAll({ where: { id: prodId } })
+  //   .then(products => {
+  //     res.render('shop/product-detail', {
+  //       product: products[0],
+  //       pageTitle: products[0].title,
+  //       path: '/products'
+  //     });
+  //   })
+  //   .catch(err => console.log(err));
+  Product.findByPk(prodId)
     // product is an array with one element, but view expects a single object, not an array with one object; to address this, the first element of the array is passed, with product[0]
-    .then(([product]) => {
+    .then(product => {
       res.render('shop/product-detail', {
-        product: product[0],
+        product: product,
         pageTitle: product.title,
         path: '/products'
       });
