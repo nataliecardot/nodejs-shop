@@ -97,7 +97,16 @@ exports.getProducts = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
+  Product.findByPk(prodId)
+    .then(product => {
+      // Sequelize method
+      return product.destroy();
+    })
+    // This will execute once destruction succeeded
+    .then(result => {
+      console.log('Product destroyed');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
   // Will put this in a callback later to ensure it's only executed after deletion
-  res.redirect('/admin/products');
 };
