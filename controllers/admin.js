@@ -42,18 +42,20 @@ exports.getEditProduct = (req, res) => {
   }
   // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
-    if (!product) {
-      return res.redirect('/');
-    }
-    res.render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      // You can set path to whatever you want; doesn't have to match route
-      path: '/admin/edit-product',
-      editing: editMode,
-      product: product
-    });
-  });
+  Product.findByPk(prodId)
+    .then(product => {
+      if (!product) {
+        return res.redirect('/');
+      }
+      res.render('admin/edit-product', {
+        pageTitle: 'Edit Product',
+        // You can set path to whatever you want; doesn't have to match route
+        path: '/admin/edit-product',
+        editing: editMode,
+        product: product
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postEditProduct = (req, res) => {
@@ -64,16 +66,21 @@ exports.postEditProduct = (req, res) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
-  const updatedProduct = new Product(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedPrice,
-    updatedDesc
-  );
-  updatedProduct.save();
-  // Will put this in a callback later to ensure it's only executed after new data is saved
-  res.redirect('/admin/products');
+  Product.findByPk(prodId)
+    .then(product => {
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.description = updatedDesc;
+      product.imageUrl = updatedImageUrl;
+      // This Sequelize method takes products as edited and updates values in database. If product doesn't exist, creates new one; if it does, it updates it
+      // Returning promise returned by save as not to next promises (would be .save().then()... same ugly picture as nested callbacks)
+      return product.save();
+    })
+    .then(result => {
+      console.log('Product updated');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getProducts = (req, res) => {
