@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
+const Product = require('./models/product');
+const User = require('./models/user');
 
 const app = express();
 
@@ -35,10 +37,19 @@ app.use(shopRoutes);
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
 
-// Creates tables for all models that were defined using define method on instance of Sequelize. Syncs models to database by creating appropriate tables, and if applicable, relations
-// Note: When table is created for model, it is automatically pluralized based ('product' model => 'products' table)
+// Don't need both, but making both relations/directions explicit
+// Relates product and user models (using Sequelize). Adds userId attribute to product table to hold primary key value for user (so in product table, userId is a foreign key)
+// For when user creates product (one-to-one relationship)
+// onDelete: What happens to connected products if user is deleted. CASCADE means the deletion would also be executed for product
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+// One user can add more than one product to shop. Adds userId to product table
+User.hasMany(Product);
+
+// Creates tables for all models that were defined using define method on instance of Sequelize, and relations as defined above. "Syncs models to database by creating appropriate tables, and if applicable, relations"
+// Note: When table is created for model, it is automatically pluralized ('product' model => 'products' table)
 sequelize
-  .sync()
+  // Setting force to true drops existing table. Did so so that newly added relation could be incorporated (wouldn't use in production)
+  .sync({ force: true })
   .then(result => {
     // console.log(result);
     // Starts sever (Express shorthand)
