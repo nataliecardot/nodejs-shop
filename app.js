@@ -29,6 +29,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // __dirname, a core Node.js feature, gives the absolute path of the directory containing the currently executing file (root folder)
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Middleware stores user in request so it can be used anywhere in app
+app.use((req, res, next) => {
+  // Retrieve user from database
+  User.findByPk(1)
+    .then(user => {
+      // User being retrieved from db is not just a JS object with values stored in db; it's a Sequelize object with values stored in db along with utility methods added by Sequelize; storing Sequelize object, not JS object with field values. Thus, whenever calling req.user, can also execute methods like destroy()
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match routes in routes file
 app.use('/admin', adminRoutes);
@@ -49,10 +61,22 @@ User.hasMany(Product);
 // Note: When table is created for model, it is automatically pluralized ('product' model => 'products' table)
 sequelize
   // Setting force to true drops existing table. Did so so that newly added relation could be incorporated (wouldn't use in production)
-  .sync({ force: true })
+  // .sync({ force: true })
+  .sync()
   .then(result => {
+    return User.findByPk(1);
     // console.log(result);
-    // Starts sever (Express shorthand)
+  })
+  .then(user => {
+    if (!user) {
+      return User.create({ name: 'Natalie', email: 'test@test.com' });
+    }
+    // Note: If you return a value in a then block, it's automatically wrapped into a new promises
+    return user;
+  })
+  .then(user => {
+    // console.log(user);
+    // Express shorthand that starts Node.js server at specified port, identical to Node's http.Server.listen() method
     app.listen(3000);
   })
   .catch(err => console.log(err));
