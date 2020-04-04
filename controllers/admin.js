@@ -7,7 +7,7 @@ exports.getAddProduct = (req, res) => {
     pageTitle: 'Add Product',
     // You can set path to whatever you want; doesn't have to match route
     path: '/admin/add-product',
-    editing: false
+    editing: false,
   });
 };
 
@@ -18,19 +18,15 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // Create creates a new element based on model and immediately saves it to database (build also creates a new object based on model, but only in JS, then it must be saved manually). Takes args per model definition (using destructuring)
-  Product.create({
-    title,
-    price,
-    imageUrl,
-    description
-  })
-    .then(result => {
+  // createProduct() method automatically added by Sequelize due to relation defined in app.js (User.hasMany(Product))
+  req.user
+    .createProduct({ title, price, imageUrl, description })
+    .then((result) => {
       // console.log(result)
       console.log('Product created');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 // Like getAddProduct, except here, will pass in the product information, and upon hitting save, want to edit rather than create product
@@ -44,7 +40,7 @@ exports.getEditProduct = (req, res) => {
   // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
   const prodId = req.params.productId;
   Product.findByPk(prodId)
-    .then(product => {
+    .then((product) => {
       if (!product) {
         return res.redirect('/');
       }
@@ -53,10 +49,10 @@ exports.getEditProduct = (req, res) => {
         // You can set path to whatever you want; doesn't have to match route
         path: '/admin/edit-product',
         editing: editMode,
-        product: product
+        product: product,
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.postEditProduct = (req, res) => {
@@ -68,7 +64,7 @@ exports.postEditProduct = (req, res) => {
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
   Product.findByPk(prodId)
-    .then(product => {
+    .then((product) => {
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDesc;
@@ -77,37 +73,37 @@ exports.postEditProduct = (req, res) => {
       // Returning promise returned by save as not to next promises (would be .save().then()... same ugly picture as nested callbacks)
       return product.save();
     })
-    .then(result => {
+    .then((result) => {
       console.log('Product updated');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.getProducts = (req, res) => {
   Product.findAll()
-    .then(products => {
+    .then((products) => {
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
-        path: '/admin/products'
+        path: '/admin/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
   Product.findByPk(prodId)
-    .then(product => {
+    .then((product) => {
       // Sequelize method
       return product.destroy();
     })
     // This will execute once destruction succeeded
-    .then(result => {
+    .then((result) => {
       console.log('Product destroyed');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
   // Will put this in a callback later to ensure it's only executed after deletion
 };
