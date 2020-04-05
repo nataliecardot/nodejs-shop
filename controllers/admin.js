@@ -39,8 +39,13 @@ exports.getEditProduct = (req, res) => {
   }
   // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
   const prodId = req.params.productId;
-  Product.findByPk(prodId)
-    .then((product) => {
+  // Get product for currently logged in user using Sequelize method automatically created based on relation set in app.js
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // Product.findByPk(prodId)
+    .then((products) => {
+      // Will get array back even though only one product
+      const product = products[0];
       if (!product) {
         return res.redirect('/');
       }
@@ -81,7 +86,9 @@ exports.postEditProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-  Product.findAll()
+  // Sequelize method automatically created based on relation set in app.js
+  req.user
+    .getProducts()
     .then((products) => {
       res.render('admin/products', {
         prods: products,
