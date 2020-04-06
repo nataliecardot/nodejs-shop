@@ -7,6 +7,8 @@ const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 const app = express();
 
@@ -33,12 +35,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   // Retrieve user from database
   User.findByPk(1)
-    .then(user => {
+    .then((user) => {
       // User being retrieved from db is not just a JS object with values stored in db; it's a Sequelize object with values stored in db along with utility methods added by Sequelize; storing Sequelize object, not JS object with field values. Thus, whenever calling req.user, can also execute methods like destroy()
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
@@ -56,27 +58,33 @@ app.use(errorController.get404);
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 // One user can add more than one product to shop. Adds userId to product table
 User.hasMany(Product);
+// Adds userId attribute to cart table
+User.hasOne(Cart);
+Cart.belongsTo(User); // Inverse of above. Optional (one direction is sufficient) but making explicit
+// Many-many relationship; one cart can hold multiple products, and single product can be part of multiple carts. Only works with intermediate table that connects them, which stores both product and cart IDs (cartitem table). through key tells Sequelize where the connections should be stored (said intermediary table)
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 // Creates tables for all models that were defined using define method on instance of Sequelize, and relations as defined above. "Syncs models to database by creating appropriate tables, and if applicable, relations"
 // Note: When table is created for model, it is automatically pluralized ('product' model => 'products' table)
 sequelize
-  // Setting force to true drops existing table. Did so so that newly added relation could be incorporated (wouldn't use in production)
+  // Setting force to true drops existing table(s) and recreates as required; using so that newly added relations are incorporated (wouldn't use in production)
   // .sync({ force: true })
   .sync()
-  .then(result => {
+  .then((result) => {
     return User.findByPk(1);
     // console.log(result);
   })
-  .then(user => {
+  .then((user) => {
     if (!user) {
       return User.create({ name: 'Natalie', email: 'test@test.com' });
     }
     // Note: If you return a value in a then block, it's automatically wrapped into a new promises
     return user;
   })
-  .then(user => {
+  .then((user) => {
     // console.log(user);
     // Express shorthand that starts Node.js server at specified port, identical to Node's http.Server.listen() method
     app.listen(3000);
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
