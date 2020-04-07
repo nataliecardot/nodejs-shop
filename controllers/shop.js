@@ -7,14 +7,14 @@ const Cart = require('../models/cart');
 exports.getProducts = (req, res) => {
   // Get all records for this model
   Product.findAll()
-    .then(products => {
+    .then((products) => {
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
-        path: '/products'
+        path: '/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.getProduct = (req, res) => {
@@ -33,55 +33,53 @@ exports.getProduct = (req, res) => {
   //   .catch(err => console.log(err));
   Product.findByPk(prodId)
     // product is an array with one element, but view expects a single object, not an array with one object; to address this, the first element of the array is passed, with product[0]
-    .then(product => {
+    .then((product) => {
       res.render('shop/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/products'
+        path: '/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.getIndex = (req, res) => {
   // Get all records for this model
   Product.findAll()
-    .then(products => {
+    .then((products) => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
-        path: '/'
+        path: '/',
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.getCart = (req, res) => {
-  Cart.getCart(cart => {
-    Product.fetchAll(products => {
-      const cartProducts = [];
-      for (product of products) {
-        const cartProductData = cart.products.find(
-          prod => prod.id === product.id
-        );
-        if (cartProductData) {
-          cartProducts.push({ productData: product, qty: cartProductData.qty });
-        }
-      }
-      res.render('shop/cart', {
-        path: '/cart',
-        pageTitle: 'Your Cart',
-        products: cartProducts
-      });
-    });
-  });
+  req.user
+    .getCart()
+    .then((cart) => {
+      //  Cart is associated with products in app.js through belongsToMany. Sequelize looks into cartitem inbetween table
+      return cart
+        .getProducts()
+        .then((products) => {
+          res.render('shop/cart', {
+            path: '/cart',
+            pageTitle: 'Your Cart',
+            products,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postCart = (req, res) => {
   // Retrieve product ID from incoming request and fetch that product in database/file and add it to cart
   // productId is the name used in the view, on the hidden input
   const prodId = req.body.productId;
-  Product.findById(prodId, product => {
+  Product.findById(prodId, (product) => {
     // Cart is serving as a sort of 'utility model'; not instantiating it, but using static method
     Cart.addProduct(prodId, product.price);
   });
@@ -91,7 +89,7 @@ exports.postCart = (req, res) => {
 
 exports.postCartDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
-  Product.findById(prodId, product => {
+  Product.findById(prodId, (product) => {
     Cart.deleteProduct(prodId, product.price);
     res.redirect('/cart');
   });
@@ -100,13 +98,13 @@ exports.postCartDeleteProduct = (req, res) => {
 exports.getOrders = (req, res) => {
   res.render('shop/orders', {
     path: '/orders',
-    pageTitle: 'Your Orders'
+    pageTitle: 'Your Orders',
   });
 };
 
 exports.getCheckout = (req, res) => {
   res.render('shop/checkout', {
     path: '/checkout',
-    pageTitle: 'Checkout'
+    pageTitle: 'Checkout',
   });
 };

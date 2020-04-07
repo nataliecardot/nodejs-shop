@@ -84,6 +84,9 @@ sequelize
   })
   .then((user) => {
     // console.log(user);
+    return user.createCart();
+  })
+  .then((cart) => {
     // Express shorthand that starts Node.js server at specified port, identical to Node's http.Server.listen() method
     app.listen(3000);
   })
