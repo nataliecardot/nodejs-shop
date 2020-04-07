@@ -61,7 +61,7 @@ User.hasMany(Product);
 // Adds userId attribute to cart table
 User.hasOne(Cart);
 Cart.belongsTo(User); // Inverse of above. Optional (one direction is sufficient) but making explicit
-// Many-many relationship; one cart can hold multiple products, and single product can be part of multiple carts. Only works with intermediate table that connects them, which stores both product and cart IDs (cartitem table). through key tells Sequelize where the connections should be stored (said intermediary table)
+// Many-many relationship; one cart can hold multiple products, and single product can be part of multiple carts. Only works with intermediate table that connects them, which stores both product and cart IDs (cartitems table). through key tells Sequelize where the connections should be stored (said intermediary table)/which table to use as inbetween model and thus inbetween table
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
 

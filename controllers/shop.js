@@ -79,12 +79,42 @@ exports.postCart = (req, res) => {
   // Retrieve product ID from incoming request and fetch that product in database/file and add it to cart
   // productId is the name used in the view, on the hidden input
   const prodId = req.body.productId;
-  Product.findById(prodId, (product) => {
-    // Cart is serving as a sort of 'utility model'; not instantiating it, but using static method
-    Cart.addProduct(prodId, product.price);
-  });
-  // Express method. Loads the GET route, the cart page
-  res.redirect('/cart');
+  let fetchedCart;
+  req.user
+    .getCart()
+    .then((cart) => {
+      fetchedCart = cart;
+      // Find out if item is part of cart; if it is, only need to increase quantity, otherwise add with quantity of 1
+      // Retrieve product data associated with cart for product in incoming request
+      return cart.getProducts({ where: { id: prodId } });
+    })
+    // Will get array of products that only holds one product, or if product not already in cart, it will be empty
+    .then((products) => {
+      let product;
+      if (products.length > 0) {
+        product = products[0];
+      }
+      let newQuantity = 1;
+      // If product isn't undefined and do have valid product, increase quantity
+      if (product) {
+        // ...
+      }
+      // If product not in cart, find general data for product and add new product
+      return Product.findByPk(prodId)
+        .then((product) => {
+          // addProduct() is another magic method added by Sequelize for many-many relationships; product will be added to inbetween table cartitems
+          // through: telling Sequelize for inbetween table cartitems, here's additional info needed to set values; setting keys/fields that should be set in cartitems
+          return fetchedCart.addProduct(product, {
+            through: { quantity: newQuantity },
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .then(() => {
+      // Express method. Loads the GET route, the cart page
+      res.redirect('/cart');
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postCartDeleteProduct = (req, res) => {
