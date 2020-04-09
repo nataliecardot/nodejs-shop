@@ -96,9 +96,9 @@ exports.postCart = (req, res) => {
       }
       let newQuantity = 1;
       // If product isn't undefined and do have valid product, increase quantity
-      if (product) {
-        // ...
-      }
+      // if (product) {
+
+      // }
       // If product not in cart, find general data for product and add new product
       return Product.findByPk(prodId)
         .then((product) => {
