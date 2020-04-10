@@ -56,10 +56,8 @@ app.use(errorController.get404);
 // For when user creates product (one-to-one relationship)
 // onDelete: What happens to connected products if user is deleted. CASCADE means the deletion would also be executed for product
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
-// One user can add more than one product to shop. Adds userId to product table
-User.hasMany(Product);
-// Adds userId attribute to cart table
-User.hasOne(Cart);
+User.hasMany(Product); // One user can add more than one product to shop. Adds userId to product table
+User.hasOne(Cart); // Adds userId attribute to cart table
 Cart.belongsTo(User); // Inverse of above. Optional (one direction is sufficient) but making explicit
 // Many-many relationship; one cart can hold multiple products, and single product can be part of multiple carts. Only works with intermediate table that connects them, which stores both product and cart IDs (cartitems table). through key tells Sequelize where the connections should be stored (said intermediary table)/which table to use as inbetween model and thus inbetween table
 Cart.belongsToMany(Product, { through: CartItem });
