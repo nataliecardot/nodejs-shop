@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  padding: 1em 3rem;
+  padding: 2em 3rem;
   margin: auto;
 }
 
@@ -203,6 +203,11 @@ form {
   background: white;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.btn.danger {
+  color: red;
+  border-color: red;
 }
 
 .btn:hover,
