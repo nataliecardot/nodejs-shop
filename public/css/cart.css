@@ -14,6 +14,15 @@
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 5px;
+  margin: 1rem 0;
+}
+
+.cart__item:first-of-type {
+  margin-top: 0;
+}
+
+.cart__item:last-of-type {
+  margin-bottom: 0;
 }
 
 .cart__item h1,

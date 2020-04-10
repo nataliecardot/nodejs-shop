@@ -80,6 +80,7 @@ exports.postCart = (req, res) => {
   // productId is the name used in the view, on the hidden input
   const prodId = req.body.productId;
   let fetchedCart;
+  let newQuantity = 1;
   req.user
     .getCart()
     .then((cart) => {
@@ -94,21 +95,21 @@ exports.postCart = (req, res) => {
       if (products.length > 0) {
         product = products[0];
       }
-      let newQuantity = 1;
       // If product isn't undefined and do have valid product, increase quantity
-      // if (product) {
-
-      // }
+      if (product) {
+        const oldQuantity = product.cartItem.quantity;
+        newQuantity += oldQuantity;
+        return product;
+      }
       // If product not in cart, find general data for product and add new product
-      return Product.findByPk(prodId)
-        .then((product) => {
-          // addProduct() is another magic method added by Sequelize for many-many relationships; product will be added to inbetween table cartitems
-          // through: telling Sequelize for inbetween table cartitems, here's additional info needed to set values; setting keys/fields that should be set in cartitems
-          return fetchedCart.addProduct(product, {
-            through: { quantity: newQuantity },
-          });
-        })
-        .catch((err) => console.log(err));
+      return Product.findByPk(prodId);
+    })
+    // addProduct() is another magic method added by Sequelize for many-many relationships; product will be added to inbetween table cartitems
+    // through: telling Sequelize for inbetween table cartitems, here's additional info needed to set values; setting keys/fields that should be set in cartitems
+    .then((product) => {
+      return fetchedCart.addProduct(product, {
+        through: { quantity: newQuantity },
+      });
     })
     .then(() => {
       // Express method. Loads the GET route, the cart page
