@@ -32,10 +32,9 @@ exports.getProduct = (req, res) => {
   //   })
   //   .catch(err => console.log(err));
   Product.findByPk(prodId)
-    // product is an array with one element, but view expects a single object, not an array with one object; to address this, the first element of the array is passed, with product[0]
     .then((product) => {
       res.render('shop/product-detail', {
-        product: product,
+        product,
         pageTitle: product.title,
         path: '/products',
       });
