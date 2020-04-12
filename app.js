@@ -9,6 +9,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express();
 
@@ -62,6 +64,12 @@ Cart.belongsTo(User); // Inverse of above. Optional (one direction is sufficient
 // Many-many relationship; one cart can hold multiple products, and single product can be part of multiple carts. Only works with intermediate table that connects them, which stores both product and cart IDs (cartitems table). through key tells Sequelize where the connections should be stored (said intermediary table)/which table to use as inbetween model and thus inbetween table
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
+// One-to-many relationship; one user can have many orders. But one product can have many orders (with inbetween table OrderItem)
+// Adds order id to users table
+Order.belongsTo(User);
+// Adds user id to orders table
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
 
 // Creates tables for all models that were defined using define method on instance of Sequelize, and relations as defined above. "Syncs models to database by creating appropriate tables, and if applicable, relations"
 // Note: When table is created for model, it is automatically pluralized ('product' model => 'products' table)
