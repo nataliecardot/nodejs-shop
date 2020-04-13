@@ -1,3 +1,8 @@
+.qty {
+  margin-left: auto;
+  margin-right: 1.25rem;
+}
+
 .order-btn-container {
   width: 40rem;
   margin: 1.5rem auto 0 auto;
@@ -41,5 +46,14 @@
   .order-btn-container,
   .cart__item-list {
     width: 100%;
+  }
+
+  .qty {
+    margin-right: 0.75rem;
+  }
+
+  .cart__item h1,
+  .cart__item h2 {
+    font-size: 1rem;
   }
 }
