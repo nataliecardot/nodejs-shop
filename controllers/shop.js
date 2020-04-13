@@ -2,7 +2,6 @@
 
 // Capital is convention for class name
 const Product = require('../models/product');
-const Cart = require('../models/cart');
 
 exports.getProducts = (req, res) => {
   // Get all records for this model
@@ -130,6 +129,33 @@ exports.postCartDeleteProduct = (req, res) => {
     })
     .then((result) => {
       res.redirect('/cart');
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postOrder = (req, res) => {
+  req.user
+    .getCart()
+    .then((cart) => {
+      return cart.getProducts();
+    })
+    .then((products) => {
+      return req.user
+        .createOrder()
+        .then((order) => {
+          // Associate products with order
+          return order.addProducts(
+            products.map((product) => {
+              // Configure value for inbetween table orderitems (taking quantity field for each product in cart from cartitems table and storing it in orderitems table). orderItem corresponds to model name as specified with Sequelize.define()
+              product.orderItem = { quantity: product.cartItem.quantity };
+              return product;
+            })
+          );
+        })
+        .then((result) => {
+          res.redirect('/orders');
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 };

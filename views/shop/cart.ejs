@@ -12,7 +12,7 @@
             <li class="cart__item">
               <!-- cartitem is automatically created (Sequelize) key for inbetween cartitems table and the entry for this product in it -->
               <h1><%= p.title %></h1>
-              <h2>Quantity: <%= p.cartItem.quantity %></h2>
+              <h2>Qty: <%= p.cartItem.quantity %></h2>
               <form action="/cart-delete-item" method="POST">
                 <input type="hidden" value="<%= p.id %>" name="productId">
                 <button class="btn-danger" type="submit">Delete</button>
@@ -20,9 +20,9 @@
             </li>
           <% }) %>
         </ul>
-        <div class="centered mt-4">
+        <div class="order-btn-container">
           <form action="/create-order" method="POST">
-            <button class="btn" type="submit">Order Now</button>
+            <button class="btn" type="submit">Checkout Cart</button>
           </form>
         </div>
       <% } else { %>

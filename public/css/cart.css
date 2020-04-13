@@ -1,10 +1,14 @@
+.order-btn-container {
+  width: 40rem;
+  margin: 1.5rem auto 0 auto;
+}
+
 .cart__item-list {
   list-style: none;
   margin: 0;
   padding: 0;
   margin: auto;
   width: 40rem;
-  max-width: 90%;
 }
 
 .cart__item {
@@ -30,4 +34,12 @@
   margin-right: 1rem;
   font-size: 1.2rem;
   margin: 0;
+}
+
+/* Smartphones */
+@media screen and (max-width: 767px) {
+  .order-btn-container,
+  .cart__item-list {
+    width: 100%;
+  }
 }

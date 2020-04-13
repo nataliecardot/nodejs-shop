@@ -7,12 +7,12 @@
 
 body {
   padding: 0;
-  margin: 0 0 2rem 0;
+  margin: 0;
   font-family: "Open Sans", sans-serif;
 }
 
 main {
-  padding: 2em 3rem;
+  padding: 2rem 3rem;
   margin: auto;
 }
 
@@ -22,10 +22,6 @@ form {
 
 .centered {
   text-align: center;
-}
-
-.mt-4 {
-  margin-top: 1.5rem;
 }
 
 .image {
@@ -118,7 +114,7 @@ form {
 .mobile-nav__item a.active {
   background: #37474f;
   color: white;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 #side-menu-toggle {
@@ -127,8 +123,8 @@ form {
   padding: 0.5rem;
   display: block;
   background: transparent;
-  color: white;
-  cursor: pointer;
+  color: #fff;
+  border-radius: 5px;
 }
 
 #side-menu-toggle:focus {
@@ -238,6 +234,17 @@ form {
   color: #fff;
 }
 
+@media (max-width: 767px) {
+  .main-header {
+    padding: 0 1.5rem 0 0.5rem;
+  }
+
+  main {
+    padding: 2rem;
+  }
+}
+
+/* Tablets and larger devices */
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
