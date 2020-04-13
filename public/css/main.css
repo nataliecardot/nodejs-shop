@@ -120,7 +120,7 @@ form {
 #side-menu-toggle {
   border: 1px solid white;
   font: inherit;
-  padding: 0.5rem;
+  padding: 0.4rem;
   display: block;
   background: transparent;
   color: #fff;
@@ -236,7 +236,7 @@ form {
 
 @media (max-width: 767px) {
   .main-header {
-    padding: 0 1.5rem 0 0.5rem;
+    padding: 0 1.5rem 0 0.7rem;
   }
 
   main {
