@@ -62,7 +62,7 @@ form {
 
 .main-header__item a {
   text-decoration: none;
-  color: white;
+  color: #fff;
 }
 
 .main-header__item a:hover,
@@ -78,7 +78,7 @@ form {
   position: fixed;
   left: 0;
   top: 0;
-  background: white;
+  background: #fff;
   z-index: 10;
   padding: 2rem 1rem 1rem 2rem;
   transform: translateX(-100%);
@@ -113,12 +113,12 @@ form {
 .mobile-nav__item a:hover,
 .mobile-nav__item a.active {
   background: #37474f;
-  color: white;
+  color: #fff;
   border-radius: 5px;
 }
 
 #side-menu-toggle {
-  border: 1px solid white;
+  border: 1px solid #fff;
   font: inherit;
   padding: 0.4rem;
   display: block;
