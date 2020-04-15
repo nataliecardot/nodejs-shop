@@ -134,9 +134,11 @@ exports.postCartDeleteProduct = (req, res) => {
 };
 
 exports.postOrder = (req, res) => {
+  let fetchedCart;
   req.user
     .getCart()
     .then((cart) => {
+      fetchedCart = cart;
       return cart.getProducts();
     })
     .then((products) => {
@@ -151,6 +153,10 @@ exports.postOrder = (req, res) => {
               return product;
             })
           );
+        })
+        .then((result) => {
+          // Drop items in cartitems
+          return fetchedCart.setProducts(null);
         })
         .then((result) => {
           res.redirect('/orders');
