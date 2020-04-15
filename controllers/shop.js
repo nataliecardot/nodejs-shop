@@ -167,15 +167,14 @@ exports.postOrder = (req, res) => {
 };
 
 exports.getOrders = (req, res) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders',
-  });
-};
-
-exports.getCheckout = (req, res) => {
-  res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout',
-  });
+  req.user
+    .getOrders({ include: ['products'] })
+    .then((orders) => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders,
+      });
+    })
+    .catch((err) => console.log(err));
 };
