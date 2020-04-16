@@ -42,7 +42,6 @@ app.use('/admin', adminRoutes);
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
 
-mongoConnect((client) => {
-  console.log(client);
+mongoConnect(() => {
   app.listen();
 });
