@@ -11,7 +11,8 @@ class Product {
   save() {
     const db = getDb();
     // As with database, if doesn't exist yet, will be created upon inserting data
-    db.collection('products')
+    return db
+      .collection('products')
       .insertOne(this)
       .then((result) => {
         console.log(result);

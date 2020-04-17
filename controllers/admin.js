@@ -18,9 +18,9 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // createProduct() method automatically added by Sequelize due to relation defined in app.js (User.hasMany(Product))
-  req.user
-    .createProduct({ title, price, imageUrl, description })
+  const product = new Product(title, price, description, imageUrl);
+  product
+    .save()
     .then((result) => {
       // console.log(result)
       console.log('Product created');
