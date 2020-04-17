@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.use((req, res, next) => {
   //     next();
   //   })
   //   .catch((err) => console.log(err));
+  next();
 });
 
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
@@ -43,5 +44,5 @@ app.use('/admin', adminRoutes);
 app.use(errorController.get404);
 
 mongoConnect(() => {
-  app.listen();
+  app.listen(3000);
 });
