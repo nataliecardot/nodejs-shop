@@ -85,19 +85,17 @@ exports.postAddProduct = (req, res) => {
 //     .catch((err) => console.log(err));
 // };
 
-// exports.getProducts = (req, res) => {
-//   // Sequelize method automatically created based on relation set in app.js
-//   req.user
-//     .getProducts()
-//     .then((products) => {
-//       res.render('admin/products', {
-//         prods: products,
-//         pageTitle: 'Admin Products',
-//         path: '/admin/products',
-//       });
-//     })
-//     .catch((err) => console.log(err));
-// };
+exports.getProducts = (req, res) => {
+  Product.fetchAll()
+    .then((products) => {
+      res.render('admin/products', {
+        prods: products,
+        pageTitle: 'Admin Products',
+        path: '/admin/products',
+      });
+    })
+    .catch((err) => console.log(err));
+};
 
 // exports.postDeleteProduct = (req, res) => {
 //   const prodId = req.body.productId;
