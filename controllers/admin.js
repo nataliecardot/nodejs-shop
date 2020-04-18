@@ -1,4 +1,7 @@
+const mongodb = require('mongodb');
 const Product = require('../models/product');
+
+const ObjectId = mongodb.ObjectId;
 
 // For GET request to add-product page
 exports.getAddProduct = (req, res) => {
@@ -64,16 +67,16 @@ exports.postEditProduct = (req, res) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
-  Product.findByPk(prodId)
-    .then((product) => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.description = updatedDesc;
-      product.imageUrl = updatedImageUrl;
-      // This Sequelize method takes products as edited and updates values in database. If product doesn't exist, creates new one; if it does, it updates it
-      // Returning promise returned by save as not to next promises (would be .save().then()... same ugly picture as nested callbacks)
-      return product.save();
-    })
+
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedDesc,
+    updatedImageUrl,
+    new ObjectId(prodId)
+  );
+  product
+    .save()
     .then((result) => {
       console.log('Product updated');
       res.redirect('/admin/products');
