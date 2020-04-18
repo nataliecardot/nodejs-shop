@@ -93,18 +93,14 @@ exports.getProducts = (req, res) => {
     .catch((err) => console.log(err));
 };
 
-// exports.postDeleteProduct = (req, res) => {
-//   const prodId = req.body.productId;
-//   Product.findByPk(prodId)
-//     .then((product) => {
-//       // Sequelize method
-//       return product.destroy();
-//     })
-//     // This will execute once destruction succeeded
-//     .then((result) => {
-//       console.log('Product destroyed');
-//       res.redirect('/admin/products');
-//     })
-//     .catch((err) => console.log(err));
-//   // Will put this in a callback later to ensure it's only executed after deletion
-// };
+exports.postDeleteProduct = (req, res) => {
+  const prodId = req.body.productId;
+  Product.deleteById(prodId)
+    // This will execute once destruction succeeded
+    .then(() => {
+      console.log('Product destroyed');
+      res.redirect('/admin/products');
+    })
+    .catch((err) => console.log(err));
+  // Will put this in a callback later to ensure it's only executed after deletion
+};
