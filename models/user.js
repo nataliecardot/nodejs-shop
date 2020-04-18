@@ -21,6 +21,11 @@ class User {
         .collection('users')
         // findOne() is alternative to find().next() as is used in product model to use when you know that there's just one item
         .findOne({ _id: new ObjectId(userId) })
+        .then((user) => {
+          // console.log(user);
+          return user;
+        })
+        .catch((err) => console.log(err))
     );
   }
 }

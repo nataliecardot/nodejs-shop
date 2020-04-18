@@ -33,7 +33,6 @@ app.use((req, res, next) => {
       next();
     })
     .catch((err) => console.log(err));
-  next();
 });
 
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
