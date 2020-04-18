@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product {
@@ -32,6 +33,23 @@ class Product {
         .then((products) => {
           console.log(products);
           return products;
+        })
+        .catch((err) => console.log(err))
+    );
+  }
+
+  static findById(prodId) {
+    const db = getDb();
+    // find() still returns a cursor here since MongoDB doesn't know will only get one product; using next() to get next, and this case last, document returned by find()
+    return (
+      db
+        .collection('products')
+        // MongoDB stores IDs as ObjectID. MongoDB stores data in BSON format, which allows use of ObjectId, a type added by MongoDB (not a default JS type). It generates and manages ID, which look random but actually aren't
+        .find({ _id: new mongodb.ObjectId(prodId) })
+        .next()
+        .then((product) => {
+          console.log(product);
+          return product;
         })
         .catch((err) => console.log(err))
     );
