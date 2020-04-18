@@ -7,7 +7,7 @@ class Product {
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
-    this._id = id;
+    this._id = new mongodb.ObjectId(id);
   }
 
   save() {
@@ -18,7 +18,7 @@ class Product {
       dbOp = db
         .collection('products')
         // Second arg is description of changes to make to existing document found with filter. Using `this` instructs MongoDB to set key-value fields present in object/product instance to document in database (you could also do {title: this.title}, and so on, but this can be used since want to update all fields, except ID, which won't be overwritten)
-        .updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this });
+        .updateOne({ _id: this._id }, { $set: this });
     } else {
       dbOp = db.collection('products').insertOne(this);
     }
