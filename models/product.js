@@ -22,8 +22,6 @@ class Product {
     } else {
       dbOp = db.collection('products').insertOne(this);
     }
-    const db = getDb();
-    // As with database, if doesn't exist yet, will be created upon inserting data
     return dbOp
       .then((result) => {
         console.log(result);
