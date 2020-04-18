@@ -2,19 +2,29 @@ const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product {
-  constructor(title, price, description, imageUrl) {
+  constructor(title, price, description, imageUrl, id) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
+    this._id = id;
   }
 
   save() {
     const db = getDb();
+    let dbOp;
+    if (this._id) {
+      // Update product
+      dbOp = db
+        .collection('products')
+        // Second arg is description of changes to make to existing document found with filter. Using `this` instructs MongoDB to set key-value fields present in object/product instance to document in database (you could also do {title: this.title}, and so on, but this can be used since want to update all fields, except ID, which won't be overwritten)
+        .updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this });
+    } else {
+      dbOp = db.collection('products').insertOne(this);
+    }
+    const db = getDb();
     // As with database, if doesn't exist yet, will be created upon inserting data
-    return db
-      .collection('products')
-      .insertOne(this)
+    return dbOp
       .then((result) => {
         console.log(result);
       })
