@@ -29,7 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   User.findById('5e9b29fdb0730b1fb47ac1d1')
     .then((user) => {
-      req.user = user;
+      // Storing instantiated User enables use of user class methods
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next();
     })
     .catch((err) => console.log(err));
