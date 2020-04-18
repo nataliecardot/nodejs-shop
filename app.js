@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 // Express middleware: Functions that execute during the lifecycle of a request to the Express server
 
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match routes in routes file
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
