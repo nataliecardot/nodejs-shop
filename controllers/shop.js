@@ -76,6 +76,8 @@ exports.postCart = (req, res) => {
     })
     .then((result) => {
       console.log(result);
+      // Express method. Loads GET route for cart page
+      res.redirect('/cart');
     });
   // let fetchedCart;
   // let newQuantity = 1;
