@@ -94,32 +94,9 @@ exports.postCartDeleteProduct = (req, res) => {
 exports.postOrder = (req, res) => {
   let fetchedCart;
   req.user
-    .getCart()
-    .then((cart) => {
-      fetchedCart = cart;
-      return cart.getProducts();
-    })
-    .then((products) => {
-      return req.user
-        .createOrder()
-        .then((order) => {
-          // Associate products with order
-          return order.addProducts(
-            products.map((product) => {
-              // Configure value for inbetween table orderitems (taking quantity field for each product in cart from cartitems table and storing it in orderitems table). orderItem corresponds to model name as specified with Sequelize.define()
-              product.orderItem = { quantity: product.cartItem.quantity };
-              return product;
-            })
-          );
-        })
-        .then((result) => {
-          // Drop items in cartitems
-          return fetchedCart.setProducts(null);
-        })
-        .then((result) => {
-          res.redirect('/orders');
-        })
-        .catch((err) => console.log(err));
+    .addOrder()
+    .then((result) => {
+      res.redirect('/orders');
     })
     .catch((err) => console.log(err));
 };
