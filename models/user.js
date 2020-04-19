@@ -73,6 +73,21 @@ class User {
       });
   }
 
+  deleteItemFromCart(productId) {
+    // filter() JS method creates new array with all elements that pass test implemented by provided function (like find(), but returns array with all matching items rather than first one)
+    const updatedCartItems = this.cart.items.filter((i) => {
+      // Return true (keep) for all items except one being deleted
+      return i.productId.toString() !== productId.toString();
+    });
+    const db = getDb();
+    return db
+      .collection('users')
+      .updateOne(
+        { _id: new ObjectId(this._id) },
+        { $set: { cart: { items: updatedCartItems } } }
+      );
+  }
+
   static findById(userId) {
     const db = getDb();
     return (
