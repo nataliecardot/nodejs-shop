@@ -90,16 +90,18 @@ class User {
 
   addOrder() {
     const db = getDb();
-    const order = {
-      items: this.cart.items,
-      user: {
-        _id: new ObjectId(this._id),
-        name: this.name,
-      },
-    };
-    return db
-      .collection('orders')
-      .insertOne(this.cart)
+    // Embedding documents with duplicate data, which isn't a problem if data changes since only want a snapshot of data as it was at time of order
+    return this.getCart()
+      .then((products) => {
+        const order = {
+          items: products,
+          user: {
+            _id: new ObjectId(this._id),
+            name: this.name,
+          },
+        };
+        return db.collection('orders').insertOne(order);
+      })
       .then((result) => {
         this.cart = { items: [] };
         return db
