@@ -46,6 +46,33 @@ class User {
     );
   }
 
+  getCart() {
+    // in users collection, cart.items array only stores product id and quantity; to dislay product data, have to enrich it with data stored in products collection. If there is a connection between two collections with a reference, have to merge manually
+    const db = getDb();
+    // Mapping over an array of items, where every item is a JS object, into an array of just strings, just the product IDs
+    const productIds = this.cart.items.map((i) => {
+      return i.productId;
+    });
+    // $in query operator takes array of IDs. MongoDB find() method returns cursor that holds references to all products matching one of IDs included in array
+    return db
+      .collection('products')
+      .find({ _id: { $in: productIds } })
+      .toArray()
+      .then((products) => {
+        // Add quantity back to every product
+        return products.map((p) => {
+          // Due to arrow function, `this` refers to class
+          // Built-in JS find() method returns value of first element in provided array that satisfies provided testing function
+          return {
+            ...p,
+            quantity: this.cart.items.find((i) => {
+              return i.productId.toString() === p._id.toString();
+            }).quantity,
+          };
+        });
+      });
+  }
+
   static findById(userId) {
     const db = getDb();
     return (

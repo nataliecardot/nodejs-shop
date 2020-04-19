@@ -56,18 +56,12 @@ exports.getIndex = (req, res) => {
 exports.getCart = (req, res) => {
   req.user
     .getCart()
-    .then((cart) => {
-      //  Cart is associated with products in app.js through belongsToMany. Sequelize looks into cartitem inbetween table
-      return cart
-        .getProducts()
-        .then((products) => {
-          res.render('shop/cart', {
-            path: '/cart',
-            pageTitle: 'Your Cart',
-            products,
-          });
-        })
-        .catch((err) => console.log(err));
+    .then((products) => {
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products,
+      });
     })
     .catch((err) => console.log(err));
 };
