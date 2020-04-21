@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');
-const User = require('./models/user');
+// const User = require('./models/user');
 
 const app = express();
 
@@ -25,16 +25,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // __dirname, a core Node.js feature, gives the absolute path of the directory containing the currently executing file (root folder)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Stores user in request so it can be used anywhere in app
-app.use((req, res, next) => {
-  User.findById('5e9b29fdb0730b1fb47ac1d1')
-    .then((user) => {
-      // Storing instantiated User enables use of user class methods
-      req.user = new User(user.name, user.email, user.cart, user._id);
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+// // Stores user in request so it can be used anywhere in app
+// app.use((req, res, next) => {
+//   User.findById('5e9b29fdb0730b1fb47ac1d1')
+//     .then((user) => {
+//       // Storing instantiated User enables use of user class methods
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 // The order of these doesn't matter since using router.get rather than router.use; with get, post, etc., it's an exact match
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match routes in routes file

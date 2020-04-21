@@ -18,16 +18,12 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(
-    title,
-    price,
-    description,
-    imageUrl,
-    null,
-    req.user._id
-  );
+  // Map values to fields defined in schema (order doesn't matter since it's in a JS object). Creates new product based on model, which is based on the schema
+  const product = new Product({ title, price, description, imageUrl });
   product
+    // Mongoose method
     .save()
+    // Technically you don't get a promise, but Mongoose provides then method
     .then((result) => {
       console.log('Product created');
       res.redirect('/admin/products');
@@ -70,16 +66,12 @@ exports.postEditProduct = (req, res) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
-
-  const product = new Product(
-    updatedTitle,
-    updatedPrice,
-    updatedDesc,
-    updatedImageUrl,
-    prodId
-  );
+  // Map values to fields defined in schema (order doesn't matter since it's in a JS object). Creates new product based on model, which is based on the schema
+  const product = new Product({ title, price, description, imageUrl });
   product
+    // Mongoose method
     .save()
+    // Technically you don't get a promise, but Mongoose provides then method
     .then((result) => {
       console.log('Product updated');
       res.redirect('/admin/products');

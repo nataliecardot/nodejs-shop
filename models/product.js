@@ -21,6 +21,9 @@ const productSchema = new Schema({
   },
 });
 
+// Model name is used as collection name in pluralized, lowercase format
+module.exports = mongoose.model('Product', productSchema);
+
 // const mongodb = require('mongodb');
 // const getDb = require('../util/database').getDb;
 
