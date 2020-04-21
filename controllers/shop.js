@@ -4,9 +4,10 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res) => {
-  // Get all records for this model
-  Product.fetchAll()
+  // Mongoose method. Unlike with MongoDB driver, method does not provide a cursor, but all products (but could chain cursor() method to get access to cursor, then use eachAsync() to loop through them or next() to get next element)
+  Product.find()
     .then((products) => {
+      console.log(products);
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -42,7 +43,7 @@ exports.getProduct = (req, res) => {
 };
 
 exports.getIndex = (req, res) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
       res.render('shop/index', {
         prods: products,

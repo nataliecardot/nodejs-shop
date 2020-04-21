@@ -6,10 +6,10 @@ const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
-// // Using get so that the order doesn't matter in app.js (then it's an exact match, unlike with router.use [same for app.use])
-// router.get('/', shopController.getIndex);
+// Using get so that the order doesn't matter in app.js (then it's an exact match, unlike with router.use [same for app.use])
+router.get('/', shopController.getIndex);
 
-// router.get('/products', shopController.getProducts);
+router.get('/products', shopController.getProducts);
 
 // // Dynamic segment used; value held by dynamic param is extracted in shop.js controller file. Note: Route with dynamic segments must go after specific route starting with /products/, e.g., /products/delete, otherwise the dynamic segment route will be fired first and the specific route won't be reached (because the "delete" part would be assumed to be the dynamic value)
 // router.get('/products/:productId', shopController.getProduct);
