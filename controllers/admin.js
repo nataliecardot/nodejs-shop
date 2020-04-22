@@ -97,7 +97,8 @@ exports.getProducts = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId)
+  // findByIdAndRemove is a Mongoose method that removes a document
+  Product.findByIdAndRemove(prodId)
     // This will execute once destruction succeeded
     .then(() => {
       console.log('Product destroyed');
