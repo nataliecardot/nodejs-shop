@@ -17,7 +17,12 @@ const userSchema = new Schema({
     // Array of embedded documents
     items: [
       {
-        productId: { type: Schema.Types.ObjectId, required: true },
+        productId: {
+          type: Schema.Types.ObjectId,
+          // ref to indicate ID refers to product stored/defined through product model (refs only needed when using references)
+          ref: 'Product',
+          required: true,
+        },
         quantity: { type: Number, required: true },
       },
     ],

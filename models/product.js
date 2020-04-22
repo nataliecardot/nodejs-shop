@@ -19,6 +19,11 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  userId: {
+    type: Schema.Types.ObjectId,
+    // Tells Mongoose which other model is related to data in this field
+    ref: 'User',
+  },
 });
 
 // Model name is used as collection name in pluralized, lowercase format

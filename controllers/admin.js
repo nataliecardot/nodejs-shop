@@ -19,7 +19,14 @@ exports.postAddProduct = (req, res) => {
   const price = req.body.price;
   const description = req.body.description;
   // Map values to fields defined in schema (order doesn't matter since it's in a JS object). Creates new product based on model, which is based on the schema
-  const product = new Product({ title, price, description, imageUrl });
+  const product = new Product({
+    title,
+    price,
+    description,
+    imageUrl,
+    // In Mongoose can just store entire object, and for convenience, Mongoose will extract ID (instead of using req.user._id)
+    userId: req.user,
+  });
   product
     // Mongoose method
     .save()
