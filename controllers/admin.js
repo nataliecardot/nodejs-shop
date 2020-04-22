@@ -42,7 +42,6 @@ exports.getEditProduct = (req, res) => {
   // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
   const prodId = req.params.productId;
   Product.findById(prodId)
-    // Product.findByPk(prodId)
     .then((product) => {
       if (!product) {
         return res.redirect('/');
@@ -63,14 +62,19 @@ exports.postEditProduct = (req, res) => {
   // using productId because that's the name given to the hidden input in the edit-product.ejs view file
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  // Map values to fields defined in schema (order doesn't matter since it's in a JS object). Creates new product based on model, which is based on the schema
-  const product = new Product({ title, price, description, imageUrl });
-  product
-    // Mongoose method
-    .save()
+
+  Product.findById(prodId)
+    .then((product) => {
+      // Thanks to Mongoose, this will not only be JS object with the product data, but a full Mongoose methon on which Mongoose methods like save() can be called. If save() called on existing object, not saved as new one, but an update is done
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.imageUrl = updatedImageUrl;
+      product.description = updatedDesc;
+      return product.save();
+    })
     // Technically you don't get a promise, but Mongoose provides then method
     .then((result) => {
       console.log('Product updated');
@@ -80,7 +84,7 @@ exports.postEditProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
       res.render('admin/products', {
         prods: products,
