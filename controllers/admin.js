@@ -92,7 +92,14 @@ exports.postEditProduct = (req, res) => {
 
 exports.getProducts = (req, res) => {
   Product.find()
+    // // Specify which fields should be retrieved from database
+    // // Only retrieve title and price, excude ID
+    // .select('title price -_id')
+    // // Tells Mongoose to populate a field with all info, not just the ID. So userId field becomes full user object
+    // // Second arg is data to include (ID always included unless you explicitly exclude it)
+    // .populate('userId', 'name')
     .then((products) => {
+      console.log(products);
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
