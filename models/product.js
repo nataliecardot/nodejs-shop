@@ -23,6 +23,7 @@ const productSchema = new Schema({
     type: Schema.Types.ObjectId,
     // Tells Mongoose which other model is related to data in this field
     ref: 'User',
+    required: true,
   },
 });
 
