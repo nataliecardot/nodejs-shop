@@ -47,8 +47,12 @@ exports.getIndex = (req, res) => {
 
 exports.getCart = (req, res) => {
   req.user
-    .getCart()
-    .then((products) => {
+    // Get cart items where product ID is populated with product data
+    .populate('cart.items.productId')
+    // Needed to be able to chain then; executes populate() and returns promise
+    .execPopulate()
+    .then((user) => {
+      const products = user.cart.items;
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
