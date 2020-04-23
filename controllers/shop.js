@@ -2,6 +2,7 @@
 
 // Capital is convention for class name
 const Product = require('../models/product');
+const Order = require('../models/order');
 
 exports.getProducts = (req, res) => {
   // Mongoose method. Unlike with MongoDB driver, method does not provide a cursor, but all products (but could chain cursor() method to get access to cursor, then use eachAsync() to loop through them or next() to get next element)
@@ -89,7 +90,23 @@ exports.postCartDeleteProduct = (req, res) => {
 
 exports.postOrder = (req, res) => {
   req.user
-    .addOrder()
+    // Get cart items where product ID is populated with product data
+    .populate('cart.items.productId')
+    // Needed to be able to chain then; executes populate() and returns promise
+    .execPopulate()
+    .then((user) => {
+      const products = user.cart.items.map((i) => {
+        return { quantity: i.quantity, product: i.productId };
+      });
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products,
+      });
+      return order.save();
+    })
     .then((result) => {
       res.redirect('/orders');
     })
