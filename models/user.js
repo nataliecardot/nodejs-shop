@@ -29,8 +29,8 @@ const userSchema = new Schema({
   },
 });
 
-// Called on instance based on schema, on an object which will have a populated cart with either an empty array of items or one that has items
-// Function has to be written like this so `this` keyword refers to schema
+// Called on instance based on model (instances of models are documents), on an object which will have a populated cart with either an empty array of items or one that has items
+// Function assigned to methods object of schema has to be written like this so `this` keyword refers to schema
 userSchema.methods.addToCart = function (product) {
   // findIndex() returns matching index, or -1 if no matching index
   const cartProductIndex = this.cart.items.findIndex((cp) => {
