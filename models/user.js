@@ -57,6 +57,16 @@ userSchema.methods.addToCart = function (product) {
   return this.save();
 };
 
+userSchema.methods.removeFromCart = function (productId) {
+  // filter() JS method creates new array with all elements that pass test implemented by provided function (like find(), but returns array with all matching items rather than first one)
+  const updatedCartItems = this.cart.items.filter((i) => {
+    // Return true (keep) for all items except one being deleted
+    return i.productId.toString() !== productId.toString();
+  });
+  this.cart.items = updatedCartItems;
+  return this.save();
+};
+
 module.exports = mongoose.model('User', userSchema);
 
 // const mongodb = require('mongodb');
