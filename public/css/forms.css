@@ -14,7 +14,8 @@
 .form-control textarea {
   border: 1px solid #a1a1a1;
   font: inherit;
-  border-radius: 2px;
+  border-radius: 3px;
+  padding: 0.6em 0.8em;
 }
 
 .form-control input:focus,
