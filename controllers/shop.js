@@ -91,6 +91,7 @@ exports.postCartDeleteProduct = (req, res) => {
 exports.postOrder = (req, res) => {
   req.user
     // Get cart items where product ID is populated with product data
+    // productID was added as a key (holds product._id) in addToCart method of user schema
     .populate('cart.items.productId')
     // Needed to be able to chain then; executes populate() and returns promise
     .execPopulate()
