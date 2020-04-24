@@ -96,7 +96,8 @@ exports.postOrder = (req, res) => {
     .execPopulate()
     .then((user) => {
       const products = user.cart.items.map((i) => {
-        return { quantity: i.quantity, product: i.productId };
+        // _doc is provided by Mongoose. Using spread operator to pull out the full product data from it and store in new object
+        return { quantity: i.quantity, product: { ...i.productId._doc } };
       });
       const order = new Order({
         user: {
