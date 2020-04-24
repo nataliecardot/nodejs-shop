@@ -15,6 +15,7 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
 
 // Express middleware: Functions that execute during the lifecycle of a request to the Express server
 
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 // Addition of '/admin' makes it so only routes starting with /admin will go into the admin routes file, and Express will omit/ignore that segment in the URL when it tries to match routes in routes file
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 // Catchall middleware; for requests to path without any fitting middleware
 app.use(errorController.get404);
