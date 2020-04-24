@@ -44,8 +44,10 @@ form {
 
 .main-header__nav {
   height: 100%;
-  display: none;
+  width: 100%;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .main-header__item-list {
@@ -60,14 +62,20 @@ form {
   padding: 0;
 }
 
-.main-header__item a {
+.main-header__item a,
+.main-header__item button {
+  font: inherit;
+  background: transparent;
+  border: none;
   text-decoration: none;
   color: #fff;
 }
 
 .main-header__item a:hover,
 .main-header__item a:active,
-.main-header__item a.active {
+.main-header__item a.active,
+.main-header__item button:hover,
+.main-header__item button:active {
   color: #e7dd80;
 }
 
@@ -157,7 +165,6 @@ form {
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  position: relative;
   border-radius: 5px;
 }
 
@@ -184,9 +191,6 @@ form {
 .card__actions {
   padding: 1rem;
   text-align: center;
-  bottom: 0;
-  position: absolute;
-  width: 100%;
 }
 
 .card__actions button,
