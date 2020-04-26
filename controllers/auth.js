@@ -1,5 +1,6 @@
-exports.getLogin = (req, res) => {
-  // const isLoggedIn = req.get('Cookie').split('=')[1] === 'true';
+const User = require('../models/user');
+
+exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
@@ -7,15 +8,17 @@ exports.getLogin = (req, res) => {
   });
 };
 
-exports.postLogin = (req, res) => {
-  // Session object added by session middleware. By default session cookie expires when browser is closed
-  // Store data that persists across requests for same user (can click around, and isLoggedIn will still be true). Cookie still needed to identify user, but sensitive info stored on server; can't be modified by client. Session being stored in MongoDB (by default stored in memory)
-  req.session.isLoggedIn = true;
-  res.redirect('/');
+exports.postLogin = (req, res, next) => {
+  User.findById('5e9ff0fb5485a71f44e73136')
+    .then((user) => {
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      res.redirect('/');
+    })
+    .catch((err) => console.log(err));
 };
 
-exports.postLogout = (req, res) => {
-  // destroy() method is provided by connect-mongodb-session. Function passed is called once it's done destroying session
+exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     console.log(err);
     res.redirect('/');
