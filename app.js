@@ -44,6 +44,9 @@ app.use(
 
 // Stores user in request so it can be used anywhere in app. Since this middleware runs on every incoming request before it's handled by routes, the data stored is used in same request cycle as in the route handlers, the controllers
 app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
   User.findById('5e9ff0fb5485a71f44e73136')
     .then((user) => {
       // The user being stored in request is a full Mongoose model, so can call all Mongoose model methods on it
