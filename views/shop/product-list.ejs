@@ -25,8 +25,10 @@
           </div>
           <div class="card__actions">
             <a href="/products/<%= product._id %>" class="btn">Details</a>
-            <!-- Product is a local variable in this loop only, and the include within the loop doesn't receive it by default. But can make it available to the include by passing second argument to include function (the object key is what will be available in the include, and the value refers to the value in this iteration of the loop). Using destructuring, same as product: product -->
-            <%- include('../includes/add-to-cart.ejs', {product}) %>
+            <% if (isAuthenticated) { %>
+              <!-- Product is a local variable in this loop only, and the include within the loop doesn't receive it by default. But can make it available to the include by passing second argument to include function (the object key is what will be available in the include, and the value refers to the value in this iteration of the loop). Using destructuring, same as product: product -->
+              <%- include('../includes/add-to-cart.ejs', {product}) %>
+            <% } %>
           </div>
         </article>
         <% } %>
