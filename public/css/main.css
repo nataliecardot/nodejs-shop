@@ -240,6 +240,7 @@ form {
 
 .logout {
   cursor: pointer;
+  outline: none;
 }
 
 @media (max-width: 767px) {
