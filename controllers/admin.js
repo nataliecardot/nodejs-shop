@@ -1,53 +1,43 @@
 const Product = require('../models/product');
 
-// For GET request to add-product page
-exports.getAddProduct = (req, res) => {
-  // res.render renders a view template, optionally passing 'locals' object that contains properties that define local variables for the view
+exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
-    // You can set path to whatever you want; doesn't have to match route
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated: req.isLoggedIn,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
-// For POST request (from form submission; form has method="POST")
-exports.postAddProduct = (req, res) => {
-  // Create new object based on Product class (blueprint). title, etc., comes from attribute (name="title") in input
+exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  // Map values to fields defined in schema (order doesn't matter since it's in a JS object). Creates new product based on model, which is based on the schema
   const product = new Product({
-    title,
-    price,
-    description,
-    imageUrl,
-    // In Mongoose can just store entire object, and for convenience, Mongoose will extract ID (instead of using req.user._id)
+    title: title,
+    price: price,
+    description: description,
+    imageUrl: imageUrl,
     userId: req.user,
   });
   product
-    // Mongoose method
     .save()
-    // Technically you don't get a promise, but Mongoose provides then method
     .then((result) => {
-      console.log('Product created');
+      // console.log(result);
+      console.log('Created Product');
       res.redirect('/admin/products');
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-// Like getAddProduct, except here, will pass in the product information, and upon hitting save, want to edit rather than create product
-exports.getEditProduct = (req, res) => {
-  // Query object is created and managed by Express
-  // If edit param isn't set, will get undefined (falsy)
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect('/');
   }
-  // id can be retrieved from incoming request because it's part of dynamic segment in route (/admin/edit-product/:productID, GET)
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
@@ -56,19 +46,16 @@ exports.getEditProduct = (req, res) => {
       }
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
-        // You can set path to whatever you want; doesn't have to match route
         path: '/admin/edit-product',
         editing: editMode,
         product: product,
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
 };
 
-exports.postEditProduct = (req, res) => {
-  // Fetch info for the product and create new Product instance and populate it with that info then call Product.save()
-  // using productId because that's the name given to the hidden input in the edit-product.ejs view file
+exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
@@ -77,28 +64,22 @@ exports.postEditProduct = (req, res) => {
 
   Product.findById(prodId)
     .then((product) => {
-      // Thanks to Mongoose, this will not only be JS object with the product data, but a full Mongoose methon on which Mongoose methods like save() can be called. If save() called on existing object, not saved as new one, but an update is done
       product.title = updatedTitle;
       product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
       product.description = updatedDesc;
+      product.imageUrl = updatedImageUrl;
       return product.save();
     })
-    // Technically you don't get a promise, but Mongoose provides then method
     .then((result) => {
-      console.log('Product updated');
+      console.log('UPDATED PRODUCT!');
       res.redirect('/admin/products');
     })
     .catch((err) => console.log(err));
 };
 
-exports.getProducts = (req, res) => {
+exports.getProducts = (req, res, next) => {
   Product.find()
-    // // Specify which fields should be retrieved from database
-    // // Only retrieve title and price, excude ID
     // .select('title price -_id')
-    // // Tells Mongoose to populate a field with all info, not just the ID. So userId field becomes full user object
-    // // Second arg is data to include (ID always included unless you explicitly exclude it)
     // .populate('userId', 'name')
     .then((products) => {
       console.log(products);
@@ -106,21 +87,18 @@ exports.getProducts = (req, res) => {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
 };
 
-exports.postDeleteProduct = (req, res) => {
+exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  // findByIdAndRemove is a Mongoose method that removes a document
   Product.findByIdAndRemove(prodId)
-    // This will execute once destruction succeeded
     .then(() => {
-      console.log('Product destroyed');
+      console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
     .catch((err) => console.log(err));
-  // Will put this in a callback later to ensure it's only executed after deletion
 };
