@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -19,12 +20,14 @@ const authRoutes = require('./routes/auth');
 
 // Express middleware: Functions that execute during the lifecycle of a request to the Express server
 
-// Register body parser so req.body doesn't output undefined
-// body-parser is currently included with Express, but installing and using it as separate middleware just in case removed in future
+// Register body parser so req.body doesn't output undefined (body-parser is currently included with Express, but installing and using it as separate middleware in case removed in future)
 app.use(bodyParser.urlencoded({ extended: true }));
 // Static method that ships with Express is a built-in method that serves static files. Files served statically: not handled by Express.js router or other middleware, but instead directly forwarded to the file system. Path to folder to be served statically is passed in; a folder to grant read access to. Can do this for CSS, JS, images...
 // __dirname, a core Node.js feature, gives the absolute path of the directory containing the currently executing file (root folder)
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+);
 
 // Stores user in request so it can be used anywhere in app. Since this middleware runs on every incoming request before it's handled by routes, the data stored is used in same request cycle as in the route handlers, the controllers
 app.use((req, res, next) => {
