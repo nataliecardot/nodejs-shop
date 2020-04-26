@@ -13,3 +13,11 @@ exports.postLogin = (req, res) => {
   req.session.isLoggedIn = true;
   res.redirect('/');
 };
+
+exports.postLogout = (req, res) => {
+  // destroy() method is provided by connect-mongodb-session. Function passed is called once it's done destroying session
+  req.session.destroy((err) => {
+    console.log(err);
+    res.redirect('/');
+  });
+};
