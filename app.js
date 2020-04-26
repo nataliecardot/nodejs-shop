@@ -4,11 +4,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
+const MONGODB_URI =
+  'mongodb+srv://natalie:lRMEZPpEz50mgjZQ@cluster0-4yuid.mongodb.net/shop';
+
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions',
+});
 
 app.set('view engine', 'ejs');
 // Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
@@ -26,7 +34,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // __dirname, a core Node.js feature, gives the absolute path of the directory containing the currently executing file (root folder)
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store,
+  })
 );
 
 // Stores user in request so it can be used anywhere in app. Since this middleware runs on every incoming request before it's handled by routes, the data stored is used in same request cycle as in the route handlers, the controllers
@@ -50,10 +63,7 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(
-    'mongodb+srv://natalie:lRMEZPpEz50mgjZQ@cluster0-4yuid.mongodb.net/shop?retryWrites=true&w=majority',
-    { useUnifiedTopology: true, useNewUrlParser: true }
-  )
+  .connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then((result) => {
     User.findOne().then((user) => {
       if (!user) {
