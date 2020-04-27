@@ -254,6 +254,10 @@ h1 {
   outline: none;
 }
 
+.product-detail-description {
+  margin-bottom: 1.5rem;
+}
+
 @media (max-width: 767px) {
   .main-header {
     padding: 0 1.5rem 0 0.7rem;
