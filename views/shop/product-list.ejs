@@ -19,9 +19,7 @@
                   <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                 </div>
                 <div class="card__content">
-                  <h2 class="product__price">$
-                    <%= product.price %>
-                  </h2>
+                  <h2 class="product__price">$<%= product.price %></h2>
                   <p class="product__description">
                     <%= product.description %>
                   </p>
@@ -29,7 +27,7 @@
                 <div class="card__actions">
                   <a href="/products/<%= product._id %>" class="btn">Details</a>
                   <% if (isAuthenticated) { %>
-                    <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                    <%- include('../includes/add-to-cart.ejs', {product}) %>
                   <% } %>
                 </div>
               </article>

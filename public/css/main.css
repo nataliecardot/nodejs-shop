@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  padding: 2rem 3rem;
+  padding: 2rem 3rem 2.75rem 3rem;
   margin: auto;
 }
 
@@ -80,7 +80,7 @@ h1 {
 .main-header__item a.active,
 .main-header__item button:hover,
 .main-header__item button:active {
-  color: #e7dd80;
+  color: #bebebe;
 }
 
 .mobile-nav {
@@ -152,8 +152,8 @@ h1 {
 
 #side-menu-toggle:active,
 #side-menu-toggle:hover {
-  color: #e7dd80;
-  border-color: #e7dd80;
+  color: #bebebe;
+  border-color: #bebebe;
 }
 
 .backdrop {
