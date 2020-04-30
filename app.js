@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  // Express feature: set local variables passed into views
+  // Locals field: Express feature for setting local variables that are passed into views. For every request that is executed, these fields are set for view that is rendered
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.csrfToken = req.csrfToken();
   next();
