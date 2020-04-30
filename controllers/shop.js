@@ -22,7 +22,7 @@ exports.getProduct = (req, res, next) => {
   Product.findById(prodId)
     .then((product) => {
       res.render('shop/product-detail', {
-        product: product,
+        product,
         pageTitle: product.title,
         path: '/products',
         isAuthenticated: req.session.isLoggedIn,
@@ -55,7 +55,7 @@ exports.getCart = (req, res, next) => {
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: products,
+        products,
         isAuthenticated: req.session.isLoggedIn,
       });
     })
@@ -97,7 +97,7 @@ exports.postOrder = (req, res, next) => {
           name: req.user.name,
           userId: req.user,
         },
-        products: products,
+        products,
       });
       return order.save();
     })
@@ -116,7 +116,7 @@ exports.getOrders = (req, res, next) => {
       res.render('shop/orders', {
         path: '/orders',
         pageTitle: 'Your Orders',
-        orders: orders,
+        orders,
         isAuthenticated: req.session.isLoggedIn,
       });
     })
