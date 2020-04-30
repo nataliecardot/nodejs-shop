@@ -3,11 +3,14 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  // Workaround to solve issue of user message div being rendered even if no error, since otherwise errorMessage holds an empty array (truthy)
+  message.length > 0 ? (message = message[0]) : (message = null);
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
     // Only set if there was an error (no user with email/password) from login POST request. Whatever was stored under key 'error' is retrieved and stored in errorMessage, and then this info is removed from session
-    errorMessage: req.flash('error'),
+    errorMessage: message,
   });
 };
 
