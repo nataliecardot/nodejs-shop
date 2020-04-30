@@ -177,6 +177,10 @@ h1 {
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 5px;
+  /* Using flexbox to ensure card__actions (details, add to cart buttons) are aligned with bottom of card */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .card__header,
