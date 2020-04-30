@@ -262,6 +262,27 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
+.user-message {
+  margin: auto;
+  width: 90%;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-radius: 5px;
+  /* Same colors for Bootstrap 4 primary alert */
+  border: 1px solid #b8daff;
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.user-message--error {
+  /* Same colors for Bootstrap 4 danger alert */
+  border: 1px solid #f5c6cb;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Smartphones */
 @media (max-width: 767px) {
   .main-header {
     padding: 0 1.5rem 0 0.7rem;
@@ -280,5 +301,9 @@ h1 {
 
   #side-menu-toggle {
     display: none;
+  }
+
+  .user-message {
+    width: 30rem;
   }
 }
