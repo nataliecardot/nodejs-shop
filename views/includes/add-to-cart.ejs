@@ -1,4 +1,5 @@
 <form action="/cart" method="post">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <!-- type="submit" needed, but that's default for modern browsers (IE7 and below use button as default). See https://stackoverflow.com/questions/60629749/is-type-submit-the-default-for-a-button-in-a-form-in-ie8-through-11 -->
   <button class="btn">Add to Cart</button>
   <!-- Passing data (product ID) as part of POST request body. Hidden so not displayed on page, but still encoded in request that's being sent. The value is added to the request for that product ID -->
