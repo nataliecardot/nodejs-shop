@@ -10,15 +10,12 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
+  const { title, imageUrl, price, description } = req.body;
   const product = new Product({
-    title: title,
-    price: price,
-    description: description,
-    imageUrl: imageUrl,
+    title,
+    price,
+    description,
+    imageUrl,
     userId: req.user,
   });
   product
@@ -48,7 +45,7 @@ exports.getEditProduct = (req, res, next) => {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
         editing: editMode,
-        product: product,
+        product,
         isAuthenticated: req.session.isLoggedIn,
       });
     })
