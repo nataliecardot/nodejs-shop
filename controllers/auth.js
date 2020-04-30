@@ -6,6 +6,8 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
+    // Only set if there was an error (no user with email/password) from login POST request. Whatever was stored under key 'error' is retrieved and stored in errorMessage, and then this info is removed from session
+    errorMessage: req.flash('error'),
   });
 };
 
@@ -21,6 +23,8 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
+        // Key under which message will be stored, and message. Available in session until used
+        req.flash('error', 'Invalid email or password.');
         return res.redirect('/login');
       }
       // Validate password. bcrypt can compare password to hashed value, and can determine whether hashed value makes sense, taking into account hashing algorithm used. So if it were hashed, could it result in hashed password?
