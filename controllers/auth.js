@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-exports.getLogin = (req, res, next) => {
+exports.getLogin = (req, res) => {
   let message = req.flash('error');
   // Workaround to solve issue of user message div being rendered even if no error, since otherwise errorMessage holds an empty array (truthy)
   message.length > 0 ? (message = message[0]) : (message = null);
@@ -26,7 +26,7 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
-exports.getSignup = (req, res, next) => {
+exports.getSignup = (req, res) => {
   let message = req.flash('error');
   message.length > 0 ? (message = message[0]) : (message = null);
   res.render('auth/signup', {
@@ -36,7 +36,7 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
@@ -71,7 +71,7 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postSignup = (req, res, next) => {
+exports.postSignup = (req, res) => {
   // Will validate user input later
   const { email, password, confirmPassword } = req.body;
   // Look for email field in documents in users collection (email: email)
@@ -107,7 +107,7 @@ exports.postSignup = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postLogout = (req, res, next) => {
+exports.postLogout = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.log(err);
