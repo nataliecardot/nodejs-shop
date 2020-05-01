@@ -15,9 +15,12 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  message.length > 0 ? (message = message[0]) : (message = null);
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Sign Up',
+    errorMessage: message,
   });
 };
 
@@ -45,6 +48,7 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/');
             });
           }
+          req.flash('error', 'Invalid email or password.');
           res.redirect('/login');
         })
         .catch((err) => {
@@ -62,6 +66,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email })
     .then((userDoc) => {
       if (userDoc) {
+        req.flash('error', 'Email already in use.');
         return res.redirect('/signup');
       }
       // Generates hashed password. Asynchronous task; returns a promise. Second arg is salt value, how many rounds of hashing will be applied
