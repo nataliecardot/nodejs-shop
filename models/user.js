@@ -11,6 +11,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  // Token will only be present if requested to reset password
+  resetToken: String,
+  resetTokenExpiration: Date,
   // Embedded document
   cart: {
     // To define that you want to store an array, you simply create an array
