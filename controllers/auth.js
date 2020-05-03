@@ -134,7 +134,7 @@ exports.postResetPassword = (req, res) => {
       console.log(err);
       return redirect('/reset-password');
     }
-    // Passing hex because buffer stores hexadecimal values, and toString() needs that info to convert to ASCII characters
+    // Passing `hex` because buffer stores hexadecimal values, and toString() needs that info to convert to ASCII characters
     // Will look for token from URL in database to confirm password reset link was sent by app/server
     const token = buffer.toString('hex');
     // From password reset page email field
