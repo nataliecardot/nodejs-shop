@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "username",
+    "MONGO_PASSWORD": "password",
+    "MONGO_DEFAULT_DATABASE": "shop",
+    "SENDGRID_PASSWORD": "password"
+  }
+}
