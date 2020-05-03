@@ -144,7 +144,7 @@ exports.postResetPassword = (req, res) => {
             'error',
             'No account with the provided email address exists.'
           );
-          return redirect('/reset-password');
+          return res.redirect('/reset-password');
         }
         user.resetToken = token;
         // 3600000 ms = 1 hour
@@ -155,11 +155,12 @@ exports.postResetPassword = (req, res) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from: 'shop@nodecomplete.com',
+          from: 'cardotmedia@gmail.com',
           subject: 'Password reset',
           html: `
-            <p>You requested a password reset</p>
-            <p>Click this <a href="http://localhost:3000/reset-password/${token}">link</a> to set a new password.</p>
+            <p>We received your password reset request.</p>
+            <p>To set a new password, use this <a href="http://localhost:3000/reset-password/${token}">link</a>.</p>
+            <p>If you did not submit a request to change your password, please disregard this message.</p>
           `,
         });
       })
