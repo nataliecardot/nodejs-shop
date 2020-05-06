@@ -8,7 +8,7 @@
       <div class="image">
         <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
       </div>
-      <h2><%= product.price %></h2>
+      <h2>$<%= product.price %></h2>
       <p class="product-detail-description"><%= product.description %></p>
       <% if (isAuthenticated) { %>
         <%- include('../includes/add-to-cart.ejs', {product}) %>

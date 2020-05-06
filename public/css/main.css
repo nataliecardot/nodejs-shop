@@ -180,7 +180,7 @@ h1 {
   /* Using flexbox to ensure card__actions (details, add to cart buttons) are aligned with bottom of card */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .card__header,
