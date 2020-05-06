@@ -176,6 +176,13 @@ exports.getNewPassword = (req, res) => {
     resetTokenExpiration: { $gt: Date.now() },
   })
     .then((user) => {
+      if (!user) {
+        req.flash(
+          'error',
+          'Oops! That reset password link has already been used. If you still need to reset your password, submit a new request.'
+        );
+        return res.redirect('/login');
+      }
       let message = req.flash('error');
       message.length > 0 ? (message = message[0]) : (message = null);
       res.render('auth/new-password', {
