@@ -16,14 +16,22 @@ const transporter = nodemailer.createTransport(
 );
 
 exports.getLogin = (req, res) => {
+  // Used to instruct user to login with new password after resetting their password and redirected to login
+  let infoMessage = req.flash('success');
+  infoMessage.length > 0
+    ? (infoMessage = infoMessage[0])
+    : (infoMessage = null);
+
   let message = req.flash('error');
   // Workaround to solve issue of user message div being rendered even if no error, since otherwise errorMessage holds an empty array (truthy)
   message.length > 0 ? (message = message[0]) : (message = null);
+
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
     // Only set if there was an error (no user with email/password) from login POST request. Whatever was stored under key 'error' is retrieved and stored in errorMessage, and then this info is removed from session
     errorMessage: message,
+    infoMessage,
   });
 };
 
@@ -224,6 +232,11 @@ exports.postNewPassword = (req, res) => {
         subject: 'Password reset successful',
         html: `<p>Your Node Shop password has been changed.</p>`,
       });
+
+      let infoMessage = req.flash(
+        'success',
+        'Please sign in with your new password.'
+      );
 
       res.redirect('/login');
     })

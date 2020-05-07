@@ -7,6 +7,10 @@
    <%- include('../includes/navigation.ejs') %>
 
   <main>
+    <% if (infoMessage) { %>
+      <div class="user-message"><%= infoMessage %></div>
+    <% } %>
+
     <% if (errorMessage) { %>
       <!-- Reminder: Using BEM methodology for class naming https://css-tricks.com/bem-101/ -->
       <div class="user-message user-message--error"><%= errorMessage %></div>
