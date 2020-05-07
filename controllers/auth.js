@@ -158,7 +158,7 @@ exports.postResetPassword = (req, res) => {
           from: 'cardotmedia@gmail.com',
           subject: 'Password reset',
           html: `
-            <p>We received your password reset request.</p>
+            <p>We received your Node Shop password reset request.</p>
             <p>To set a new password, use this <a href="http://localhost:3000/reset-password/${token}">link</a>.</p>
             <p>If you did not submit a request to change your password, please disregard this message.</p>
           `,
@@ -218,6 +218,13 @@ exports.postNewPassword = (req, res) => {
       return resetUser.save();
     })
     .then((result) => {
+      transporter.sendMail({
+        to: resetUser.email,
+        from: 'cardotmedia@gmail.com',
+        subject: 'Password reset successful',
+        html: `<p>Your Node Shop password has been changed.</p>`,
+      });
+
       res.redirect('/login');
     })
     .catch((err) => console.log(err));
