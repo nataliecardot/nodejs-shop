@@ -184,11 +184,11 @@ exports.getNewPassword = (req, res) => {
     resetTokenExpiration: { $gt: Date.now() },
   })
     .then((user) => {
-      // This will be the case if a password reset link is clicked after it was already used, since resetToken and resetTokenExpiration fields are set to undefined after password is reset
+      // This will be the case if a password reset link is clicked after it was already used, since resetToken and resetTokenExpiration fields are set to undefined after password is reset. Also displayed if random text entered in place of token in reset password page URL
       if (!user) {
         req.flash(
           'error',
-          'Oops! That reset password link has already been used. If you would still like to reset your password, submit a new request.'
+          'Invalid password reset link. To reset your password, submit a new request.'
         );
         return res.redirect('/login');
       }
