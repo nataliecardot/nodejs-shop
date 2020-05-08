@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  padding: 2rem 3rem 2.75rem 3rem;
+  padding: 0.5rem 3rem;
   margin: auto;
 }
 
@@ -279,6 +279,10 @@ h1 {
   border: 1px solid #b8daff;
   background-color: #cce5ff;
   color: #004085;
+}
+
+li:last-of-type {
+  margin-bottom: 0;
 }
 
 .user-message--error {
