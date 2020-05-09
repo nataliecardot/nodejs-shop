@@ -85,11 +85,10 @@ exports.postSignup = (req, res) => {
   const { email, password, confirmPassword } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.array());
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Sign Up',
-      errorMessage: errors.array(),
+      errorMessage: errors.array()[0].msg,
     });
   }
   // Look for email field in documents in users collection (email: email)
