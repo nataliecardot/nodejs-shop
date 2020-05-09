@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
@@ -81,8 +82,16 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSignup = (req, res) => {
-  // Will validate user input later
   const { email, password, confirmPassword } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render('auth/signup', {
+      path: '/signup',
+      pageTitle: 'Sign Up',
+      errorMessage: errors.array(),
+    });
+  }
   // Look for email field in documents in users collection (email: email)
   User.findOne({ email })
     .then((userDoc) => {
