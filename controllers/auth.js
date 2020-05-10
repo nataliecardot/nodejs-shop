@@ -29,7 +29,7 @@ exports.getLogin = (req, res) => {
 
   res.render('auth/login', {
     path: '/login',
-    pageTitle: 'Login',
+    pageTitle: 'Log In',
     // Only set if there was an error (no user with email/password) from login POST request. Whatever was stored under key 'error' is retrieved and stored in errorMessage, and then this info is removed from session
     errorMessage: message,
     infoMessage,
@@ -43,11 +43,26 @@ exports.getSignup = (req, res) => {
     path: '/signup',
     pageTitle: 'Sign Up',
     errorMessage: message,
+    oldInput: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 };
 
 exports.postLogin = (req, res) => {
   const { email, password } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render('auth/login', {
+      path: '/login',
+      pageTitle: 'Log In',
+      errorMessage: errors.array()[0].msg,
+    });
+  }
+
   User.findOne({ email })
     .then((user) => {
       if (!user) {
@@ -82,13 +97,15 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSignup = (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, confirmPassword } = req.body;
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Sign Up',
       errorMessage: errors.array()[0].msg,
+      oldInput: { email, password, confirmPassword },
     });
   }
 
@@ -108,7 +125,7 @@ exports.postSignup = (req, res) => {
       // sendMail() provides a promise. Returning in order to chain .catch() and catch any errors
       return transporter.sendMail({
         to: email,
-        from: 'shop@nodecomplete.com',
+        from: 'cardotmedia@gmail.com',
         subject: 'Welcome to Node Shop!',
         html: '<h1>You have successfully signed up.</h1>',
       });
