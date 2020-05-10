@@ -2,6 +2,7 @@ const express = require('express');
 const { check, body } = require('express-validator');
 
 const authController = require('../controllers/auth');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -20,10 +21,16 @@ router.post(
       .withMessage('Please enter a valid email.')
       // Method found in validator.js docs. validator.js implicitly installed with express-validator
       .custom((value, { req }) => {
-        if (value === 'test1@test.com') {
-          throw new Error('This email is forbidden');
-        }
-        return true;
+        // if (value === 'test1@test.com') {
+        //   throw new Error('This email is forbidden');
+        // }
+        // return true;
+        // Look for email field in documents in users collection (email: email)
+        return User.findOne({ email: value }).then((userDoc) => {
+          if (userDoc) {
+            return Promise.reject('Email already in use.');
+          }
+        });
       }),
     // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.]). Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
     body(

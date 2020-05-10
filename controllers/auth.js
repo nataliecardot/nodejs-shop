@@ -82,7 +82,7 @@ exports.postLogin = (req, res) => {
 };
 
 exports.postSignup = (req, res) => {
-  const { email, password, confirmPassword } = req.body;
+  const { email, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/signup', {
@@ -91,35 +91,27 @@ exports.postSignup = (req, res) => {
       errorMessage: errors.array()[0].msg,
     });
   }
-  // Look for email field in documents in users collection (email: email)
-  User.findOne({ email })
-    .then((userDoc) => {
-      if (userDoc) {
-        req.flash('error', 'Email already in use.');
-        return res.redirect('/signup');
-      }
-      // Generates hashed password. Asynchronous task; returns a promise. Second arg is salt value, how many rounds of hashing will be applied
-      return bcrypt
-        .hash(password, 12)
-        .then((hashedPassword) => {
-          const user = new User({
-            email,
-            password: hashedPassword,
-            cart: { items: [] },
-          });
-          return user.save();
-        })
-        .then((result) => {
-          res.redirect('/login');
-          // sendMail() provides a promise. Returning in order to chain .catch() and catch any errors
-          return transporter.sendMail({
-            to: email,
-            from: 'shop@nodecomplete.com',
-            subject: 'Welcome to Node Shop!',
-            html: '<h1>You have successfully signed up.</h1>',
-          });
-        })
-        .catch((err) => console.log(err));
+
+  // Generates hashed password. Asynchronous task; returns a promise. Second arg is salt value, how many rounds of hashing will be applied
+  bcrypt
+    .hash(password, 12)
+    .then((hashedPassword) => {
+      const user = new User({
+        email,
+        password: hashedPassword,
+        cart: { items: [] },
+      });
+      return user.save();
+    })
+    .then((result) => {
+      res.redirect('/login');
+      // sendMail() provides a promise. Returning in order to chain .catch() and catch any errors
+      return transporter.sendMail({
+        to: email,
+        from: 'shop@nodecomplete.com',
+        subject: 'Welcome to Node Shop!',
+        html: '<h1>You have successfully signed up.</h1>',
+      });
     })
     .catch((err) => console.log(err));
 };
