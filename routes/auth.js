@@ -28,10 +28,16 @@ router.post(
     // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.]). Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
     body(
       'password',
-      'Password must be at least 8 characters long, with alphanumeric characters only.'
+      'Please use a password with a minimum of 8 alphanumeric characters.'
     )
       .isLength({ min: 8 })
       .isAlphanumeric(),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Passwords do not match.');
+      }
+      return true;
+    }),
   ],
   authController.postSignup
 );
