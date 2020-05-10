@@ -13,7 +13,16 @@ router.post('/login', authController.postLogin);
 
 router.post(
   '/signup',
-  check('email').isEmail().withMessage('Please enter a valid email.'),
+  check('email')
+    .isEmail()
+    .withMessage('Please enter a valid email.')
+    // Method found in validator.js docs. validator.js implicitly installed with express-validator
+    .custom((value, { req }) => {
+      if (value === 'test1@test.com') {
+        throw new Error('This email is forbidden');
+      }
+      return true;
+    }),
   authController.postSignup
 );
 
