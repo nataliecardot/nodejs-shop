@@ -1,5 +1,5 @@
 const express = require('express');
-const { check } = require('express-validator');
+const { check, body } = require('express-validator');
 
 const authController = require('../controllers/auth');
 
@@ -13,16 +13,26 @@ router.post('/login', authController.postLogin);
 
 router.post(
   '/signup',
-  check('email')
-    .isEmail()
-    .withMessage('Please enter a valid email.')
-    // Method found in validator.js docs. validator.js implicitly installed with express-validator
-    .custom((value, { req }) => {
-      if (value === 'test1@test.com') {
-        throw new Error('This email is forbidden');
-      }
-      return true;
-    }),
+  // Wrapping checks in array is not required, but makes it clearer that this block is about validation
+  [
+    check('email')
+      .isEmail()
+      .withMessage('Please enter a valid email.')
+      // Method found in validator.js docs. validator.js implicitly installed with express-validator
+      .custom((value, { req }) => {
+        if (value === 'test1@test.com') {
+          throw new Error('This email is forbidden');
+        }
+        return true;
+      }),
+    // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.]). Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
+    body(
+      'password',
+      'Password must be at least 8 characters long, with alphanumeric characters only.'
+    )
+      .isLength({ min: 8 })
+      .isAlphanumeric(),
+  ],
   authController.postSignup
 );
 
