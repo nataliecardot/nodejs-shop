@@ -48,6 +48,7 @@ exports.getSignup = (req, res) => {
       password: '',
       confirmPassword: '',
     },
+    validationErrors: [],
   });
 };
 
@@ -106,6 +107,7 @@ exports.postSignup = (req, res) => {
       pageTitle: 'Sign Up',
       errorMessage: errors.array()[0].msg,
       oldInput: { email, password, confirmPassword },
+      validationErrors: errors.array(),
     });
   }
 
