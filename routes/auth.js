@@ -13,6 +13,7 @@ router.get('/signup', authController.getSignup);
 router.post(
   '/login',
   [
+    // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.])
     body('email')
       .isEmail()
       .withMessage('Please enter a valid email address.')
@@ -47,7 +48,7 @@ router.post(
         });
       })
       .normalizeEmail(),
-    // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.]). Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
+    // Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
     body(
       'password',
       'Please use a password with a minimum of 8 alphanumeric characters.'
