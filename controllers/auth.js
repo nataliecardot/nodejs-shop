@@ -17,12 +17,6 @@ const transporter = nodemailer.createTransport(
 );
 
 exports.getLogin = (req, res) => {
-  // Used to instruct user to login with new password after resetting their password and redirected to login
-  let infoMessage = req.flash('success');
-  infoMessage.length > 0
-    ? (infoMessage = infoMessage[0])
-    : (infoMessage = null);
-
   let message = req.flash('error');
   // Workaround to solve issue of user message div being rendered even if no error, since otherwise errorMessage holds an empty array (truthy)
   message.length > 0 ? (message = message[0]) : (message = null);
@@ -32,7 +26,11 @@ exports.getLogin = (req, res) => {
     pageTitle: 'Log In',
     // Only set if there was an error (no user with email/password) from login POST request. Whatever was stored under key 'error' is retrieved and stored in errorMessage, and then this info is removed from session
     errorMessage: message,
-    infoMessage,
+    oldInput: {
+      email: '',
+      password: '',
+    },
+    validationErrors: [],
   });
 };
 
@@ -61,15 +59,27 @@ exports.postLogin = (req, res) => {
       path: '/login',
       pageTitle: 'Log In',
       errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email,
+        password,
+      },
+      validationErrors: errors.array(),
     });
   }
 
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        // Key under which message will be stored, and message. Available in session until used
-        req.flash('error', 'Invalid email or password.');
-        return res.redirect('/login');
+        return res.status(422).render('auth/login', {
+          path: '/login',
+          pageTitle: 'Log In',
+          errorMessage: 'Invalid email or password.',
+          oldInput: {
+            email,
+            password,
+          },
+          validationErrors: [],
+        });
       }
       // Validate password. bcrypt can compare password to hashed value, and can determine whether hashed value makes sense, taking into account hashing algorithm used. So if it were hashed, could it result in hashed password?
       bcrypt
@@ -86,8 +96,16 @@ exports.postLogin = (req, res) => {
               res.redirect('/');
             });
           }
-          req.flash('error', 'Invalid email or password.');
-          res.redirect('/login');
+          return res.status(422).render('auth/login', {
+            path: '/login',
+            pageTitle: 'Log In',
+            errorMessage: 'Invalid email or password.',
+            oldInput: {
+              email,
+              password,
+            },
+            validationErrors: [],
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -251,11 +269,6 @@ exports.postNewPassword = (req, res) => {
         subject: 'Password reset successful',
         html: `<p>Your Node Shop password has been changed.</p>`,
       });
-
-      let infoMessage = req.flash(
-        'success',
-        'Please sign in with your new password.'
-      );
 
       res.redirect('/login');
     })

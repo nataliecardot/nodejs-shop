@@ -7,22 +7,30 @@
    <%- include('../includes/navigation.ejs') %>
 
   <main>
-    <% if (infoMessage) { %>
-      <div class="user-message"><%= infoMessage %></div>
-    <% } %>
-
     <% if (errorMessage) { %>
       <!-- Reminder: Using BEM methodology for class naming https://css-tricks.com/bem-101/ -->
       <div class="user-message user-message--error"><%= errorMessage %></div>
     <% } %>
-    <form class="login-form" action="/login" method="POST">
+    <form class="login-form" action="/login" method="POST" novalidate>
       <div class="form-control">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email">
+        <input
+          class="<%= validationErrors.find(error => error.param === 'email') ? 'invalid' : '' %>"
+          type="email"
+          name="email"
+          id="email"
+          value="<%= oldInput.email %>"
+        >
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password">
+        <input
+          class="<%= validationErrors.find(error => error.param === 'password') ? 'invalid' : '' %>"
+          type="password"
+          name="password"
+          id="password"
+          value="<%= oldInput.password %>"
+        >
       </div>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button class="btn" type="submit">Login</button>
