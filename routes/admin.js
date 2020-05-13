@@ -19,10 +19,17 @@ router.get('/products', isAuth, adminController.getProducts);
 router.post(
   '/add-product',
   [
-    body('title').isString().isLength({ min: 3 }).trim(),
+    body('title')
+      .trim()
+      .isString()
+      .isLength({ min: 3, max: 50 })
+      .withMessage('Title must be 3 to 50 characters in length.'),
     body('imageUrl').trim().isURL(),
     body('price').isFloat(),
-    body('description').isLength({ min: 5, max: 400 }).trim(),
+    body('description')
+      .trim()
+      .isLength({ min: 5, max: 400 })
+      .withMessage('Description must be 5 to 400 characters in length.'),
   ],
   isAuth,
   adminController.postAddProduct
@@ -34,10 +41,17 @@ router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
 router.post(
   '/edit-product',
   [
-    body('title').isString().isLength({ min: 3 }).trim(),
+    body('title')
+      .trim()
+      .isString()
+      .isLength({ min: 3, max: 50 })
+      .withMessage('Title must be 3 to 50 characters in length.'),
     body('imageUrl').trim().isURL(),
     body('price').isFloat(),
-    body('description').isLength({ min: 5, max: 400 }).trim(),
+    body('description')
+      .trim()
+      .isLength({ min: 5, max: 400 })
+      .withMessage('Description must be 5 to 400 characters in length.'),
   ],
   isAuth,
   adminController.postEditProduct
