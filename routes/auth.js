@@ -29,7 +29,7 @@ router.post(
 
 router.post(
   '/signup',
-  // Wrapping checks in array is not required, but makes it clearer that this block is about validation
+  // Wrapping checks in array is not required but makes it clearer that this block is about validation
   [
     check('email')
       .isEmail()
@@ -48,7 +48,7 @@ router.post(
         });
       })
       .normalizeEmail(),
-    // Adding validation error message as second argument as alternative to using withMessage() after each validator, since using message for both
+    // Adding validation error message as second argument as alternative to using withMessage() after each validator since using message for both checks
     body(
       'password',
       'Please use a password with a minimum of 8 alphanumeric characters.'
