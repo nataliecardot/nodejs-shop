@@ -129,7 +129,7 @@ exports.postSignup = (req, res) => {
     });
   }
 
-  // Generates hashed password. Asynchronous task; returns a promise. Second arg is salt value, how many rounds of hashing will be applied
+  // Generates hashed password. Asynchronous task; returns a promise. Second arg is salt value (how many rounds of hashing will be applied)
   bcrypt
     .hash(password, 12)
     .then((hashedPassword) => {
