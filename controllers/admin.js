@@ -64,11 +64,15 @@ exports.postAddProduct = (req, res) => {
       //   errorMessage: 'Database operation failed. Please try again.',
       //   validationErrors: [],
       // });
-      res.redirect('/500');
+      // res.redirect('/500');
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      // When next is called with error passed as arg, informs Express that an error occurred, and Express will skip to error-handling middleware
+      return next(error);
     });
 };
 
-exports.getEditProduct = (req, res) => {
+exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect('/');
@@ -89,7 +93,11 @@ exports.getEditProduct = (req, res) => {
         validationErrors: [],
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postEditProduct = (req, res) => {

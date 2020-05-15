@@ -77,6 +77,12 @@ app.get('/500', errorController.get500);
 
 app.use(errorController.get404);
 
+// Error-handling middleware. Express executes this middleware when you call next() with an error passed to it
+app.use((error, req, res, next) => {
+  // res.status(error.httpStatusCode).render(...);
+  res.redirect('/500');
+});
+
 mongoose
   .connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then((result) => {
