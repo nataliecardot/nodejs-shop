@@ -45,6 +45,15 @@ app.use(csrfProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
+  // Locals field: Express feature for setting local variables that are passed into views. For every request that is executed, these fields are set for view that is rendered
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use((req, res, next) => {
+  // When you throw an error in synchronous places (outside of callbacks and promises), Express will detect this and execute next error handling middleware. But if error is thrown within async code (in then or catch block), Express error handling middleware won't be executed; app will simply crash; have to use next()
+  // throw new Error('sync dummy');
   if (!req.session.user) {
     return next();
   }
@@ -58,15 +67,9 @@ app.use((req, res, next) => {
     })
     // catch block will be executed in the case of technical issue (e.g., database down, or insufficient permissions to execute findById())
     .catch((err) => {
-      throw new Error(err);
+      // Within async code snippets, need to use next wrapping error, outside you can throw error
+      next(new Error(err));
     });
-});
-
-app.use((req, res, next) => {
-  // Locals field: Express feature for setting local variables that are passed into views. For every request that is executed, these fields are set for view that is rendered
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
 });
 
 app.use('/admin', adminRoutes);
@@ -80,7 +83,12 @@ app.use(errorController.get404);
 // Error-handling middleware. Express executes this middleware when you call next() with an error passed to it
 app.use((error, req, res, next) => {
   // res.status(error.httpStatusCode).render(...);
-  res.redirect('/500');
+  // res.redirect('/500');
+  res.status(500).render('500', {
+    pageTitle: 'Server Error',
+    path: '/500',
+    isAuthenticated: req.session.isLoggedIn,
+  });
 });
 
 mongoose
