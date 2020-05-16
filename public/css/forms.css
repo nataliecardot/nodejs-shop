@@ -28,3 +28,8 @@
   border-color: #db1c1c;
   outline: 0;
 }
+
+.form-control.file-picker input {
+  border: none;
+  padding: 0;
+}
