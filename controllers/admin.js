@@ -14,7 +14,7 @@ exports.getAddProduct = (req, res) => {
 };
 
 exports.postAddProduct = (req, res) => {
-  const { title, imageUrl, price, description } = req.body;
+  const { title, image, price, description } = req.body;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -26,7 +26,7 @@ exports.postAddProduct = (req, res) => {
       hasError: true,
       product: {
         title,
-        imageUrl,
+        image,
         price,
         description,
       },
@@ -98,7 +98,7 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
-exports.postEditProduct = (req, res) => {
+exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;

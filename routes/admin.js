@@ -24,7 +24,6 @@ router.post(
       .isString()
       .isLength({ min: 3, max: 50 })
       .withMessage('Title must be 3 to 50 characters in length.'),
-    body('imageUrl').trim().isURL(),
     body('price').isFloat(),
     body('description')
       .trim()
@@ -46,7 +45,6 @@ router.post(
       .isString()
       .isLength({ min: 3, max: 50 })
       .withMessage('Title must be 3 to 50 characters in length.'),
-    body('imageUrl').trim().isURL(),
     body('price').isFloat(),
     body('description')
       .trim()
