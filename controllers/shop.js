@@ -157,7 +157,7 @@ exports.getInvoice = (req, res, next) => {
       const invoicePath = path.join('data', 'invoices', invoiceName);
       // 2nd arg is callback to execute once Node is done reading file
       // data will be in buffer format
-      fs.readfile(invoicePath, (err, data) => {
+      fs.readFile(invoicePath, (err, data) => {
         if (err) {
           return next(err);
         }
