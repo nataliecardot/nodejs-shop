@@ -145,17 +145,30 @@ exports.getOrders = (req, res) => {
 
 exports.getInvoice = (req, res, next) => {
   const orderId = req.params.orderId;
-  const invoiceName = `invoice-${orderId}.pdf`;
-  const invoicePath = path.join('data', 'invoices', invoiceName);
-  // 2nd arg is callback to execute once Node is done reading file
-  // data will be in buffer format
-  fs.readfile(invoicePath, (err, data) => {
-    if (err) {
-      return next(err);
-    }
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename="`${invoiceName}`"');
-    // Function provided by Express middleware
-    res.send(data);
-  });
+  Order.findById(orderId)
+    .then((order) => {
+      if (!order) {
+        return next(new Error('No order found.'));
+      }
+      if (order.user.userId.toString() !== req.user._id.toString()) {
+        return next(new Error('Unauthorized'));
+      }
+      const invoiceName = `invoice-${orderId}.pdf`;
+      const invoicePath = path.join('data', 'invoices', invoiceName);
+      // 2nd arg is callback to execute once Node is done reading file
+      // data will be in buffer format
+      fs.readfile(invoicePath, (err, data) => {
+        if (err) {
+          return next(err);
+        }
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader(
+          'Content-Disposition',
+          'inline; filename="`${invoiceName}`"'
+        );
+        // Function provided by Express middleware
+        res.send(data);
+      });
+    })
+    .catch((err) => next(err));
 };
