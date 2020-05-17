@@ -23,7 +23,7 @@ const store = new MongoDBStore({
   collection: 'sessions',
 });
 // Secret used for signing/hashing token is stored in session by default
-const csrfProtection = csrf({});
+const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
   // Path

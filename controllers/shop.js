@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 
@@ -138,4 +141,19 @@ exports.getOrders = (req, res) => {
       error.httpStatusCode = 500;
       return next(error);
     });
+};
+
+exports.getInvoice = (req, res, next) => {
+  const orderId = req.params.orderId;
+  const invoiceName = `invoice-${orderId}.pdf`;
+  const invoicePath = path.join('data', 'invoices', invoiceName);
+  // 2nd arg is callback to execute once Node is done reading file
+  // data will be in buffer format
+  fs.readfile(invoicePath, (err, data) => {
+    if (err) {
+      return next(err);
+    }
+    // Function provided by Express middleware
+    res.send(data);
+  });
 };
