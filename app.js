@@ -35,6 +35,14 @@ const fileStorage = multer.diskStorage({
   },
 });
 
+const fileFilter = (req, file, cb) => {
+  file.mimetype === 'image/png' ||
+  file.mimetype === 'image/jpg' ||
+  file.mimetype === 'image/jpeg'
+    ? cb(null, true)
+    : cb(null, false);
+};
+
 app.set('view engine', 'ejs');
 // Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
 app.set('views', 'views');
@@ -44,7 +52,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer({ storage: fileStorage }).single('image'));
+app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
