@@ -24,6 +24,15 @@ const store = new MongoDBStore({
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf({});
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.filename + '-' + file.originalname);
+  },
+});
+
 app.set('view engine', 'ejs');
 // Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
 app.set('views', 'views');
@@ -33,8 +42,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// Expect single file. Input name is set to image. multer collects image data in a buffer, like a bus stop, gives you a way of working with stream data. Configuring multer with dest option so instead of buffering all the data in memory, it can then turn buffer back into binary data, and stores it in path images
-app.use(multer({ dest: 'images' }).single('image'));
+app.use(multer({ storage: fileStorage }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
