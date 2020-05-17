@@ -153,6 +153,8 @@ exports.getInvoice = (req, res, next) => {
     if (err) {
       return next(err);
     }
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="`${invoiceName}`"');
     // Function provided by Express middleware
     res.send(data);
   });
