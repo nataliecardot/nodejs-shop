@@ -8,7 +8,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
-const uuidv4 = require('uuid/v4');
+const { uuid } = require('uuidv4');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -32,7 +32,7 @@ const fileStorage = multer.diskStorage({
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
-    cb(null, uuidv4());
+    cb(null, uuid());
   },
 });
 
