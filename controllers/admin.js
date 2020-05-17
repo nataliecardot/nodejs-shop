@@ -16,7 +16,22 @@ exports.getAddProduct = (req, res) => {
 exports.postAddProduct = (req, res) => {
   const { title, price, description } = req.body;
   const image = req.file;
-  console.log(image);
+  // If not set, multer declined incoming file
+  if (!image) {
+    return res.status(422).render('admin/edit-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
+      editing: false,
+      hasError: true,
+      product: {
+        title,
+        price,
+        description,
+      },
+      errorMessage: 'Attached file is not an image.',
+      validationErrors: [],
+    });
+  }
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -28,7 +43,6 @@ exports.postAddProduct = (req, res) => {
       hasError: true,
       product: {
         title,
-        image,
         price,
         description,
       },
@@ -36,6 +50,8 @@ exports.postAddProduct = (req, res) => {
       validationErrors: errors.array(),
     });
   }
+
+  const imageUrl = image.path;
 
   const product = new Product({
     title,
