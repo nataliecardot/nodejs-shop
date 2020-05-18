@@ -169,26 +169,23 @@ exports.getInvoice = (req, res, next) => {
       // Return PDF to client. Pipe into response (response is a writable stream [destination to which data can be written])
       pdfDoc.pipe(res);
 
-      pdfDoc.text('Hello world');
+      pdfDoc.fontSize(26).text('Invoice', {
+        underline: true,
+        align: 'center',
+      });
+      let totalPrice = 0;
+      order.products.forEach((prod) => {
+        totalPrice += prod.quantity * prod.product.price;
+        pdfDoc
+          .fontSize(14)
+          .text(
+            `${prod.product.title} – ${prod.quantity} x $${prod.product.price}`
+          );
+      });
+      pdfDoc.text('---');
+      pdfDoc.fontSize(16).text(`Total: $${totalPrice}`);
 
       pdfDoc.end();
-      // // 2nd arg is callback to execute once Node is done reading file
-      // // data will be in buffer format
-      // fs.readFile(invoicePath, (err, data) => {
-      //   if (err) {
-      //     return next(err);
-      //   }
-      //   res.setHeader('Content-Type', 'application/pdf');
-      //   res.setHeader(
-      //     'Content-Disposition',
-      //     'inline; filename="`${invoiceName}`"'
-      //   );
-      //   // Function provided by Express middleware
-      //   res.send(data);
-      // });
-      // const file = fs.createReadStream(invoicePath);
-
-      // file.pipe(res);
     })
     .catch((err) => next(err));
 };
