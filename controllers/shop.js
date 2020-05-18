@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const PDFDocument = require('pdfkit');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 
@@ -155,6 +157,21 @@ exports.getInvoice = (req, res, next) => {
       }
       const invoiceName = `invoice-${orderId}.pdf`;
       const invoicePath = path.join('data', 'invoices', invoiceName);
+
+      const pdfDoc = new PDFDocument();
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader(
+        'Content-Disposition',
+        'inline; filename="`${invoiceName}`"'
+      );
+      // pdfDoc is a readable stream [source from which data can be consumed]; pipe into writable stream. Also ensures generated PDF gets stored on server, not just served to client
+      pdfDoc.pipe(fs.createWriteStream(invoicePath));
+      // Return PDF to client. Pipe into response (response is a writable stream [destination to which data can be written])
+      pdfDoc.pipe(res);
+
+      pdfDoc.text('Hello world');
+
+      pdfDoc.end();
       // // 2nd arg is callback to execute once Node is done reading file
       // // data will be in buffer format
       // fs.readFile(invoicePath, (err, data) => {
@@ -169,13 +186,9 @@ exports.getInvoice = (req, res, next) => {
       //   // Function provided by Express middleware
       //   res.send(data);
       // });
-      const file = fs.createReadStream(invoicePath);
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        'inline; filename="`${invoiceName}`"'
-      );
-      file.pipe(res);
+      // const file = fs.createReadStream(invoicePath);
+
+      // file.pipe(res);
     })
     .catch((err) => next(err));
 };
