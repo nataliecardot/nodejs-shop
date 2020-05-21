@@ -292,6 +292,26 @@ li:last-of-type {
   color: #721c24;
 }
 
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.pagination a {
+  text-decoration: none;
+  padding: 0.5rem 0.6rem;
+  color: #37474f;
+  border: 1px solid #37474f;
+  border-radius: 3px;
+  margin: 0 1rem;
+}
+
+.pagination a:hover,
+.pagination a:active {
+  background: #37474f;
+  color: #fff;
+}
+
 /* Smartphones */
 @media (max-width: 767px) {
   .main-header {
