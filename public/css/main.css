@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  padding: 1rem 3rem;
+  padding: 2.5rem;
   margin: auto;
 }
 
@@ -170,8 +170,7 @@ h1 {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: stretch;
+  justify-content: center;
 }
 
 .card {
@@ -221,7 +220,7 @@ h1 {
   border: 1px solid #37474f;
   color: #37474f;
   background: #fff;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -234,7 +233,7 @@ h1 {
   border: 1px solid #37474f;
   color: #37474f;
   background: #fff;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
   color: #d9534f;
   border-color: #d9534f;
@@ -293,7 +292,7 @@ li:last-of-type {
 }
 
 .pagination {
-  margin-top: 2rem;
+  margin: 2.5rem 0;
   text-align: center;
 }
 
@@ -302,7 +301,7 @@ li:last-of-type {
   padding: 0.5rem 0.6rem;
   color: #37474f;
   border: 1px solid #37474f;
-  border-radius: 3px;
+  border-radius: 5px;
   margin: 0 0.3rem;
 }
 
@@ -320,7 +319,7 @@ li:last-of-type {
   }
 
   main {
-    padding: 2rem;
+    padding: 1.5rem 0;
   }
 }
 

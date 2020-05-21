@@ -4,7 +4,7 @@
 }
 
 .order-btn-container {
-  width: 40rem;
+  width: 50%;
   margin: 1.5rem auto 0 auto;
 }
 
@@ -13,7 +13,7 @@
   margin: 0;
   padding: 0;
   margin: auto;
-  width: 40rem;
+  width: 50%;
 }
 
 .cart__item {
