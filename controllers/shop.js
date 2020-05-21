@@ -42,7 +42,8 @@ exports.getProduct = (req, res) => {
 };
 
 exports.getIndex = (req, res) => {
-  const page = req.query.page;
+  // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
+  const page = +req.query.page || 1;
   let totalItems;
 
   Product.find()

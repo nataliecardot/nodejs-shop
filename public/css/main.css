@@ -307,7 +307,8 @@ li:last-of-type {
 }
 
 .pagination a:hover,
-.pagination a:active {
+.pagination a:active,
+.pagination a.active {
   background: #37474f;
   color: #fff;
 }
