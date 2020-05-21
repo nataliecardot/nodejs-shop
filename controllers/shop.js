@@ -43,16 +43,31 @@ exports.getProduct = (req, res) => {
 
 exports.getIndex = (req, res) => {
   const page = req.query.page;
+  let totalItems;
+
   Product.find()
-    // Skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    // Only fetch amt of items to display on current page
-    .limit(ITEMS_PER_PAGE)
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return (
+        Product.find()
+          // Skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
+          .skip((page - 1) * ITEMS_PER_PAGE)
+          // Only fetch amt of items to display on current page
+          .limit(ITEMS_PER_PAGE)
+      );
+    })
     .then((products) => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Home',
         path: '/',
+        totalProducts: totalItems,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
       });
     })
     .catch((err) => {
