@@ -55,6 +55,9 @@ router.post(
   adminController.postEditProduct
 );
 
-router.post('/delete-product', isAuth, adminController.postDeleteProduct);
+// Request sent by browser-side JS; have access to HTTP verbs/methods other than GET and POST (the ones supported via form submission and clicking links)
+// Using DELETE instead of POST is a semantic matter; can use any HTTP verb to do anything, since defining what will happen with server-side logic, but it makes sense to be clear about intention
+// Using dynamic parameter since DELETE request can have dynamic URL params
+router.delete('/product/:productId', isAuth, adminController.deleteProduct);
 
 module.exports = router;
