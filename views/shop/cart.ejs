@@ -24,10 +24,11 @@
           <% }) %>
         </ul>
         <div class="order-btn-container">
-          <form action="/create-order" method="POST">
+          <!-- <form action="/create-order" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit">Checkout</button>
-          </form>
+          </form> -->
+          <a class="btn" href="/checkout">Checkout</a>
         </div>
       <% } else { %>
         <h1>No products in cart</h1>

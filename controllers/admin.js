@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 
 const Product = require('../models/product');
 
-exports.getAddProduct = (req, res) => {
+exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
@@ -15,7 +15,7 @@ exports.getAddProduct = (req, res) => {
   });
 };
 
-exports.postAddProduct = (req, res) => {
+exports.postAddProduct = (req, res, next) => {
   const { title, price, description } = req.body;
   const image = req.file;
   // If not set, multer declined incoming file
@@ -167,7 +167,7 @@ exports.postEditProduct = (req, res, next) => {
     });
 };
 
-exports.getProducts = (req, res) => {
+exports.getProducts = (req, res, next) => {
   Product.find({ userId: req.user._id })
     // .select('title price -_id')
     // .populate('userId', 'name')
@@ -185,12 +185,13 @@ exports.getProducts = (req, res) => {
     });
 };
 
+// TODO: As of lecture #354, if product is deleted but was already added to cart, product is still stored in user cart in database, so if you try to view cart again, it will result in 500 error; remove product from cart after deleting product
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
       if (!product) {
-        return new Error('Product not found.');
+        return next(new Error('Product not found.'));
       }
       fileHelper.deleteFile(product.imageUrl);
       return Product.deleteOne({ _id: prodId, userId: req.user._id });

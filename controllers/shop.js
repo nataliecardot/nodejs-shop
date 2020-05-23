@@ -8,7 +8,7 @@ const Order = require('../models/order');
 
 const ITEMS_PER_PAGE = 2;
 
-exports.getProducts = (req, res) => {
+exports.getProducts = (req, res, next) => {
   // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
   const page = +req.query.page || 1;
   let totalItems;
@@ -45,7 +45,7 @@ exports.getProducts = (req, res) => {
     });
 };
 
-exports.getProduct = (req, res) => {
+exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
@@ -62,7 +62,7 @@ exports.getProduct = (req, res) => {
     });
 };
 
-exports.getIndex = (req, res) => {
+exports.getIndex = (req, res, next) => {
   // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
   const page = +req.query.page || 1;
   let totalItems;
@@ -99,7 +99,7 @@ exports.getIndex = (req, res) => {
     });
 };
 
-exports.getCart = (req, res) => {
+exports.getCart = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
     .execPopulate()
@@ -112,13 +112,14 @@ exports.getCart = (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
     });
 };
 
-exports.postCart = (req, res) => {
+exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then((product) => {
@@ -129,7 +130,7 @@ exports.postCart = (req, res) => {
     });
 };
 
-exports.postCartDeleteProduct = (req, res) => {
+exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   req.user
     .removeFromCart(prodId)
@@ -143,7 +144,31 @@ exports.postCartDeleteProduct = (req, res) => {
     });
 };
 
-exports.postOrder = (req, res) => {
+exports.getCheckout = (req, res, next) => {
+  req.user
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then((user) => {
+      const products = user.cart.items;
+      let total = 0;
+      products.forEach((p) => {
+        total += p.quantity * p.productId.price;
+      });
+      res.render('shop/checkout', {
+        path: '/checkout',
+        pageTitle: 'Checkout',
+        products,
+        totalSum: total,
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.postOrder = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
     .execPopulate()
@@ -173,7 +198,7 @@ exports.postOrder = (req, res) => {
     });
 };
 
-exports.getOrders = (req, res) => {
+exports.getOrders = (req, res, next) => {
   Order.find({ 'user.userId': req.user._id })
     .then((orders) => {
       res.render('shop/orders', {
