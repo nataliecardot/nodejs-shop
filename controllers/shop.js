@@ -145,6 +145,8 @@ exports.postCartDeleteProduct = (req, res, next) => {
     });
 };
 
+// Currently payment process has flaw; user can enter success URL and the cart is cleared. Should use webhooks
+// Can configure Stripe so it sends a request to a URL of choice (which would have to be managed wth routing) and that tells you the order succeeded, because Stripe sends the request behind the scenes. Does not send a request to a URL of your site anyone can enter, but will be a request validated by Stripe not as easy to fake. Webhooks setup in Stripe docs
 exports.getCheckout = (req, res, next) => {
   let products;
   let total = 0;
