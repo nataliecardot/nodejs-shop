@@ -3,6 +3,7 @@ const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator');
 
 const Product = require('../models/product');
+const User = require('../models/user');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -192,17 +193,19 @@ exports.deleteProduct = (req, res, next) => {
       if (!product) {
         return next(new Error('Product not found.'));
       }
+      // Delete image file for product stored on server
       fileHelper.deleteFile(product.imageUrl);
+      // Delete product from every user's cart
+      User.find({}, (err, users) => {
+        users.forEach((user) => {
+          user.removeFromCart(prodId);
+        });
+      });
       return Product.deleteOne({ _id: prodId, userId: req.user._id });
     })
     .then(() => {
       // json() is an Express helper method for returning JSON data (can use normal JS object; will be converted to JSON behind the scenes)
       res.status(200).json({ message: 'Success!' });
-    })
-    // Added myself; as of lecture #354, if product is deleted but was already added to cart, product is still stored in user cart in database, so if you try to view cart again, it will result in 500 error; this is a workaround
-    .then(() => {
-      // Remove product with ID from cart (sets cart items to those not matching id passed as argument)
-      req.user.removeFromCart(prodId);
     })
     .catch((err) => {
       console.log(err);
