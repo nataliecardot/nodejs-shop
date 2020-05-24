@@ -37,7 +37,7 @@ exports.postAddProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log(errors.array());
+    // console.log(errors.array());
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
       path: '/admin/add-product',
@@ -185,7 +185,6 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-// TODO: As of lecture #354, if product is deleted but was already added to cart, product is still stored in user cart in database, so if you try to view cart again, it will result in 500 error; remove product from cart after deleting product
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
@@ -200,7 +199,13 @@ exports.deleteProduct = (req, res, next) => {
       // json() is an Express helper method for returning JSON data (can use normal JS object; will be converted to JSON behind the scenes)
       res.status(200).json({ message: 'Success!' });
     })
+    // Added myself; as of lecture #354, if product is deleted but was already added to cart, product is still stored in user cart in database, so if you try to view cart again, it will result in 500 error; this is a workaround
+    .then(() => {
+      // Remove product with ID from cart (sets cart items to those not matching id passed as argument)
+      req.user.removeFromCart(prodId);
+    })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({ message: 'Deleting product failed.' });
     });
 };
