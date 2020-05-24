@@ -12,7 +12,7 @@
       <div class="user-message user-message--error"><%= errorMessage %></div>
     <% } %>
     <!-- Default enctype is application/x-www-form-urlencoded. multipart/form-data is content type telling server that this submission/request will not contain plaintext, but mixed data (text and binary). multer package will be looking for requests with this type of data, and will then be able to parse both text and file -->
-    <form class="product-form" action="/admin/<% if (editing || hasError) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
+    <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
       <div class="form-control">
         <label for="title">Title</label>
         <input
