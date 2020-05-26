@@ -304,13 +304,13 @@ exports.getInvoice = (req, res, next) => {
       order.products.forEach((prod) => {
         totalPrice += prod.quantity * prod.product.price;
         pdfDoc
-          .fontSize(14)
+          .fontSize(12)
           .text(
             `${prod.product.title} – ${prod.quantity} x $${prod.product.price}`
           );
       });
-      pdfDoc.text('---');
-      pdfDoc.fontSize(16).text(`Total: $${totalPrice}`);
+      pdfDoc.moveDown();
+      pdfDoc.fontSize(18).text(`Total: $${totalPrice.toFixed(2)}`);
 
       pdfDoc.end();
     })
