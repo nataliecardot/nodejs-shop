@@ -113,7 +113,6 @@ exports.getCart = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -159,6 +158,7 @@ exports.getCheckout = (req, res, next) => {
       products.forEach((p) => {
         total += p.quantity * p.productId.price;
       });
+      total = total.toFixed(2);
 
       // Create sessions key to use in EJS template
       return stripe.checkout.sessions.create({
@@ -168,7 +168,8 @@ exports.getCheckout = (req, res, next) => {
             name: p.productId.title,
             description: p.productId.description,
             // Have to specify price in cents
-            amount: p.productId.price * 100,
+            // Using Math.round to ensure that I get an integer, due to JS floating point error causing Stripe invalid integer error "'Invalid integer: 819.9999999999999'" https://stackoverflow.com/questions/28025804/stripe-checkout-price-error-invalid-integer/28067229
+            amount: Math.round(p.productId.price * 100),
             currency: 'usd',
             quantity: p.quantity,
           };
