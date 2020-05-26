@@ -13,7 +13,7 @@ It was built as a course project for Udemy's [NodeJS - The Complete Guide](https
 1. Install dependencies
    `npm install`
 
-2. Change the file example-nodemon.json to nodemon.json. Use the example to replace keys with appropriate API keys, etc., from MongoDB, Sendgrid, and Stripe. These can each be acquired for free.
+2. Change the filename of `example-nodemon.json` to `nodemon.json`. Use the example as a guideline to replace keys with appropriate API keys, etc., from MongoDB, Sendgrid, and Stripe. These can each be acquired using a free account.
 
 3. Start Node server at http://localhost:3000
    `npm start`
