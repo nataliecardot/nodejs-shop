@@ -18,7 +18,7 @@ It was built as a course project for Udemy's [NodeJS - The Complete Guide](https
 3. Start Node server at http://localhost:3000
    `npm start`
 
-When you try placing an order, you'll land on Stripe testing mode checkout. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards).
+When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards).
 
 ## Screenshots
 
