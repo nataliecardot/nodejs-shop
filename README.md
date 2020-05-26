@@ -1,5 +1,17 @@
 # nodejs-shop
 
-Course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
+This is a mock online shop built using Node.js, Express, and MongoDB/Mongoose. It also uses the MVC framework, and renders views on the server using the EJS templating engine. Sendgrid is used to send emails and Stripe is used to handle payments. Other features include pagination, error handling, validation of user input, sessions, authentication, and file storage.
 
-In this Node.js/Express online store application, I employ variety of technologies and techniques including the MVC design pattern, REST APIs, GraphQL APIs, MongoDB (and Mongoose), SQL (and Sequelize), handling online payments (including Stripe checkout), WebSockets & Socket.IO, authentication, cookies, sessions, and testing with Mocha. The code is refactored numerous times to implement different approaches, databases, etc.
+Prior to the final version, I also used SQL/Sequelize, and output dynamic content with Pug and Handlebars. The code was refactored numerous times to try different approaches.
+
+It was built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
+
+## View Locally
+
+1. Install dependencies
+   `npm install`
+
+2. Change the file example-nodemon.json to nodemon.json. Use the example to replace keys with appropriate API keys, etc., from MongoDB, Sendgrid, and Stripe. These can each be acquired for free.
+
+3. Start Node server at http://localhost:3000
+   `npm start`
