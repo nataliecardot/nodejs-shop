@@ -2,9 +2,9 @@
 
 This is a mock online shop built using Node.js, Express, and MongoDB/Mongoose. The user can create an account, reset their password, add and remove cart items, upload and delete products, update data for products they added, checkout their cart, place orders, and view past orders (with the option to download an invoice PDF for each).
 
-It follows the MVC design pattern, and renders views on the server using the EJS templating engine. Sendgrid is used to send emails and Stripe is used to handle payments. Other features include pagination, error handling, validation of user input, sessions, authentication, and file storage.
+It follows the MVC design pattern, and renders views on the server using the EJS templating engine. SendGrid is used to send emails and Stripe is used to handle payments. Other features include pagination, error handling, validation of user input, sessions, authentication, and file storage.
 
-Prior to the final version, I also used SQL/Sequelize, and output dynamic content with Pug and Handlebars. The code was refactored numerous times to try different approaches.
+Prior to the final version, I also used SQL (MySQL)/Sequelize, and output dynamic content with Pug and Handlebars. The code was refactored numerous times to try different approaches.
 
 It was built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
 
@@ -16,7 +16,7 @@ It was built as a course project for Udemy's [NodeJS - The Complete Guide](https
 npm install
 ```
 
-2. Change the filename of `example-nodemon.json` to `nodemon.json`. Use the example as a guideline to replace keys with appropriate API keys, etc., from MongoDB, Sendgrid, and Stripe. These can each be acquired using a free account.
+2. Change the filename of `example-nodemon.json` to `nodemon.json`. Use the example as a guideline to replace keys with appropriate API keys, etc., from MongoDB, SendGrid, and Stripe. These can each be acquired using a free account.
 
 3. Start Node server at http://localhost:3000
 
