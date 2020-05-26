@@ -10,12 +10,12 @@ It was built as a course project for Udemy's [NodeJS - The Complete Guide](https
 
 ## View Locally
 
-1. Install dependencies
+1. Install dependencies:
    `npm install`
 
 2. Change the filename of `example-nodemon.json` to `nodemon.json`. Use the example as a guideline to replace keys with appropriate API keys, etc., from MongoDB, Sendgrid, and Stripe. These can each be acquired using a free account.
 
-3. Start Node server at http://localhost:3000
+3. Start Node server at http://localhost:3000:
    `npm start`
 
 When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards).
