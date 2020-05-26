@@ -22,7 +22,10 @@ When you place an order in the app, you'll be redirected to Stripe checkout in t
 
 ## Screenshots
 
+<img src="https://user-images.githubusercontent.com/33387780/82863375-d6abe180-9ed6-11ea-8c24-77cdf255519f.JPG" width="800">
+<img src="https://user-images.githubusercontent.com/33387780/82863392-e3c8d080-9ed6-11ea-9263-d13ae76c6547.JPG" width="800">
 <img src="https://user-images.githubusercontent.com/33387780/82859964-22f22400-9ecd-11ea-9b1e-31b4ea99ba77.jpg" width="800">
 <img src="https://user-images.githubusercontent.com/33387780/82860386-3651bf00-9ece-11ea-84be-e5da6e870a74.JPG" width="800">
 <img src="https://user-images.githubusercontent.com/33387780/82860439-72851f80-9ece-11ea-8869-f47be59cdd02.JPG" width="800">
 <img src="https://user-images.githubusercontent.com/33387780/82861970-3bfdd380-9ed3-11ea-981b-f5c9d23df19f.JPG" width="800">
+<img src="https://user-images.githubusercontent.com/33387780/82863189-5e452080-9ed6-11ea-86c2-9986c0d82894.JPG" width="800">
