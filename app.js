@@ -26,9 +26,8 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
-  // Path
-  // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
   destination: (req, file, cb) => {
+    // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
