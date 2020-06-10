@@ -20,9 +20,9 @@ router.post(
       // validator.js built-in sanitizer
       .normalizeEmail(),
     body('password', 'Password must be valid.')
+      .trim()
       .isLength({ min: 8 })
-      .isAlphanumeric()
-      .trim(),
+      .isAlphanumeric(),
   ],
   authController.postLogin
 );
@@ -53,9 +53,9 @@ router.post(
       'password',
       'Please use a password with a minimum of 8 alphanumeric characters.'
     )
+      .trim()
       .isLength({ min: 8 })
-      .isAlphanumeric()
-      .trim(),
+      .isAlphanumeric(),
     body('confirmPassword')
       .trim()
       .custom((value, { req }) => {
