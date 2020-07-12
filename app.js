@@ -52,7 +52,7 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-// Add secure response header(s) with Helmet
+// Set secure response header(s) with Helmet
 // In my app, in developer tools (in the network tab) I can see it added one additional response header for localhost, Strict-Transport-Security. This HTTP header tells browsers to stick with HTTPS and never visit the insecure HTTP version. Once a browser sees this header, it will only visit the site over HTTPS for the next 60 days
 app.use(helmet());
 
