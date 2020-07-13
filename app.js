@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -28,6 +29,10 @@ const store = new MongoDBStore({
 });
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf();
+
+// Don't want to start server until file is read in, thus using synchronous version
+const privateKey = fs.readFileSync('server.key');
+const certificate = fs.readFileSync('server.cert');
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -136,6 +141,11 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then((result) => {
+    // First arg for createServer() configures server, second is request handler, in this case, Express application
+    // Commenting out because just as with request logging and asset compression, it's handled by hosting provider, and browsers don't accept custom/self-signed certificate; will be displayed as insecure with a message that connection is not private
+    // https
+    //   .createServer({ key: privateKey, cert: certificate }, app)
+    //   .listen(process.env.PORT || 3000);
     app.listen(process.env.PORT || 3000);
   })
   .catch((err) => {
