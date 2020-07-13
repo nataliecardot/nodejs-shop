@@ -31,8 +31,8 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 // Don't want to start server until file is read in, thus using synchronous version
-const privateKey = fs.readFileSync('server.key');
-const certificate = fs.readFileSync('server.cert');
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
