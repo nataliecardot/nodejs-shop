@@ -8,6 +8,8 @@ Prior to the final version, I also used SQL (MySQL)/Sequelize, and output dynami
 
 Built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
 
+## View Live: https://nodejs-e-shop.herokuapp.com/
+
 ## View Locally
 
 1. Install dependencies
