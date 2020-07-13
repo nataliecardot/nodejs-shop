@@ -1,2 +1,4 @@
 node_modules
 nodemon.json
+server.cert
+server.key
