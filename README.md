@@ -10,6 +10,10 @@ Built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.
 
 ## View Live: https://nodejs-e-shop.herokuapp.com/
 
+Note: File storage is not persistent in the live version. Source code is saved and redeployed when the server is shut down or goes to sleep (which happens after some time since Heroku's free tier is being used), but user-generated/uploaded files not stored and recreated upon server restart. (A solution would be to use multer, configured with multer-s3, to store images on Amazon S3.)
+
+When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards). For a production app, I'd use live keys rather than testing keys after activating my Stripe account.
+
 ## View Locally
 
 1. Install dependencies
@@ -25,15 +29,3 @@ npm install
 ```
 npm run start:dev
 ```
-
-When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards).
-
-## Screenshots
-
-<img src="https://user-images.githubusercontent.com/33387780/82859964-22f22400-9ecd-11ea-9b1e-31b4ea99ba77.jpg" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82863375-d6abe180-9ed6-11ea-8c24-77cdf255519f.JPG" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82863392-e3c8d080-9ed6-11ea-9263-d13ae76c6547.JPG" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82860386-3651bf00-9ece-11ea-84be-e5da6e870a74.JPG" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82860439-72851f80-9ece-11ea-8869-f47be59cdd02.JPG" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82861970-3bfdd380-9ed3-11ea-981b-f5c9d23df19f.JPG" width="800">
-<img src="https://user-images.githubusercontent.com/33387780/82863189-5e452080-9ed6-11ea-86c2-9986c0d82894.JPG" width="800">
