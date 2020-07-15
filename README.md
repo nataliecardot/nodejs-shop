@@ -12,7 +12,7 @@ Built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.
 
 Note: File storage is not persistent in the live version. Source code is saved and redeployed when the server is shut down or goes to sleep (which happens after some time since Heroku's free tier is being used), but user-generated/uploaded files not stored and recreated upon server restart. (A solution would be to use multer, configured with multer-s3, to store images on Amazon S3.)
 
-When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards). For a production app, I'd use live keys rather than testing keys after activating my Stripe account.
+When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards). For a production app, live mode rather than test mode publishable and secret keys rather than testing keys would be used.
 
 ## View Locally
 
