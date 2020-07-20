@@ -19,6 +19,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, price, description } = req.body;
   const image = req.file;
+
   // If not set, multer declined incoming file
   if (!image) {
     return res.status(422).render('admin/edit-product', {
@@ -54,7 +55,8 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
-  const imageUrl = image.path;
+  const imageUrl = req.file.location;
+  console.log(imageUrl);
 
   const product = new Product({
     title,
