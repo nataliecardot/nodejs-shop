@@ -174,8 +174,7 @@ exports.postEditProduct = (req, res, next) => {
         s3.deleteObject(
           {
             Bucket: 'nodejs-shop',
-            // TODO: Just pass normally?
-            Key: `${product.imageKey}`,
+            Key: product.imageKey,
           },
           function (err, data) {
             console.log('Image deleted');
@@ -232,7 +231,7 @@ exports.deleteProduct = (req, res, next) => {
       s3.deleteObject(
         {
           Bucket: 'nodejs-shop',
-          Key: `${product.imageKey}`,
+          Key: product.imageKey,
         },
         function (err, data) {
           console.log('Image deleted');
