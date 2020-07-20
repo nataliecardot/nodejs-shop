@@ -1,5 +1,4 @@
 const fileHelper = require('../util/file');
-const aws = require('aws-sdk');
 
 const { validationResult } = require('express-validator');
 
@@ -164,22 +163,7 @@ exports.postEditProduct = (req, res, next) => {
       product.price = updatedPrice;
       product.description = updatedDesc;
       if (image) {
-        // fileHelper.deleteFile(product.imageUrl);
-        const s3 = new aws.S3({
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-          region: 'us-west-2',
-        });
-
-        s3.deleteObject(
-          {
-            Bucket: 'nodejs-shop',
-            Key: product.imageKey,
-          },
-          function (err, data) {
-            console.log('Image deleted');
-          }
-        );
+        fileHelper.deleteFile(product.imageKey);
         product.imageUrl = imageUrl;
         product.imageKey = imageKey;
       }
