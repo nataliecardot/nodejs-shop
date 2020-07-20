@@ -17,7 +17,7 @@
                 </header>
                 <div class="card__image">
                   <!-- Slash at beginning turns it into an absolute path; will not append to current path, but create a new path with domain only and then path that gets rendered here -->
-                  <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+                  <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                 </div>
                 <div class="card__content">
                   <h2 class="product__price">$<%= product.price %></h2>
