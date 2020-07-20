@@ -1,4 +1,4 @@
-// const fileHelper = require('../util/file');
+const fileHelper = require('../util/file');
 const aws = require('aws-sdk');
 
 const { validationResult } = require('express-validator');
@@ -220,23 +220,8 @@ exports.deleteProduct = (req, res, next) => {
         return next(new Error('Product not found.'));
       }
       // Delete image file for product stored on server
-      // fileHelper.deleteFile(product.imageUrl);
+      fileHelper.deleteFile(product.imageKey);
 
-      const s3 = new aws.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: 'us-west-2',
-      });
-
-      s3.deleteObject(
-        {
-          Bucket: 'nodejs-shop',
-          Key: product.imageKey,
-        },
-        function (err, data) {
-          console.log('Image deleted');
-        }
-      );
       // Delete product from every user's cart
       User.find({}, (err, users) => {
         users.forEach((user) => {
