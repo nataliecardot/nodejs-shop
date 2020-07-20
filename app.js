@@ -48,6 +48,7 @@ const upload = multer({
     acl: 'public-read',
     // Callback that accepts the request and file, and returns a metadata object to be saved to S3
     metadata(req, file, cb) {
+      // fieldname: the key passed to single() -- 'image'
       cb(null, { fieldName: file.fieldname });
     },
     // key: name of file
