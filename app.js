@@ -22,7 +22,7 @@ const aws = require('aws-sdk');
 
 const MONGODB_URI =
   // process object is globally available in Node app; part of Node core runtime. The env property contains all environment variables known by process object. Using nodemon.json to store environment variables, but could alternatively use dotenv package for this (see https://www.youtube.com/watch?v=17UVejOw3zA)
-  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-4yuid.mongodb.net/test-node-shop`;
+  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-4yuid.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 
 const app = express();
 const store = new MongoDBStore({
