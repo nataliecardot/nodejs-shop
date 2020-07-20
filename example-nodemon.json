@@ -6,6 +6,7 @@
     "SENDGRID_PASSWORD": "password",
     "STRIPE_SECRET_KEY": "key",
     "AWS_SECRET_ACCESS_KEY": "key",
-    "AWS_ACCESS_KEY_ID": "key id"
+    "AWS_ACCESS_KEY_ID": "key id",
+    "AWS_BUCKET_NAME": "bucket name"
   }
 }
