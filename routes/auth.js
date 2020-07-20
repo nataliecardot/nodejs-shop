@@ -21,8 +21,7 @@ router.post(
       .normalizeEmail(),
     body('password', 'Password must be valid.')
       .trim()
-      .isLength({ min: 8 })
-      .isAlphanumeric(),
+      .isLength({ min: 8, max: 100 }),
   ],
   authController.postLogin
 );
@@ -49,13 +48,9 @@ router.post(
       })
       .normalizeEmail(),
     // Adding validation error message as second argument as alternative to using withMessage() after each validator since using message for both checks
-    body(
-      'password',
-      'Please use a password with a minimum of 8 alphanumeric characters.'
-    )
+    body('password', 'Please use a password a between 8 and 100 characters.')
       .trim()
-      .isLength({ min: 8 })
-      .isAlphanumeric(),
+      .isLength({ min: 8, max: 100 }),
     body('confirmPassword')
       .trim()
       .custom((value, { req }) => {
