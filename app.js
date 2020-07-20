@@ -10,6 +10,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
 const { uuid } = require('uuidv4');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -17,6 +18,7 @@ const compression = require('compression');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
+const aws = require('aws-sdk');
 
 const MONGODB_URI =
   // process object is globally available in Node app; part of Node core runtime. The env property contains all environment variables known by process object. Using nodemon.json to store environment variables, but could alternatively use dotenv package for this (see https://www.youtube.com/watch?v=17UVejOw3zA)
@@ -30,27 +32,56 @@ const store = new MongoDBStore({
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf();
 
+// S3 upload
+
+// Params
+const s3 = new aws.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: 'us-west-2',
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: 'nodejs-shop',
+    acl: 'public-read',
+    // Callback that accepts the request and file, and returns a metadata object to be saved to S3
+    metadata(req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    // key: name of file
+    key(req, file, cb) {
+      cb(null, `${uuid()}.jpg`);
+    },
+  }),
+});
+
+app.post('/upload', upload.single('image'), function (req, res, next) {
+  return res.json({ imageUrl: req.file.location });
+});
+
 // Don't want to start server until file is read in, thus using synchronous version
 // const privateKey = fs.readFileSync('server.key');
 // const certificate = fs.readFileSync('server.cert');
 
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
-    cb(null, 'images');
-  },
-  filename: (req, file, cb) => {
-    cb(null, uuid());
-  },
-});
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
+//     cb(null, 'images');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, uuid());
+//   },
+// });
 
-const fileFilter = (req, file, cb) => {
-  file.mimetype === 'image/png' ||
-  file.mimetype === 'image/jpg' ||
-  file.mimetype === 'image/jpeg'
-    ? cb(null, true)
-    : cb(null, false);
-};
+// const fileFilter = (req, file, cb) => {
+//   file.mimetype === 'image/png' ||
+//   file.mimetype === 'image/jpg' ||
+//   file.mimetype === 'image/jpeg'
+//     ? cb(null, true)
+//     : cb(null, false);
+// };
 
 app.set('view engine', 'ejs');
 // Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
@@ -77,9 +108,9 @@ app.use(compression());
 // app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
+// app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+// app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(
   session({
     secret: 'my secret',
