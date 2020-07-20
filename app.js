@@ -34,7 +34,7 @@ const csrfProtection = csrf();
 
 // S3 upload
 
-// Params
+// AWS S3 service interface object (docs: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html)
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -57,10 +57,6 @@ const upload = multer({
     },
   }),
 });
-
-// app.post('/upload', upload.single('image'), function (req, res, next) {
-//   return res.json({ imageUrl: req.file.location });
-// });
 
 app.use(upload.single('image'));
 
