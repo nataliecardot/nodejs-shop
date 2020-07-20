@@ -19,17 +19,20 @@
                   <!-- Slash at beginning turns it into an absolute path; will not append to current path, but create a new path with domain only and then path that gets rendered here -->
                   <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
                 </div>
-                <div class="card__content">
-                  <h2 class="product__price">$<%= product.price %></h2>
-                  <p class="product__description">
-                    <%= product.description %>
-                  </p>
-                </div>
-                <div class="card__actions">
-                  <a href="/admin/edit-product/<%= product._id %>?edit=true" class="btn">Edit</a>
-                  <input type="hidden" value="<%= product._id %>" name="productId">
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
+                <!-- Wrapping both in a div so price and description are aligned to the end instead of halfway between image and buttons if there's extra space -->
+                <div>
+                  <div class="card__content">
+                    <h2 class="product__price">$<%= product.price %></h2>
+                    <p class="product__description">
+                      <%= product.description %>
+                    </p>
+                  </div>
+                  <div class="card__actions">
+                    <a href="/admin/edit-product/<%= product._id %>?edit=true" class="btn">Edit</a>
+                    <input type="hidden" value="<%= product._id %>" name="productId">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
+                  </div>
                 </div>
               </article>
               <% } %>
