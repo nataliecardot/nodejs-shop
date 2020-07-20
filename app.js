@@ -13,7 +13,7 @@ const multer = require('multer');
 const { uuid } = require('uuidv4');
 const helmet = require('helmet');
 const compression = require('compression');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -62,10 +62,10 @@ const authRoutes = require('./routes/auth');
 
 // Create write stream (for passing to morgan, used to log request data), for logging request data in file instead of console
 // flags: 'a': a is for append; new data will be appended to that file (additional log statements are added to end of existing file rather than overwriting it)
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, 'access.log'),
-  { flags: 'a' }
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, 'access.log'),
+//   { flags: 'a' }
+// );
 
 // Set secure response header(s) with Helmet
 // In my app, in developer tools (in the network tab) I can see it added one additional response header for localhost, Strict-Transport-Security. This HTTP header tells browsers to stick with HTTPS and never visit the insecure HTTP version. Once a browser sees this header, it will only visit the site over HTTPS for the next 60 days
@@ -74,7 +74,7 @@ app.use(helmet());
 app.use(compression());
 // Log request data using writable file stream created above. Which data is logged and how to format it is passed into funtion
 // Also normally handled by hosting providers
-app.use(morgan('combined', { stream: accessLogStream }));
+// app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
