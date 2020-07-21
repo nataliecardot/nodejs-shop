@@ -50,7 +50,7 @@ exports.getSignup = (req, res) => {
   });
 };
 
-exports.postLogin = (req, res) => {
+exports.postLogin = (req, res, next) => {
   const { email, password } = req.body;
 
   const errors = validationResult(req);
@@ -119,7 +119,7 @@ exports.postLogin = (req, res) => {
     });
 };
 
-exports.postSignup = (req, res) => {
+exports.postSignup = (req, res, next) => {
   const { email, password, confirmPassword } = req.body;
 
   const errors = validationResult(req);
@@ -180,7 +180,7 @@ exports.getResetPassword = (req, res) => {
   });
 };
 
-exports.postResetPassword = (req, res) => {
+exports.postResetPassword = (req, res, next) => {
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       console.log(err);
@@ -225,7 +225,7 @@ exports.postResetPassword = (req, res) => {
   });
 };
 
-exports.getNewPassword = (req, res) => {
+exports.getNewPassword = (req, res, next) => {
   // Check whether there is a user for token in URL and that token is not expired. $gt operator: greater than
   const token = req.params.token;
   User.findOne({
@@ -258,7 +258,7 @@ exports.getNewPassword = (req, res) => {
     });
 };
 
-exports.postNewPassword = (req, res) => {
+exports.postNewPassword = (req, res, next) => {
   const newPassword = req.body.password;
   const { userId, passwordToken } = req.body;
   let resetUser;
