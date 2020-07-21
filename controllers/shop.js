@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
+const moment = require('moment');
 
 // const PDFDocument = require('pdfkit');
 
@@ -209,6 +210,7 @@ exports.getCheckoutSuccess = (req, res, next) => {
           email: req.user.email,
           userId: req.user,
         },
+        date: moment().format('YYYY-MM-DD'),
         products,
       });
       return order.save();
