@@ -14,7 +14,10 @@ const deleteFile = (key) => {
       Key: key,
     },
     function (err, data) {
-      console.log('Image deleted');
+      // console.log('Image deleted');
+      if (err) {
+        throw err;
+      }
     }
   );
 };
