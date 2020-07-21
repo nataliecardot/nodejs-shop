@@ -64,7 +64,7 @@ exports.getProduct = (req, res, next) => {
     });
 };
 
-exports.getIndex = (req, res, next) => {
+exports.getHomepage = (req, res, next) => {
   // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
   const page = +req.query.page || 1;
   let totalItems;

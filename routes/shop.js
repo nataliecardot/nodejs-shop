@@ -8,7 +8,7 @@ const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 // Using get so that the order doesn't matter in app.js (then it's an exact match, unlike with router.use [same for app.use])
-router.get('/', shopController.getIndex);
+router.get('/', shopController.getHomepage);
 
 router.get('/products', shopController.getProducts);
 
