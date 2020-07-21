@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
-const PDFDocument = require('pdfkit');
+// const PDFDocument = require('pdfkit');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
@@ -272,47 +272,58 @@ exports.getOrders = (req, res, next) => {
     });
 };
 
-exports.getInvoice = (req, res, next) => {
-  const orderId = req.params.orderId;
-  Order.findById(orderId)
-    .then((order) => {
-      if (!order) {
-        return next(new Error('No order found.'));
-      }
-      if (order.user.userId.toString() !== req.user._id.toString()) {
-        return next(new Error('Unauthorized'));
-      }
-      const invoiceName = `invoice-${orderId}.pdf`;
-      const invoicePath = path.join('data', 'invoices', invoiceName);
+// TODO: Replicate behavior with S3 upload
+// exports.getInvoice = (req, res, next) => {
+//   const orderId = req.params.orderId;
+//   Order.findById(orderId)
+//     .then((order) => {
+//       if (!order) {
+//         return next(new Error('No order found.'));
+//       }
+//       if (order.user.userId.toString() !== req.user._id.toString()) {
+//         return next(new Error('Unauthorized'));
+//       }
+//       const invoiceName = `invoice-${orderId}.pdf`;
+//       // const invoicePath = path.join('data', 'invoices', invoiceName);
 
-      const pdfDoc = new PDFDocument();
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        'inline; filename="`${invoiceName}`"'
-      );
-      // pdfDoc is a readable stream [source from which data can be consumed]; pipe into writable stream. Also ensures generated PDF gets stored on server, not just served to client
-      pdfDoc.pipe(fs.createWriteStream(invoicePath));
-      // Return PDF to client. Pipe into response (response is a writable stream [destination to which data can be written])
-      pdfDoc.pipe(res);
+//       const pdfDoc = new PDFDocument();
+//       res.setHeader('Content-Type', 'application/pdf');
+//       res.setHeader(
+//         'Content-Disposition',
+//         'inline; filename="`${invoiceName}`"'
+//       );
+//       // pdfDoc is a readable stream [source from which data can be consumed]; pipe into writable stream. Also ensures generated PDF gets stored on server, not just served to client
+//       pdfDoc.pipe(fs.createWriteStream(invoicePath));
+//       // Return PDF to client. Pipe into response (response is a writable stream [destination to which data can be written])
+//       pdfDoc.pipe(res);
 
-      pdfDoc.fontSize(26).text('Invoice', {
-        underline: true,
-        align: 'center',
-      });
-      let totalPrice = 0;
-      order.products.forEach((prod) => {
-        totalPrice += prod.quantity * prod.product.price;
-        pdfDoc
-          .fontSize(12)
-          .text(
-            `${prod.product.title} – ${prod.quantity} x $${prod.product.price}`
-          );
-      });
-      pdfDoc.moveDown();
-      pdfDoc.fontSize(18).text(`Total: $${totalPrice.toFixed(2)}`);
+//       pdfDoc.fontSize(26).text('Invoice', {
+//         underline: true,
+//         align: 'center',
+//       });
+//       let totalPrice = 0;
+//       order.products.forEach((prod) => {
+//         totalPrice += prod.quantity * prod.product.price;
+//         pdfDoc
+//           .fontSize(12)
+//           .text(
+//             `${prod.product.title} – ${prod.quantity} x $${prod.product.price}`
+//           );
+//       });
+//       pdfDoc.moveDown();
+//       pdfDoc.fontSize(18).text(`Total: $${totalPrice.toFixed(2)}`);
 
-      pdfDoc.end();
-    })
-    .catch((err) => next(err));
-};
+//       pdfDoc.end();
+
+//       // S3 upload
+//       const params = {
+//         key: invoiceName,
+//         body: './output.pdf',
+//         bucket: 'nodejs-shop',
+//         contentType: 'application/pdf',
+//       };
+
+//       s3.putObject(params, function (err, response) {});
+//     })
+//     .catch((err) => next(err));
+// };
