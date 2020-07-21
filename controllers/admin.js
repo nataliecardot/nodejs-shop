@@ -131,8 +131,6 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   // TODO: Remove if not used
   const image = req.file;
-  const imageUrl = req.file.location;
-  const imageKey = req.file.key;
   const updatedDesc = req.body.description;
 
   const errors = validationResult(req);
@@ -163,6 +161,8 @@ exports.postEditProduct = (req, res, next) => {
       product.price = updatedPrice;
       product.description = updatedDesc;
       if (image) {
+        const imageUrl = req.file.location;
+        const imageKey = req.file.key;
         fileHelper.deleteFile(product.imageKey);
         product.imageUrl = imageUrl;
         product.imageKey = imageKey;
