@@ -44,15 +44,15 @@ h1 {
 
 .main-header {
   width: 100%;
-  height: 3.5rem;
-  background-color: #37474f;
+  height: 3rem;
+  background-color: #292a2b;
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
 }
 
 .main-header__nav {
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
   display: none;
   align-items: center;

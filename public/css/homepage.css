@@ -1,0 +1,32 @@
+.landing {
+  /* background-color: antiquewhite; */
+  background-image: url("https://nodejs-shop.s3-us-west-2.amazonaws.com/landing-med.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  /* Nowrap by default */
+  flex-wrap: wrap;
+  /* Alignment along main axis, row/horizontal by default */
+  justify-content: center;
+  /* Alignment along cross axis, column/vertical by default */
+  align-items: center;
+  /* 3.5rem set as header height in .main-header class n main.css */
+  height: calc(100vh - 3rem);
+}
+
+.landing div {
+  background-color: #fff;
+  padding: 0.5rem 3rem;
+  border-radius: 1rem;
+  opacity: 0.8;
+}
+
+.landing div > h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.landing div > h2 {
+  margin: 0.8rem 0;
+}

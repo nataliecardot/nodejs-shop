@@ -65,40 +65,10 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getHomepage = (req, res, next) => {
-  // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
-  const page = +req.query.page || 1;
-  let totalItems;
-
-  Product.find()
-    .countDocuments()
-    .then((numProducts) => {
-      totalItems = numProducts;
-      return (
-        Product.find()
-          // Skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
-          .skip((page - 1) * ITEMS_PER_PAGE)
-          // Only fetch amt of items to display on current page
-          .limit(ITEMS_PER_PAGE)
-      );
-    })
-    .then((products) => {
-      res.render('shop/index', {
-        prods: products,
-        pageTitle: 'Home',
-        path: '/',
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
+  res.render('shop/index', {
+    pageTitle: 'Home',
+    path: '/',
+  });
 };
 
 exports.getCart = (req, res, next) => {
