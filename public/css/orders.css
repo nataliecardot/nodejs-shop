@@ -7,7 +7,8 @@
 
 .orders__item h1 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  color: #717579;
 }
 
 .orders__item {
@@ -27,7 +28,6 @@
   margin: 0.5rem 0;
   padding: 0.5rem;
   border: 1px solid #d6d6d6;
-  color: #37474f;
 }
 
 /* Mobile devices */
