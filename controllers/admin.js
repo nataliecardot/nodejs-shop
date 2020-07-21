@@ -18,9 +18,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { title, price, description } = req.body;
-  // TODO: Remove if not used
   const image = req.file;
-  // console.log(image);
 
   // If not set, multer declined incoming file
   if (!image) {
@@ -129,7 +127,6 @@ exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
-  // TODO: Remove if not used
   const image = req.file;
   const updatedDesc = req.body.description;
 
