@@ -150,8 +150,8 @@ exports.postSignup = (req, res, next) => {
       return transporter.sendMail({
         to: email,
         from: 'cardotmedia@gmail.com',
-        subject: 'Welcome to Node Shop!',
-        html: '<h1>You have successfully signed up.</h1>',
+        subject: 'Welcome to süß.',
+        html: '<h3>You have successfully signed up.</h3>',
       });
     })
     .catch((err) => {
@@ -211,8 +211,8 @@ exports.postResetPassword = (req, res, next) => {
           from: 'cardotmedia@gmail.com',
           subject: 'Password reset',
           html: `
-            <p>We received your Node Shop password reset request.</p>
-            <p>To set a new password, use this <a href="http://localhost:3000/reset-password/${token}">link</a>.</p>
+            <p>We received your süß account password reset request.</p>
+            <p>To set a new password, use this <a href="https://suess.herokuapp.com/reset-password/${token}">link</a>.</p>
             <p>If you did not submit a request to change your password, please disregard this message.</p>
           `,
         });
