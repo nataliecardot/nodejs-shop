@@ -14,6 +14,7 @@ const multerS3 = require('multer-s3');
 const { uuid } = require('uuidv4');
 const helmet = require('helmet');
 const compression = require('compression');
+const favicon = require('serve-favicon');
 // const morgan = require('morgan');
 
 const errorController = require('./controllers/error');
@@ -120,6 +121,8 @@ app.use(
 );
 app.use(csrfProtection);
 app.use(flash());
+
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.use((req, res, next) => {
   // Locals field: Express feature for setting local variables that are passed into views. For every request that is executed, these fields are set for view that is rendered
