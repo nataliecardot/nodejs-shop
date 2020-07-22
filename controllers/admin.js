@@ -176,14 +176,34 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  const ITEMS_PER_PAGE = 15;
+
+  const page = +req.query.page || 1;
+  let totalItems;
+
   Product.find({ userId: req.user._id })
-    // .select('title price -_id')
-    // .populate('userId', 'name')
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return (
+        Product.find()
+          // Skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
+          .skip((page - 1) * ITEMS_PER_PAGE)
+          // Only fetch amt of items to display on current page
+          .limit(ITEMS_PER_PAGE)
+      );
+    })
     .then((products) => {
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
       });
     })
     .catch((err) => {
