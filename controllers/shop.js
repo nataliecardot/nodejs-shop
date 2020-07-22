@@ -8,7 +8,7 @@ const moment = require('moment');
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 12;
 
 exports.getProducts = (req, res, next) => {
   // Using unary plus operator to convert to number (otherwise it's a string and is concatenated with number in logic below)
