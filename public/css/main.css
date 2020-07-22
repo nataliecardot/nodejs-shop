@@ -12,7 +12,7 @@ body {
 }
 
 main {
-  padding: 2.5rem;
+  /* Padding and width set according to breakpoint. margin of auto centers it */
   margin: auto;
 }
 
@@ -52,7 +52,6 @@ h1 {
 }
 
 .main-header__nav {
-  /* height: 100%; */
   width: 100%;
   display: none;
   align-items: center;
@@ -320,7 +319,7 @@ li:last-of-type {
 /* Smartphones */
 @media (max-width: 767px) {
   .main-header {
-    padding: 0 1.5rem 0 0.7rem;
+    padding: 0 1rem 0 0.7rem;
   }
 
   main {
@@ -340,5 +339,28 @@ li:last-of-type {
 
   .user-message {
     width: 30rem;
+  }
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  main {
+    padding: 1.5rem 0;
+  }
+}
+
+/* Smaller computer screens */
+@media screen and (min-width: 992px) and (max-width: 1400px) {
+  main {
+    padding: 1.3rem 0;
+    width: 80%;
+  }
+}
+
+/* Larger computer screens */
+@media screen and (min-width: 1401px) {
+  main {
+    padding: 1rem 0;
+    width: 70%;
   }
 }
