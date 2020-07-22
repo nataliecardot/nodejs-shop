@@ -186,7 +186,7 @@ exports.getProducts = (req, res, next) => {
     .then((numProducts) => {
       totalItems = numProducts;
       return (
-        Product.find()
+        Product.find({ userId: req.user._id })
           // Skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
           .skip((page - 1) * ITEMS_PER_PAGE)
           // Only fetch amt of items to display on current page
