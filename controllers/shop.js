@@ -21,7 +21,7 @@ exports.getProducts = (req, res, next) => {
       totalItems = numProducts;
       return (
         Product.find()
-          // To sort in descending order (newest added at top of list)
+          // To sort in descending order (newest at top of list)
           // .sort({ _id: -1 })
           // skip MongoDB and therefore Mongoose method skips first x amt of results and is called on a cursor. find() is an object that returns a cursor, an object that enables iterating through documents of a collection
           .skip((page - 1) * ITEMS_PER_PAGE)
