@@ -11,14 +11,9 @@ html {
 }
 
 body {
-  padding: 0;
+  /* body has default 8px margin on all sides (but no default padding) */
   margin: 0;
   font-family: "Open Sans", sans-serif;
-}
-
-main {
-  /* Padding and width set according to breakpoint. margin of auto centers it */
-  margin: auto;
 }
 
 form {
@@ -322,14 +317,14 @@ li:last-of-type {
   color: #fff;
 }
 
+main {
+  margin: 1.5rem auto;
+}
+
 /* Smartphones */
 @media (max-width: 767px) {
   .main-header {
     padding: 0 1rem 0 0.7rem;
-  }
-
-  main {
-    padding: 1.3rem auto 1.7rem auto;
   }
 }
 
@@ -345,28 +340,5 @@ li:last-of-type {
 
   .user-message {
     width: 30rem;
-  }
-}
-
-/* Tablets */
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  main {
-    padding: 1.5rem auto 2rem;
-  }
-}
-
-/* Smaller computer screens */
-@media screen and (min-width: 992px) and (max-width: 1400px) {
-  main {
-    width: 80%;
-    margin: 1.7rem auto;
-  }
-}
-
-/* Larger computer screens */
-@media screen and (min-width: 1401px) {
-  main {
-    width: 70%;
-    margin: 2rem auto;
   }
 }

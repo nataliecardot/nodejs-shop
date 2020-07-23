@@ -62,7 +62,7 @@
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .order-btn-container,
   .cart__item-list {
-    width: 90%;
+    width: 80%;
   }
 }
 
@@ -70,7 +70,7 @@
 @media screen and (min-width: 992px) and (max-width: 1400px) {
   .order-btn-container,
   .cart__item-list {
-    width: 70%;
+    width: 60%;
   }
 }
 
@@ -78,6 +78,6 @@
 @media screen and (min-width: 1401px) {
   .order-btn-container,
   .cart__item-list {
-    width: 60%;
+    width: 50%;
   }
 }

@@ -32,7 +32,7 @@
 /* Mobile devices */
 @media (max-width: 767px) {
   .orders {
-    width: 93%;
+    width: 90%;
   }
 
   .orders__item h1 {
@@ -47,20 +47,20 @@
 /* Tablets */
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .orders {
-    width: 90%;
+    width: 80%;
   }
 }
 
 /* Smaller computer screens */
 @media screen and (min-width: 992px) and (max-width: 1400px) {
   .orders {
-    width: 70%;
+    width: 60%;
   }
 }
 
 /* Larger computer screens */
 @media screen and (min-width: 1401px) {
   .orders {
-    width: 60%;
+    width: 50%;
   }
 }
