@@ -6,7 +6,7 @@ const Product = require('../models/product');
 const User = require('../models/user');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', {
+  res.render('admin/add-edit-form', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
@@ -22,7 +22,7 @@ exports.postAddProduct = (req, res, next) => {
 
   // If not set, multer declined incoming file
   if (!image) {
-    return res.status(422).render('admin/edit-product', {
+    return res.status(422).render('admin/add-edit-form', {
       pageTitle: 'Add Product',
       path: '/admin/add-product',
       editing: false,
@@ -40,7 +40,7 @@ exports.postAddProduct = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     // console.log(errors.array());
-    return res.status(422).render('admin/edit-product', {
+    return res.status(422).render('admin/add-edit-form', {
       pageTitle: 'Add Product',
       path: '/admin/add-product',
       editing: false,
@@ -73,7 +73,7 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch((err) => {
-      // return res.status(500).render('admin/edit-product', {
+      // return res.status(500).render('admin/add-edit-form', {
       //   pageTitle: 'Add Product',
       //   path: '/admin/add-product',
       //   editing: false,
@@ -106,7 +106,7 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.redirect('/');
       }
-      res.render('admin/edit-product', {
+      res.render('admin/add-edit-form', {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
         editing: editMode,
@@ -133,7 +133,7 @@ exports.postEditProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('admin/edit-product', {
+    return res.status(422).render('admin/add-edit-form', {
       pageTitle: 'Edit Product',
       path: '/admin/edit-product',
       editing: true,
