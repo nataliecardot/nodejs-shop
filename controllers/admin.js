@@ -32,7 +32,8 @@ exports.postAddProduct = (req, res, next) => {
         price,
         description,
       },
-      errorMessage: 'Attached file is not an image.',
+      errorMessage:
+        'File type not supported. Please upload a JPEG, JPG, or PNG image file.',
       validationErrors: [],
     });
   }

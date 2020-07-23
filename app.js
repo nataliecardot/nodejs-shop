@@ -33,7 +33,29 @@ const store = new MongoDBStore({
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf();
 
-// S3 upload
+// S3 upload/file handling
+
+// Don't want to start server until file is read in, thus using synchronous version
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
+
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
+//     cb(null, 'images');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, uuid());
+//   },
+// });
+
+const fileFilter = (req, file, cb) => {
+  file.mimetype === 'image/png' ||
+  file.mimetype === 'image/jpg' ||
+  file.mimetype === 'image/jpeg'
+    ? cb(null, true)
+    : cb(null, false);
+};
 
 // AWS S3 service interface object (docs: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html)
 const s3 = new aws.S3({
@@ -57,31 +79,12 @@ const upload = multer({
       cb(null, `${uuid()}.jpg`);
     },
   }),
+  fileFilter,
 });
 
 app.use(upload.single('image'));
 
-// Don't want to start server until file is read in, thus using synchronous version
-// const privateKey = fs.readFileSync('server.key');
-// const certificate = fs.readFileSync('server.cert');
-
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
-//     cb(null, 'images');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, uuid());
-//   },
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   file.mimetype === 'image/png' ||
-//   file.mimetype === 'image/jpg' ||
-//   file.mimetype === 'image/jpeg'
-//     ? cb(null, true)
-//     : cb(null, false);
-// };
+// END S3 upload/file handling
 
 app.set('view engine', 'ejs');
 // Setting this explicity even though the views folder in main directory is where the view engine looks for views by default
