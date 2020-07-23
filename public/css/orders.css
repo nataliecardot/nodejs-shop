@@ -2,7 +2,6 @@
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  width: 50%;
 }
 
 .orders__item h1 {
@@ -33,6 +32,35 @@
 /* Mobile devices */
 @media (max-width: 767px) {
   .orders {
-    width: 100%;
+    width: 93%;
+  }
+
+  .orders__item h1 {
+    font-size: 0.9rem;
+  }
+
+  li {
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .orders {
+    width: 90%;
+  }
+}
+
+/* Smaller computer screens */
+@media screen and (min-width: 992px) and (max-width: 1400px) {
+  .orders {
+    width: 70%;
+  }
+}
+
+/* Larger computer screens */
+@media screen and (min-width: 1401px) {
+  .orders {
+    width: 60%;
   }
 }
