@@ -171,13 +171,6 @@ h1 {
   display: none;
 }
 
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 5px;
@@ -257,6 +250,16 @@ h1 {
   color: #fff;
 }
 
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+  /* To center within main, since it has a width set on some breakpoints */
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .logout {
   cursor: pointer;
   outline: none;
@@ -326,6 +329,10 @@ main {
   .main-header {
     padding: 0 1rem 0 0.7rem;
   }
+
+  main {
+    margin-top: 0.5rem;
+  }
 }
 
 /* Tablets and larger devices */
@@ -340,5 +347,19 @@ main {
 
   .user-message {
     width: 30rem;
+  }
+}
+
+/* Smaller computer screens */
+@media screen and (min-width: 992px) and (max-width: 1400px) {
+  .grid {
+    width: 90%;
+  }
+}
+
+/* Larger computer screens */
+@media screen and (min-width: 1401px) {
+  .grid {
+    width: 80%;
   }
 }

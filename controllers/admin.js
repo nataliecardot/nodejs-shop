@@ -176,7 +176,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  const ITEMS_PER_PAGE = 9;
+  const ITEMS_PER_PAGE = 8;
 
   const page = +req.query.page || 1;
   let totalItems;
