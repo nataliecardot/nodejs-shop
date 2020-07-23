@@ -70,7 +70,7 @@
 @media screen and (min-width: 992px) and (max-width: 1400px) {
   .order-btn-container,
   .cart__item-list {
-    width: 60%;
+    width: 55%;
   }
 }
 

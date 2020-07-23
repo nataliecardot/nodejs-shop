@@ -54,7 +54,7 @@
 /* Smaller computer screens */
 @media screen and (min-width: 992px) and (max-width: 1400px) {
   .orders {
-    width: 60%;
+    width: 55%;
   }
 }
 
