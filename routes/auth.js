@@ -16,12 +16,10 @@ router.post(
     // Look for specific field but in request body only (unlike check, which looks in all features of incoming request [header, cookie, param, etc.])
     body('email')
       .isEmail()
-      .withMessage('Please enter a valid email address.')
-      // validator.js built-in sanitizer
+      .withMessage('Please enter a valid email.')
+      // validator.js built-in sanitizer (trims whitespace on sides of email, converts email to lowercase)
       .normalizeEmail(),
-    body('password', 'Password must be valid.')
-      .trim()
-      .isLength({ min: 8, max: 100 }),
+    body('password', 'Password must be valid.').isLength({ min: 8, max: 100 }),
   ],
   authController.postLogin
 );
@@ -48,17 +46,16 @@ router.post(
       })
       .normalizeEmail(),
     // Adding validation error message as second argument as alternative to using withMessage() after each validator since using message for both checks
-    body('password', 'Please use a password between 8 and 100 characters.')
-      .trim()
-      .isLength({ min: 8, max: 100 }),
-    body('confirmPassword')
-      .trim()
-      .custom((value, { req }) => {
-        if (value !== req.body.password) {
-          throw new Error('Passwords do not match.');
-        }
-        return true;
-      }),
+    body(
+      'password',
+      'Please use a password between 8 and 100 characters.'
+    ).isLength({ min: 8, max: 100 }),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Passwords do not match.');
+      }
+      return true;
+    }),
   ],
   authController.postSignup
 );
