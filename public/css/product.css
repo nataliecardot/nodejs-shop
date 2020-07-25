@@ -6,7 +6,7 @@
 }
 
 .product-item {
-  width: 20rem;
+  width: 20%;
   max-width: 95%;
   margin: 1rem;
 }
@@ -26,12 +26,4 @@
 
 .product__description {
   text-align: center;
-}
-
-/* Smaller computer screens */
-@media screen and (min-width: 992px) and (max-width: 1400px) {
-  /* Decreasing width by 1rem so 4 will fit on one line */
-  .product-item {
-    width: 19rem;
-  }
 }
