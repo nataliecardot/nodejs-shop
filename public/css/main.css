@@ -353,7 +353,7 @@ main {
 /* Smaller computer screens */
 @media screen and (min-width: 992px) and (max-width: 1400px) {
   .grid {
-    width: 90%;
+    width: 95%;
   }
 }
 
