@@ -28,9 +28,8 @@
   text-align: center;
 }
 
-/* Smaller computer screens */
 @media screen and (min-width: 992px) {
-  .orders {
+  .product-item {
     width: 20%;
   }
 }
