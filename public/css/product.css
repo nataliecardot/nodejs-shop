@@ -30,8 +30,8 @@
 
 /* Smaller computer screens */
 @media screen and (min-width: 992px) and (max-width: 1400px) {
-  /* Decrease width so 4 will fit on one line */
+  /* Decreasing width by 1rem so 4 will fit on one line */
   .product-item {
-    width: 17rem;
+    width: 19rem;
   }
 }

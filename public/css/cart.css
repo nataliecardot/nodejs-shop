@@ -75,7 +75,7 @@
 }
 
 /* Larger computer screens */
-@media screen and (min-width: 1401px) {
+@media screen and (min-width: 1600px) {
   .order-btn-container,
   .cart__item-list {
     width: 50%;

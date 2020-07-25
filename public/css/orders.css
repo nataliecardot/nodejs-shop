@@ -59,7 +59,7 @@
 }
 
 /* Larger computer screens */
-@media screen and (min-width: 1401px) {
+@media screen and (min-width: 1600px) {
   .orders {
     width: 50%;
   }

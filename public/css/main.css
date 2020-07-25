@@ -350,15 +350,8 @@ main {
   }
 }
 
-/* Smaller computer screens */
-@media screen and (min-width: 992px) and (max-width: 1400px) {
-  .grid {
-    width: 95%;
-  }
-}
-
 /* Larger computer screens */
-@media screen and (min-width: 1401px) {
+@media screen and (min-width: 1600px) {
   .grid {
     width: 80%;
   }
