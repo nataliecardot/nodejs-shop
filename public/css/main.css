@@ -109,7 +109,6 @@ h1 {
   list-style: none;
   /* ul has top and bottom default margin of 1em */
   margin: 0;
-  /* ul has default padding-inline-start of 40px */
   padding: 0;
 }
 
