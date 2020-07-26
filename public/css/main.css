@@ -48,6 +48,7 @@ h1 {
   background-color: #292a2b;
   padding: 0 1.5rem;
   display: flex;
+  /* Aligns vertically */
   align-items: center;
 }
 
