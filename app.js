@@ -122,6 +122,7 @@ app.use(
     store,
   })
 );
+
 app.use(csrfProtection);
 app.use(flash());
 
