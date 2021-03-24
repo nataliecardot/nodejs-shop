@@ -223,6 +223,11 @@ h1 {
   transition: 0.3s;
 }
 
+/* Applies to "add to cart" button on products page that appears when user is logged in */
+button.btn {
+  margin-top: 0.7rem;
+}
+
 .btn-danger {
   display: inline-block;
   padding: 0.25rem 1rem;
