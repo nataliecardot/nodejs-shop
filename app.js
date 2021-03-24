@@ -21,6 +21,9 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 const aws = require('aws-sdk');
 
+// To make site secure - related to express-session https://stackoverflow.com/questions/44039069/express-session-secure-cookies-not-working
+app.set('trust proxy', 1);
+
 const MONGODB_URI =
   // process object is globally available in Node app; part of Node core runtime. The env property contains all environment variables known by process object. Using nodemon.json to store environment variables, but could alternatively use dotenv package for this (see https://www.youtube.com/watch?v=17UVejOw3zA)
   `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-4yuid.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
@@ -120,6 +123,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store,
+    proxy: true,
+    cookie: {
+      secure: true,
+    },
   })
 );
 app.use(csrfProtection);
