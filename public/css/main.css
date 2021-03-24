@@ -5,11 +5,6 @@
   color: #495057;
 }
 
-/* Necessary to get rid of extra HTML space at bottom of page. Body looks to its parent (HTML) for how to scale the dynamic property, so the HTML element needs to have its height set as well */
-html {
-  height: 100%;
-}
-
 body {
   /* body has default 8px margin on all sides (but no default padding) */
   margin: 0;
@@ -305,7 +300,7 @@ li:last-of-type {
 }
 
 .pagination {
-  margin: 0 0 2.8rem;
+  margin: 0 0 2rem;
   text-align: center;
 }
 
