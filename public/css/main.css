@@ -54,6 +54,7 @@ h1 {
   justify-content: space-between;
 }
 
+/* ul */
 .main-header__item-list {
   list-style: none;
   margin: 0;
@@ -61,18 +62,28 @@ h1 {
   display: flex;
 }
 
+/* li */
 .main-header__item {
   margin: 0 1rem;
-  padding: 0;
 }
 
 .main-header__item a,
 .main-header__item button {
-  font: inherit;
-  background: transparent;
-  border: none;
   text-decoration: none;
   color: #fff;
+}
+
+.main-header__item a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #bebebe;
+  transition: width 0.3s;
+}
+
+.main-header__item a:hover::after {
+  width: 100%;
 }
 
 .main-header__item a:hover,
@@ -92,7 +103,7 @@ h1 {
   top: 0;
   background: #fff;
   z-index: 10;
-  padding: 2rem 1rem 1rem 2rem;
+  padding: 2rem;
   transform: translateX(-100%);
   transition: transform 0.3s ease-out;
 }
