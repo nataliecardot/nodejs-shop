@@ -33,22 +33,6 @@ const store = new MongoDBStore({
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf();
 
-// S3 upload/file handling
-
-// Don't want to start server until file is read in, thus using synchronous version
-// const privateKey = fs.readFileSync('server.key');
-// const certificate = fs.readFileSync('server.cert');
-
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     // First arg is for error message to throw to inform multer something is wrong with incoming file and it should not store it; with null, telling multer okay to store it
-//     cb(null, 'images');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, uuid());
-//   },
-// });
-
 const fileFilter = (req, file, cb) => {
   file.mimetype === 'image/png' ||
   file.mimetype === 'image/jpg' ||
