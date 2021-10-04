@@ -2,71 +2,51 @@
 <%- include('../includes/head.ejs') %>
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/product.css">
-</head>
+  </head>
 
-<body>
-   <%- include('../includes/navigation.ejs') %>
+  <body>
+    <%- include('../includes/navigation.ejs') %>
 
-  <main>
-    <% if (errorMessage) { %>
-      <div class="user-message user-message--error"><%= errorMessage %></div>
-    <% } %>
-    <!-- Default enctype is application/x-www-form-urlencoded. multipart/form-data is content type telling server that this submission/request will not contain plaintext, but mixed data (text and binary). multer package will be looking for requests with this type of data, and will then be able to parse both text and file -->
-    <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
-      <div class="form-control">
-        <label for="title">Title</label>
-        <input
-          class="<%= validationErrors.find(error => error.param === 'title') ? 'invalid' : '' %>"
-          type="text"
-          name="title"
-          id="title"
-          value="<% if (editing || hasError) { %><%= product.title %><% } %>"
-        >
-      </div>
-      <!-- <div class="form-control">
-        <label for="imageUrl">Image URL</label>
-        <input
-          class="<%= validationErrors.find(error => error.param === 'imageUrl') ? 'invalid' : '' %>"
-          type="text"
-          name="imageUrl"
-          id="imageUrl"
-          value="<% if (editing || hasError) { %><%= product.imageUrl %><% } %>"
-        >
-      </div> -->
-      <div class="form-control file-picker">
-        <label for="image">Image</label>
-        <input
-          type="file"
-          name="image"
-          id="image"
-        >
-      </div>
-      <div class="form-control">
-        <label for="price">Price</label>
-        <input
-          class="<%= validationErrors.find(error => error.param === 'price') ? 'invalid' : '' %>"
-          type="number"
-          name="price"
-          id="price"
-          step="0.01"
-          value="<% if (editing || hasError) { %><%= product.price %><% } %>"
-        >
-      </div>
-      <div class="form-control">
-        <label for="description">Description</label>
-        <textarea
-          class="<%= validationErrors.find(error => error.param === 'description') ? 'invalid' : '' %>"
-          name="description"
-          id="description"
-          rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
-      </div>
-      <!-- This is so can extract id by name productId in incoming request's body (from edit product form submission) in controller postEditProduct action method -->
-      <% if (editing) { %>
-        <input type="hidden" value="<%= product._id %>" name="productId">
-      <% } %>
+      <main>
+        <% if (errorMessage) { %>
+          <div class="user-message user-message--error">
+            <%= errorMessage %>
+          </div>
+          <% } %>
+            <!-- Default enctype is application/x-www-form-urlencoded. multipart/form-data is content type telling server that this submission/request will not contain plaintext, but mixed data (text and binary). multer package will be looking for requests with this type of data, and will then be able to parse both text and file -->
+            <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
+              method="POST" enctype="multipart/form-data">
+              <div class="form-control">
+                <label for="title">Title</label>
+                <input class="<%= validationErrors.find(error => error.param === 'title') ? 'invalid' : '' %>"
+                  type="text" name="title" id="title"
+                  value="<% if (editing || hasError) { %><%= product.title %><% } %>">
+              </div>
+              <div class="form-control file-picker">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
+              </div>
+              <div class="form-control">
+                <label for="price">Price</label>
+                <input class="<%= validationErrors.find(error => error.param === 'price') ? 'invalid' : '' %>"
+                  type="number" name="price" id="price" step="0.01"
+                  value="<% if (editing || hasError) { %><%= product.price %><% } %>">
+              </div>
+              <div class="form-control">
+                <label for="description">Description</label>
+                <textarea class="<%= validationErrors.find(error => error.param === 'description') ? 'invalid' : '' %>"
+                  name="description" id="description"
+                  rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
+              </div>
+              <!-- This is so can extract id by name productId in incoming request's body (from edit product form submission) in controller postEditProduct action method -->
+              <% if (editing) { %>
+                <input type="hidden" value="<%= product._id %>" name="productId">
+                <% } %>
 
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
-    </form>
-  </main>
-<%- include('../includes/end.ejs') %>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn" type="submit">
+                    <% if (editing) { %>Update Product<% } else { %>Add Product<% } %>
+                  </button>
+            </form>
+      </main>
+      <%- include('../includes/end.ejs') %>
