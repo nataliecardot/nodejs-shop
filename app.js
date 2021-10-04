@@ -33,6 +33,8 @@ const store = new MongoDBStore({
 // Secret used for signing/hashing token is stored in session by default
 const csrfProtection = csrf();
 
+// S3 upload/file handling
+
 const fileFilter = (req, file, cb) => {
   file.mimetype === 'image/png' ||
   file.mimetype === 'image/jpg' ||
