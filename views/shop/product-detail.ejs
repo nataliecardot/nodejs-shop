@@ -3,15 +3,20 @@
 
   <body>
     <%- include('../includes/navigation.ejs') %>
-    <main class="centered">
-      <h1><%= product.title %></h1>
-      <div class="image">
-        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-      </div>
-      <h2>$<%= product.price %></h2>
-      <p class="product-detail-description"><%= product.description %></p>
-      <% if (isAuthenticated) { %>
-        <%- include('../includes/add-to-cart.ejs', {product}) %>
-      <% } %>
-    </main>
-    <%- include('../includes/end.ejs') %>
+      <main class="centered">
+        <h1>
+          <%= product.title %>
+        </h1>
+        <div class="image">
+          <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+        </div>
+        <h2>$<%= (product.price).toLocaleString('en-US') %>
+        </h2>
+        <p class="product-detail-description">
+          <%= product.description %>
+        </p>
+        <% if (isAuthenticated) { %>
+          <%- include('../includes/add-to-cart.ejs', {product}) %>
+            <% } %>
+      </main>
+      <%- include('../includes/end.ejs') %>
