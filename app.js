@@ -81,16 +81,10 @@ const authRoutes = require('./routes/auth');
 // Set secure response header(s) with Helmet
 // In my app, in developer tools (in the network tab) I can see it added one additional response header for localhost, Strict-Transport-Security. This HTTP header tells browsers to stick with HTTPS and never visit the insecure HTTP version. Once a browser sees this header, it will only visit the site over HTTPS for the next 60 days
 app.use(helmet());
-// Compress assets. Note: Compression is normally done by hosting providers, but deploying to Heroku which does offer it
 app.use(compression());
-// Log request data using writable file stream created above. Which data is logged and how to format it is passed into funtion
-// Also normally handled by hosting providers
-// app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(
   session({
     secret: 'my secret',
@@ -143,8 +137,6 @@ app.use(errorController.get404);
 
 // Error-handling middleware. Express executes this middleware when you call next() with an error passed to it
 app.use((error, req, res, next) => {
-  // res.status(error.httpStatusCode).render(...);
-  // res.redirect('/500');
   res.status(500).render('500', {
     pageTitle: 'Server Error',
     path: '/500',
@@ -155,11 +147,6 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then((result) => {
-    // First arg for createServer() configures server, second is request handler, in this case, Express application
-    // Commenting out because just as with request logging and asset compression, it's handled by hosting provider, and browsers don't accept custom/self-signed certificate; will be displayed as insecure with a message that connection is not private
-    // https
-    //   .createServer({ key: privateKey, cert: certificate }, app)
-    //   .listen(process.env.PORT || 3000);
     app.listen(process.env.PORT || 3000);
   })
   .catch((err) => {
