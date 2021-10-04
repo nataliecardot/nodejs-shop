@@ -1,3 +1,8 @@
+* {
+  /* (overflow-wrap is an alias word-wrap) default is normal, in which case lines may only break at a space between words. break-word is needed to prevent text from overflowing container in the case of very long words being used. */
+  overflow-wrap: break-word;
+}
+
 .product-form {
   width: 20rem;
   max-width: 90%;
