@@ -9,6 +9,7 @@ body {
   /* body has default 8px margin on all sides (but no default padding) */
   margin: 0;
   font-family: "Open Sans", sans-serif;
+  min-height: 100vh;
 }
 
 form {
@@ -28,13 +29,8 @@ h1 {
   text-align: center;
 }
 
-.image {
-  height: 20rem;
-}
-
 .image img {
-  /* To respect max height for image class */
-  height: 100%;
+  max-width: 100%;
 }
 
 .main-header {
