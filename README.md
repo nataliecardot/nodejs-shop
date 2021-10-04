@@ -8,9 +8,9 @@ Image files are hosted in an AWS S3 bucket. Uploading a new image for a product 
 
 Prior to the final version, I also used SQL (MySQL)/Sequelize, and output dynamic content with Pug and Handlebars. The code was refactored numerous times to try different approaches. In the course, files were uploaded using the filesystem and stored locally, but a cloud storage approach was necessary for a viable app due to the hosting provider Heroku's ephemeral filesystem.
 
-Built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
-
 When you place an order in the app, you'll be redirected to Stripe checkout in test mode. You can simulate a purchase using [test card numbers](https://stripe.com/docs/testing#cards). For a production app, live mode rather than test mode publishable and secret keys would be used.
+
+Built as a course project for Udemy's [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/) by Maximilian Schwarzmüller.
 
 ## View Live: https://suess.herokuapp.com/
 
