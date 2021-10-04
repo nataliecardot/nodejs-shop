@@ -74,21 +74,6 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch((err) => {
-      // return res.status(500).render('admin/add-edit-form', {
-      //   pageTitle: 'Add Product',
-      //   path: '/admin/add-product',
-      //   editing: false,
-      //   hasError: true,
-      //   product: {
-      //     title,
-      //     imageUrl,
-      //     price,
-      //     description,
-      //   },
-      //   errorMessage: 'Database operation failed. Please try again.',
-      //   validationErrors: [],
-      // });
-      // res.redirect('/500');
       const error = new Error(err);
       error.httpStatusCode = 500;
       // When next is called with error passed as arg, informs Express that an error occurred, and Express will skip to error-handling middleware
